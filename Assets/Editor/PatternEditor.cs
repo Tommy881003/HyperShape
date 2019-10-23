@@ -20,6 +20,8 @@ public class PatternEditor : Editor
     private int degree;
     private int bCount;
     private int eCount;
+    private int startRotation;
+    private Vector2 position;
     private float radius;
     [SerializeField]
     private Vector2 from, to;
@@ -128,6 +130,12 @@ public class PatternEditor : Editor
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
+        startRotation = EditorGUILayout.IntSlider("Rotation", startRotation, 0, 359);
+        position = EditorGUILayout.Vector2Field("Position", position);
+
+        EditorGUILayout.Space();
+        EditorGUILayout.Space();
+
         from = EditorGUILayout.Vector2Field("From", from);
         to = EditorGUILayout.Vector2Field("To", to);
 
@@ -176,8 +184,8 @@ public class PatternEditor : Editor
         undoStack.Push(newList);
         for (int i = 0; i < bCount; i++)
         {
-            float degree = 360 * ((float)i / (float)bCount) * Mathf.Deg2Rad;
-            Vector2 pos = new Vector2(radius * Mathf.Cos(degree), radius * Mathf.Sin(degree));
+            float degree = (startRotation + 360 * ((float)i / (float)bCount)) * Mathf.Deg2Rad;
+            Vector2 pos = new Vector2(radius * Mathf.Cos(degree), radius * Mathf.Sin(degree)) + position;
             GameObject bullet = Instantiate(selectedPrefab, pos, Quaternion.identity);
             SpawnData newSpawn = new SpawnData();
             newSpawn.name = selectedPrefab.name;
@@ -197,11 +205,11 @@ public class PatternEditor : Editor
         foreach (SpawnData data in Inspecting.spawns)
             newList.Add(data);
         undoStack.Push(newList);
-        Vector2 a = new Vector2(radius, 0), b;
+        Vector2 a = position + new Vector2(radius * Mathf.Cos(startRotation * Mathf.Deg2Rad), radius * Mathf.Sin(startRotation * Mathf.Deg2Rad)), b;
         for (int i = 1; i <= eCount; i++)
         {
-            float degree = 360 * ((float)i / (float)eCount) * Mathf.Deg2Rad;
-            b = new Vector2(radius * Mathf.Cos(degree), radius * Mathf.Sin(degree));
+            float degree = (startRotation + 360 * ((float)i / (float)eCount)) * Mathf.Deg2Rad;
+            b = position + new Vector2(radius * Mathf.Cos(degree), radius * Mathf.Sin(degree));
             for (int j = 0; j < bCount; j++)
             {
                 float lerpValue = (float)j / (float)(bCount);
@@ -286,23 +294,23 @@ public class PatternEditor : Editor
         if(showCircle)
         {
             Handles.color = new Color(1, 1, 1, 0.4f);
-            Handles.DrawWireDisc(Vector2.zero, Vector3.back, radius);
+            Handles.DrawWireDisc(Vector2.zero + position, Vector3.back, radius);
             Handles.color = new Color(0,1,1,0.4f);
             for (int i = 0; i < bCount; i++)
             {
-                float degree = 360 * ((float)i / (float)bCount) * Mathf.Deg2Rad;
-                Vector2 pos = new Vector2(radius * Mathf.Cos(degree), radius * Mathf.Sin(degree));
+                float degree = (startRotation + 360 * ((float)i / (float)bCount)) * Mathf.Deg2Rad;
+                Vector2 pos = position + new Vector2(radius * Mathf.Cos(degree), radius * Mathf.Sin(degree));
                 Handles.DrawSolidDisc(pos, Vector3.back, 0.35f);
             }
         }
         if (showPolygon)
         {
-            Vector2 a = new Vector2(radius, 0), b;
+            Vector2 a = position + new Vector2(radius*Mathf.Cos(startRotation * Mathf.Deg2Rad), radius * Mathf.Sin(startRotation * Mathf.Deg2Rad)), b;
             for (int i = 1; i <= eCount; i++)
             {
                 Handles.color = new Color(1, 1, 1, 0.4f);
-                float degree = 360 * ((float)i / (float)eCount) * Mathf.Deg2Rad;
-                b = new Vector2(radius * Mathf.Cos(degree), radius * Mathf.Sin(degree));
+                float degree = (startRotation + 360 * ((float)i / (float)eCount)) * Mathf.Deg2Rad;
+                b = position + new Vector2(radius * Mathf.Cos(degree), radius * Mathf.Sin(degree));
                 Handles.DrawLine(a, b);
                 Handles.color = new Color(0, 1, 1, 0.4f);
                 for (int j = 0; j < bCount; j++)

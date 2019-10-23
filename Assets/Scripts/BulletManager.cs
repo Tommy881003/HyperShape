@@ -30,7 +30,7 @@ public class BulletManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        BulletArray bulletArray = BulletArray.instance;
+        BulletArray bulletArray = Resources.Load<BulletArray>("ScriptableObject/BA");
         bulletArray.DictIO();
         bulletDictionary = new Dictionary<string, Queue<GameObject>>();
         dummy = new GameObject();
@@ -48,15 +48,14 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    struct PositionUpdateJob : IJobParallelForTransform
+    struct PatternUpdateJob : IJobParallelForTransform
     {
         [ReadOnly]
         public NativeArray<float> distance;
         [ReadOnly]
-        public NativeArray<float> angle; //in radian format
+        public NativeArray<float> angles; //in radian format
         [ReadOnly]
         public NativeArray<bool> isActive;
-        //public NativeArray<SpherecastCommand> commands;
         public Vector3 parentPos;
         public float parentAngle;
         public float scale;
@@ -65,29 +64,30 @@ public class BulletManager : MonoBehaviour
         {
             if (!isActive[i])
                 return;
-            float newAngle = parentAngle + angle[i];
+            float newAngle = parentAngle + angles[i];
             Vector3 newDisance = new Vector3(distance[i] * Mathf.Cos(newAngle), distance[i] * Mathf.Sin(newAngle));
             transform.position = parentPos + (newDisance * scale);
-            //commands[i] = new SpherecastCommand(transform.position, 0.8f, Vector3.zero, 0, 1 << 8);
         }
     }
 
-    /*struct CollisionJob : IJobParallelFor
+    struct PositionUpdateJob : IJobParallelForTransform
     {
         [ReadOnly]
-        public NativeArray<RaycastHit> casts;
+        public NativeArray<float> angles; //in radian format
+        [ReadOnly]
         public NativeArray<bool> isActive;
+        [ReadOnly]
+        public float delta;
+        [ReadOnly]
+        public NativeArray<float> speeds;
 
-        public void Execute(int i)
+        public void Execute(int i, TransformAccess transform)
         {
-            Debug.Log(casts[i].point);
-            if (isActive[i] == false)
+            if (!isActive[i])
                 return;
-            if (casts[i].point != Vector3.zero)
-                isActive[i] = false;
+            transform.position += speeds[i] * new Vector3(Mathf.Cos(angles[i]), Mathf.Sin(angles[i])) * delta;
         }
-    }*/
-
+    }
 
     public IEnumerator SpawnPattern(BulletPattern pattern, Vector2 pos, Quaternion quaternion)
     {
@@ -103,10 +103,8 @@ public class BulletManager : MonoBehaviour
         int j = 0, length = pattern.spawns.Count;
         currentBulletAmount += length;
         Transform[] temp = new Transform[length];
-        JobHandle PositionJobHandle; //CastJobHandle;
-        //NativeArray<RaycastHit> results = new NativeArray<RaycastHit>(length, Allocator.Persistent);
-        //NativeArray<SpherecastCommand> commands = new NativeArray<SpherecastCommand>(length, Allocator.Persistent);
-        NativeArray<float> distance = new NativeArray<float>(length, Allocator.Persistent), angle = new NativeArray<float>(length, Allocator.Persistent);
+        JobHandle PositionJobHandle;
+        NativeArray<float> distance = new NativeArray<float>(length, Allocator.Persistent), angles = new NativeArray<float>(length, Allocator.Persistent);
         NativeArray<bool> isActive = new NativeArray<bool>(length, Allocator.Persistent);
         foreach (SpawnData spawn in pattern.spawns)
         {
@@ -117,7 +115,7 @@ public class BulletManager : MonoBehaviour
             bullets.Add(newBullet);
             bulletDictionary[spawn.name].Enqueue(newBullet);
             distance[j] = spawn.position.magnitude;
-            angle[j] = newRotate - vRotate;
+            angles[j] = newRotate - vRotate;
             temp[j] = newBullet.transform;
             isActive[j] = true;
             j++;
@@ -134,29 +132,19 @@ public class BulletManager : MonoBehaviour
             rb.velocity = new Vector2(speed * Mathf.Cos(vRotate), speed * Mathf.Sin(vRotate));
             selfRotate += pattern.rotation.Evaluate(timer) * Time.deltaTime;
             newDummy.transform.rotation = Quaternion.Euler(new Vector3(0, 0, selfRotate));
-            PositionUpdateJob m_Job = new PositionUpdateJob()
+            PatternUpdateJob m_Job = new PatternUpdateJob()
             {
                 isActive = isActive,
                 distance = distance,
-                angle = angle,
+                angles = angles,
                 scale = pattern.scale.Evaluate(timer),
                 parentPos = parent.position,
                 parentAngle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad,
-                //commands = commands
             };
             PositionJobHandle = m_Job.Schedule(transforms);
             PositionJobHandle.Complete();
-            /*var handle = SpherecastCommand.ScheduleBatch(commands, results, templength);
-            handle.Complete();
-            CollisionJob m_collision = new CollisionJob()
-            {
-                casts = results,
-                isActive = isActive
-            };
-            CastJobHandle = m_collision.Schedule(templength, 32);*/
             timer += Time.deltaTime;
             yield return null;
-            /*CastJobHandle.Complete();*/
             for (int i = 0; i < bullets.Count; i++)
             {
                 if (isActive[i] && bullets[i].activeSelf)
@@ -181,9 +169,62 @@ public class BulletManager : MonoBehaviour
         isActive.Dispose();
         transforms.Dispose();
         distance.Dispose();
-        angle.Dispose();
-        /*commands.Dispose();
-        results.Dispose();*/
+        angles.Dispose();
+    }
+
+    public IEnumerator SpawnOneShot(string bulletName, int count, float angle, float speed, bool spreadMode, Vector2 pos, float quaternion)
+    {
+        if(bulletDictionary.ContainsKey(bulletName) == false)
+        {
+            Debug.LogWarning("Bullet named " + bulletName + " is not in the dictionary");
+            yield break;
+        }
+        List<GameObject> bullets = new List<GameObject>();
+        currentBulletAmount += count;
+        Transform[] temp = new Transform[count];
+        JobHandle PositionJobHandle;
+        NativeArray<float> angles = new NativeArray<float>(count, Allocator.Persistent);
+        NativeArray<float> speeds = new NativeArray<float>(count, Allocator.Persistent);
+        NativeArray<bool> isActive = new NativeArray<bool>(count, Allocator.Persistent);
+        for(int i = 0; i < count; i++)
+        {
+            GameObject newBullet = bulletDictionary[bulletName].Dequeue();
+            newBullet.transform.position = pos;
+            newBullet.SetActive(true);
+            bullets.Add(newBullet);
+            bulletDictionary[bulletName].Enqueue(newBullet);
+            angles[i] = ((spreadMode == true? UnityEngine.Random.Range(-angle / 2, angle / 2) : Mathf.Lerp(-angle/2,angle/2, (float)i/(float)(count - 1))) + quaternion) * Mathf.Deg2Rad;
+            speeds[i] = speed + (spreadMode == true ? UnityEngine.Random.Range(-0.1f*speed, 0.1f*speed) : 0);
+            temp[i] = newBullet.transform;
+            isActive[i] = true;
+        }
+        TransformAccessArray transforms = new TransformAccessArray(temp);
+        int tempCount = count;
+        while (tempCount > 0)
+        {
+            PositionUpdateJob m_Job = new PositionUpdateJob()
+            {
+                isActive = isActive,
+                angles = angles,
+                speeds = speeds,
+                delta = Time.deltaTime
+            };
+            PositionJobHandle = m_Job.Schedule(transforms);
+            PositionJobHandle.Complete();
+            yield return null;
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                if (isActive[i] && bullets[i].activeSelf)
+                {
+                    isActive[i] = circleCast(bullets[i], bullets[i].transform.position, 0.3f);
+                    tempCount = (isActive[i] == false ? tempCount - 1 : tempCount);
+                }
+            }
+        }
+        isActive.Dispose();
+        transforms.Dispose();
+        speeds.Dispose();
+        angles.Dispose();
     }
 
     bool circleCast(GameObject go ,Vector2 pos, float radius)

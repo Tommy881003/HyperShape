@@ -56,7 +56,7 @@ MonoBehaviour:
   coolDown: 4
   timer: 0
   atkPatternLen: 0
-  pattern1: {fileID: 11400000, guid: 9796b5b5a29b0d9438f881c5348291f2, type: 2}
+  pattern1: {fileID: 11400000, guid: 4092cc4bd59bd79489ab3ee82cdfe26f, type: 2}
 --- !u!212 &7204619378978570547
 SpriteRenderer:
   m_ObjectHideFlags: 0

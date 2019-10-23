@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Diamond : Weapon
+/*public class Diamond : Weapon
 {
     private Camera cam;
     private Color srColor;
@@ -84,4 +84,4 @@ public class Diamond : Weapon
         yield return new WaitForSeconds(0.6f);
         Destroy(this.gameObject);
     }
-}
+}*/

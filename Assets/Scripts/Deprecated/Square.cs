@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Square : Weapon
+/*public class Square : Weapon
 {
     private Color srColor;
     private SpriteRenderer sr;
@@ -94,4 +94,4 @@ public class Square : Weapon
         yield return new WaitForSeconds(1f);
         Destroy(this.gameObject);
     }
-}
+}*/

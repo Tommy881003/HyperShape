@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public class Triangle : Weapon
+/*public class Triangle : Weapon
 {
     private Color srColor;
     private SpriteRenderer sr;
@@ -125,4 +125,4 @@ public class Triangle : Weapon
         }
         Destroy(this.gameObject);
     }
-}
+}*/

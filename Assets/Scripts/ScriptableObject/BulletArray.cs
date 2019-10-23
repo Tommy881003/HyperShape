@@ -10,6 +10,7 @@ public class BulletArray : ScriptableObject
 {
     public Dictionary<string, GameObject> bulletDictionary = null;
     public static BulletArray instance = null;
+
     private void OnEnable()
     {
         if (instance == null)

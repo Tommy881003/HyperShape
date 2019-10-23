@@ -20,7 +20,8 @@ public class testscript : Enemy
     public void attack1()
     {
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
-        manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
+        //manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
+        manager.StartCoroutine(manager.SpawnOneShot("Enemy_Cicle",5,45,15,true,this.transform.position, angle));
     }
 
     protected override void Follow()
