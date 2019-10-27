@@ -10,7 +10,7 @@ public class Weapon : MonoBehaviour
     public float fireRate;
     public float damage;
     public float spread;
-    public Weapon previous;
+    public GameObject previous;
 
     protected Camera cam;
     protected float fireTime;

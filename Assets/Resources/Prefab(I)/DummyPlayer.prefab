@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8335794301695319962}
   - component: {fileID: 8335794301695319965}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: DummyPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 7424d9eceaa6c8448bfa9d323b4fddd7, type: 3}
-  m_Color: {r: 1, g: 1, b: 0.5882353, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -176,7 +176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1145361040222769933}
-  - component: {fileID: 2267725008930876759}
+  - component: {fileID: 300973419}
   m_Layer: 10
   m_Name: Pistol
   m_TagString: Untagged
@@ -198,7 +198,7 @@ Transform:
   m_Father: {fileID: 8335794302553963877}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2267725008930876759
+--- !u!114 &300973419
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,15 +207,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8751256457057077844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e1b29ed9a3ac114c821cbac4dbdd722, type: 3}
+  m_Script: {fileID: 11500000, guid: 91854c37836f7fc418f810ed1f99c2c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   reloadTime: 1
-  ammoCapacity: 8
-  fireRate: 2.5
-  damage: 6
-  spread: 5
+  ammoCapacity: 5
+  fireRate: 1
+  damage: 5
+  spread: 7
+  previous: {fileID: 0}
   bullet: {fileID: 4501925598288199308, guid: 8d24c060201a99e4196b4cccd3d49f4b, type: 3}
-  bulletSpeed: 30
+  bulletSpeed: 35
   currentAmmo: 0
   canAttack: 1
+  bulletCount: 3
+  spacing: 0.05

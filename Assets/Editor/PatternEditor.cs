@@ -20,7 +20,7 @@ public class PatternEditor : Editor
     private int degree;
     private int bCount;
     private int eCount;
-    private int startRotation;
+    private float startRotation;
     private Vector2 position;
     private float radius;
     [SerializeField]
@@ -130,7 +130,7 @@ public class PatternEditor : Editor
         EditorGUILayout.Space();
         EditorGUILayout.Space();
 
-        startRotation = EditorGUILayout.IntSlider("Rotation", startRotation, 0, 359);
+        startRotation = EditorGUILayout.Slider("Rotation", startRotation, 0, 359);
         position = EditorGUILayout.Vector2Field("Position", position);
 
         EditorGUILayout.Space();

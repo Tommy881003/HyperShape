@@ -24,8 +24,8 @@ TagManager:
   - Player
   - Bullet
   - PlayerBullet
-  - 
-  - 
+  - NoEntityEnemy
+  - GhostEnemy
   - 
   - 
   - 

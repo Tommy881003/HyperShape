@@ -1,0 +1,321 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d373a4e34540b784f8a1f1dac2ec79e8, type: 3}
+  m_Name: bullet5
+  m_EditorClassIdentifier: 
+  vRotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 4
+      outSlope: 4
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 2
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1.5
+      value: -2
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 1
+      inSlope: 6
+      outSlope: 6
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  velocity:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0.5
+      outSlope: 0.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 2
+      inSlope: 0.5
+      outSlope: 0.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  scale:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 1.5
+      outSlope: 1.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 2
+      value: 4
+      inSlope: 1.5
+      outSlope: 1.5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spawns:
+  - name: Enemy_Cicle
+    position: {x: 3, y: 0}
+  - name: Enemy_Cicle
+    position: {x: 2.8977776, y: 0.77645713}
+  - name: Enemy_Cicle
+    position: {x: 2.598076, y: 1.5}
+  - name: Enemy_Cicle
+    position: {x: 2.1213202, y: 2.1213202}
+  - name: Enemy_Cicle
+    position: {x: 1.4999999, y: 2.5980763}
+  - name: Enemy_Cicle
+    position: {x: 0.7764572, y: 2.8977776}
+  - name: Enemy_Cicle
+    position: {x: -0.00000013113416, y: 3}
+  - name: Enemy_Cicle
+    position: {x: -0.77645713, y: 2.8977776}
+  - name: Enemy_Cicle
+    position: {x: -1.5000002, y: 2.598076}
+  - name: Enemy_Cicle
+    position: {x: -2.1213202, y: 2.1213202}
+  - name: Enemy_Cicle
+    position: {x: -2.598076, y: 1.5000002}
+  - name: Enemy_Cicle
+    position: {x: -2.8977776, y: 0.7764574}
+  - name: Enemy_Cicle
+    position: {x: -3, y: -0.00000026226832}
+  - name: Enemy_Cicle
+    position: {x: -2.8977776, y: -0.7764572}
+  - name: Enemy_Cicle
+    position: {x: -2.598076, y: -1.4999999}
+  - name: Enemy_Cicle
+    position: {x: -2.1213205, y: -2.1213202}
+  - name: Enemy_Cicle
+    position: {x: -1.4999998, y: -2.5980763}
+  - name: Enemy_Cicle
+    position: {x: -0.77645695, y: -2.8977776}
+  - name: Enemy_Cicle
+    position: {x: 0.00000003577464, y: -3}
+  - name: Enemy_Cicle
+    position: {x: 0.7764571, y: -2.8977776}
+  - name: Enemy_Cicle
+    position: {x: 1.4999998, y: -2.5980763}
+  - name: Enemy_Cicle
+    position: {x: 2.12132, y: -2.1213207}
+  - name: Enemy_Cicle
+    position: {x: 2.5980759, y: -1.5000005}
+  - name: Enemy_Cicle
+    position: {x: 2.8977773, y: -0.77645785}
+  - name: Enemy_Cicle
+    position: {x: 3, y: 0}
+  - name: Enemy_Cicle
+    position: {x: 2.8125, y: 0.10825317}
+  - name: Enemy_Cicle
+    position: {x: 2.625, y: 0.21650635}
+  - name: Enemy_Cicle
+    position: {x: 2.4375, y: 0.3247595}
+  - name: Enemy_Cicle
+    position: {x: 2.25, y: 0.4330127}
+  - name: Enemy_Cicle
+    position: {x: 2.0625, y: 0.54126585}
+  - name: Enemy_Cicle
+    position: {x: 1.875, y: 0.649519}
+  - name: Enemy_Cicle
+    position: {x: 1.6875, y: 0.75777215}
+  - name: Enemy_Cicle
+    position: {x: 1.4999999, y: 0.8660254}
+  - name: Enemy_Cicle
+    position: {x: 1.3124999, y: 0.97427857}
+  - name: Enemy_Cicle
+    position: {x: 1.125, y: 1.0825317}
+  - name: Enemy_Cicle
+    position: {x: 0.9374998, y: 1.1907849}
+  - name: Enemy_Cicle
+    position: {x: 0.7499999, y: 1.299038}
+  - name: Enemy_Cicle
+    position: {x: 0.56249976, y: 1.4072913}
+  - name: Enemy_Cicle
+    position: {x: 0.37499994, y: 1.5155443}
+  - name: Enemy_Cicle
+    position: {x: 0.18749985, y: 1.6237975}
+  - name: Enemy_Cicle
+    position: {x: -0.0000002483527, y: 1.7320508}
+  - name: Enemy_Cicle
+    position: {x: -0.18750007, y: 1.8403039}
+  - name: Enemy_Cicle
+    position: {x: -0.37500018, y: 1.9485571}
+  - name: Enemy_Cicle
+    position: {x: -0.5625003, y: 2.0568104}
+  - name: Enemy_Cicle
+    position: {x: -0.7500001, y: 2.1650634}
+  - name: Enemy_Cicle
+    position: {x: -0.93750024, y: 2.2733166}
+  - name: Enemy_Cicle
+    position: {x: -1.1250004, y: 2.3815699}
+  - name: Enemy_Cicle
+    position: {x: -1.3125001, y: 2.4898229}
+  - name: Enemy_Cicle
+    position: {x: -1.5000002, y: 2.598076}
+  - name: Enemy_Cicle
+    position: {x: -1.5000002, y: 2.3815699}
+  - name: Enemy_Cicle
+    position: {x: -1.5000002, y: 2.1650634}
+  - name: Enemy_Cicle
+    position: {x: -1.5000002, y: 1.948557}
+  - name: Enemy_Cicle
+    position: {x: -1.5000001, y: 1.7320507}
+  - name: Enemy_Cicle
+    position: {x: -1.5000001, y: 1.5155444}
+  - name: Enemy_Cicle
+    position: {x: -1.5000001, y: 1.2990379}
+  - name: Enemy_Cicle
+    position: {x: -1.5000001, y: 1.0825317}
+  - name: Enemy_Cicle
+    position: {x: -1.5000001, y: 0.8660252}
+  - name: Enemy_Cicle
+    position: {x: -1.5, y: 0.64951897}
+  - name: Enemy_Cicle
+    position: {x: -1.5, y: 0.43301263}
+  - name: Enemy_Cicle
+    position: {x: -1.5, y: 0.21650618}
+  - name: Enemy_Cicle
+    position: {x: -1.5, y: -0.00000011920929}
+  - name: Enemy_Cicle
+    position: {x: -1.5, y: -0.21650657}
+  - name: Enemy_Cicle
+    position: {x: -1.5, y: -0.43301272}
+  - name: Enemy_Cicle
+    position: {x: -1.5, y: -0.6495192}
+  - name: Enemy_Cicle
+    position: {x: -1.4999999, y: -0.8660256}
+  - name: Enemy_Cicle
+    position: {x: -1.4999999, y: -1.0825318}
+  - name: Enemy_Cicle
+    position: {x: -1.4999999, y: -1.2990382}
+  - name: Enemy_Cicle
+    position: {x: -1.4999999, y: -1.5155447}
+  - name: Enemy_Cicle
+    position: {x: -1.4999999, y: -1.7320508}
+  - name: Enemy_Cicle
+    position: {x: -1.4999998, y: -1.9485573}
+  - name: Enemy_Cicle
+    position: {x: -1.4999998, y: -2.1650639}
+  - name: Enemy_Cicle
+    position: {x: -1.4999998, y: -2.3815699}
+  - name: Enemy_Cicle
+    position: {x: -1.4999998, y: -2.5980763}
+  - name: Enemy_Cicle
+    position: {x: -1.3124998, y: -2.489823}
+  - name: Enemy_Cicle
+    position: {x: -1.1249998, y: -2.3815699}
+  - name: Enemy_Cicle
+    position: {x: -0.93749976, y: -2.2733166}
+  - name: Enemy_Cicle
+    position: {x: -0.74999976, y: -2.1650636}
+  - name: Enemy_Cicle
+    position: {x: -0.5624998, y: -2.0568104}
+  - name: Enemy_Cicle
+    position: {x: -0.37499982, y: -1.9485571}
+  - name: Enemy_Cicle
+    position: {x: -0.18749988, y: -1.8403039}
+  - name: Enemy_Cicle
+    position: {x: 0.0000002036492, y: -1.7320507}
+  - name: Enemy_Cicle
+    position: {x: 0.18750015, y: -1.6237975}
+  - name: Enemy_Cicle
+    position: {x: 0.3750001, y: -1.5155443}
+  - name: Enemy_Cicle
+    position: {x: 0.5625002, y: -1.407291}
+  - name: Enemy_Cicle
+    position: {x: 0.7500001, y: -1.2990379}
+  - name: Enemy_Cicle
+    position: {x: 0.9375002, y: -1.1907847}
+  - name: Enemy_Cicle
+    position: {x: 1.125, y: -1.0825316}
+  - name: Enemy_Cicle
+    position: {x: 1.3125001, y: -0.9742783}
+  - name: Enemy_Cicle
+    position: {x: 1.5000001, y: -0.86602503}
+  - name: Enemy_Cicle
+    position: {x: 1.6875, y: -0.75777197}
+  - name: Enemy_Cicle
+    position: {x: 1.875, y: -0.64951867}
+  - name: Enemy_Cicle
+    position: {x: 2.0625002, y: -0.5412654}
+  - name: Enemy_Cicle
+    position: {x: 2.25, y: -0.43301234}
+  - name: Enemy_Cicle
+    position: {x: 2.4375, y: -0.3247591}
+  - name: Enemy_Cicle
+    position: {x: 2.625, y: -0.21650583}
+  - name: Enemy_Cicle
+    position: {x: 2.8125, y: -0.10825273}
