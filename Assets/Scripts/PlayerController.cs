@@ -19,25 +19,45 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private CircleCollider2D circle;
     private Camera cam;
+    private CameraFollower follower;
+    private SpriteRenderer sr;
+    private HeartContainer heart;
 
-    private bool isShifting = false, canShift = true;
-    private bool canShoot = true;
+    private bool isShifting = false, canShift = true, canShoot = true;
+    [HideInInspector]
+    public bool isBattling = false;
+    [HideInInspector]
+    public bool vulnerable = true;
     [HideInInspector]
     public Vector2 direction = Vector2.zero;
     [Header("走路速度"), Range(1f,10f)]
     public float speed = 5;
     [Header("突刺最大距離"), Range(5f,15f)]
     public float shiftDis = 8;
+    [Header("突刺冷卻時間"), Range(0.1f, 1)]
+    public float shiftCoolDown = 0.3f;
+    [Header("最大生命"), Range(4, 10)]
+    public int maxLife = 8;
+    [Header("傷後無敵時間"), Range(1, 2)]
+    public float invincibleTime = 1.5f;
+    [HideInInspector]
+    public int life;
     private Weapon selectedWeapon;
 
     // Start is called before the first frame update
     void Start()
     {
         cam = Camera.main;
+        follower = cam.GetComponent<CameraFollower>();
         player = transform.Find("Player").gameObject;
         rb = player.GetComponent<Rigidbody2D>();
         circle = player.GetComponent<CircleCollider2D>();
+        sr = player.GetComponent<SpriteRenderer>();
         selectedWeapon = this.GetComponentInChildren<Weapon>();
+        life = maxLife;
+        heart = HeartContainer.instance;
+        heart.ShowHeart(true);
+        this.enabled = false;
     }
 
     // Update is called once per frame
@@ -133,6 +153,7 @@ public class PlayerController : MonoBehaviour
     IEnumerator Shift()
     {
         isShifting = true;
+        vulnerable = false;
         canShift = false;
         float moveDis = shiftDis;
         Vector3 moveVect = Moving().normalized;
@@ -147,7 +168,31 @@ public class PlayerController : MonoBehaviour
         player.transform.DOScale(new Vector3(1, 1, 1), 0.15f).SetEase(Ease.InCubic);
         yield return new WaitForSeconds(0.15f);
         isShifting = false;
-        yield return new WaitForSeconds(0.2f);
+        vulnerable = true;
+        yield return new WaitForSeconds(shiftCoolDown);
         canShift = true;
+    }
+
+    public IEnumerator GetDamage()
+    {
+        StartCoroutine(follower.CamShake(2,0.5f));
+        life--;
+        heart.ShowHeart(false);
+        vulnerable = false;
+        float timer = 0;
+        float flashTime = 0.1f;
+        int i = 0;
+        while(timer <= invincibleTime)
+        {
+            if(timer >= flashTime * i)
+            {
+                sr.enabled = !sr.enabled;
+                i++;
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        sr.enabled = true;
+        vulnerable = true;
     }
 }

@@ -39,7 +39,7 @@ public class Weapon : MonoBehaviour
         if (fireRate > 0 && canAttack && currentAmmo > 0)
         {
             StartCoroutine(Shoot());
-            StartCoroutine(follower.CamShake(0.3f));
+            StartCoroutine(follower.CamShake(1,0.3f));
         } 
     }
 

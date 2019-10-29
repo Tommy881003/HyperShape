@@ -10,7 +10,6 @@ public class Rifle_Burst_Lv1 : Weapon
     public override void Attack()
     {
         base.Attack();
-        Debug.Log("Attack!!!");
     }
 
     public override IEnumerator Shoot()

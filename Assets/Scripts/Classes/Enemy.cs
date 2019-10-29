@@ -4,9 +4,11 @@ using UnityEngine;
 using BTAI;
 using Pathfinding;
 using System.Linq;
+using UnityEngine.Events;
 
 public class Enemy : MonoBehaviour
 {
+    public int wave;
     Root aiRoot = BT.Root();
     protected PlayerController player;
     protected Transform playerTransform;
@@ -16,6 +18,9 @@ public class Enemy : MonoBehaviour
     protected Rigidbody2D rb;
     protected ParticleSystem dieParticle;
     protected SpriteRenderer sr;
+    protected Level parentLevel = null;
+    protected UnityEvent m_MyEvent = new UnityEvent();
+
     [SerializeField,Header("生命值"),Range(1,1000)]
     protected int hp = 50;
     [SerializeField, Header("速度"), Range(1, 100)]
@@ -91,11 +96,17 @@ public class Enemy : MonoBehaviour
     protected virtual IEnumerator playDead()
     {
         rb.velocity = Vector2.zero;
+        rb.mass = 10000;
         destination.enabled = false;
         iPath.enabled = false;
         sr.enabled = false;
         float dieTime = dieParticle.main.duration;
         dieParticle.Play();
+        if (parentLevel != null && m_MyEvent != null)
+        {
+            m_MyEvent.Invoke();
+            m_MyEvent.RemoveAllListeners();
+        }
         yield return new WaitForSeconds(dieTime);
         Destroy(this.gameObject);
     }
@@ -143,6 +154,9 @@ public class Enemy : MonoBehaviour
         iPath = enemyTransform.gameObject.GetComponent<AIPath>();
         timer = coolDown;
         rb.angularDrag = 10000;
+        parentLevel = this.GetComponentInParent<Level>();
+        if (parentLevel != null)
+            m_MyEvent.AddListener(parentLevel.EnemyDie);
     }
     /* override範例
      

@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d373a4e34540b784f8a1f1dac2ec79e8, type: 3}
+  m_Name: CircleMage_Pattern3
+  m_EditorClassIdentifier: 
+  vRotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  velocity:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 15
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 15
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  rotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 60
+      outSlope: 60
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 60
+      inSlope: Infinity
+      outSlope: 0
+      tangentMode: 71
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 60
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  scale:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2.094635
+      outSlope: 1
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.08163265
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: Infinity
+      tangentMode: 101
+      weightedMode: 0
+      inWeight: 0.09693877
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spawns:
+  - name: Enemy_Cicle
+    position: {x: 4, y: 0}
+  - name: Enemy_Cicle
+    position: {x: 3.309017, y: 0.95105654}
+  - name: Enemy_Cicle
+    position: {x: 2.1909828, y: 0.5877852}
+  - name: Enemy_Cicle
+    position: {x: 2.1909828, y: -0.5877851}
+  - name: Enemy_Cicle
+    position: {x: 3.3090172, y: -0.9510565}
+  - name: Enemy_Cicle
+    position: {x: -0.5, y: 2.598076}
+  - name: Enemy_Cicle
+    position: {x: -1.190983, y: 3.5491326}
+  - name: Enemy_Cicle
+    position: {x: -2.3090172, y: 3.1858613}
+  - name: Enemy_Cicle
+    position: {x: -2.3090172, y: 2.010291}
+  - name: Enemy_Cicle
+    position: {x: -1.1909828, y: 1.6470196}
+  - name: Enemy_Cicle
+    position: {x: -0.5, y: -2.598076}
+  - name: Enemy_Cicle
+    position: {x: -1.190983, y: -1.6470196}
+  - name: Enemy_Cicle
+    position: {x: -2.3090172, y: -2.0102909}
+  - name: Enemy_Cicle
+    position: {x: -2.3090172, y: -3.185861}
+  - name: Enemy_Cicle
+    position: {x: -1.1909828, y: -3.5491326}

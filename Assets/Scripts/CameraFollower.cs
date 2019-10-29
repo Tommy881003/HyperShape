@@ -11,7 +11,8 @@ public class CameraFollower : MonoBehaviour
     private bool isShakeing;
     [Header("攝影機跟隨強度"),Range(0f,1f)]
     public float lerp = 0.2f;
-    private float seed1,seed2,timer;
+    private float seed1,seed2,timer,shakePower = 0.5f,frequency = 8;
+    private float originalShake, originalFrequency;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class CameraFollower : MonoBehaviour
         cam = this.GetComponent<Camera>();
         isShakeing = false;
         seed1 = 0; seed2 = 0; timer = 0;
+        originalFrequency = frequency; originalShake = shakePower;
         //generator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
         if (generator == null)
         {
@@ -40,10 +42,9 @@ public class CameraFollower : MonoBehaviour
         }
         if (isShakeing)
         {
-            int frequency = 8;
             Vector2 pos = this.transform.position;
-            pos.x += (Mathf.PerlinNoise(seed1, timer * frequency) - 0.5f) * (0.5f - (1.2f * timer));
-            pos.y += (Mathf.PerlinNoise(seed2, timer * frequency) - 0.5f) * (0.5f - (1.2f * timer));
+            pos.x += (Mathf.PerlinNoise(seed1, timer * frequency) - 0.5f) * (shakePower - (1.2f * timer));
+            pos.y += (Mathf.PerlinNoise(seed2, timer * frequency) - 0.5f) * (shakePower - (1.2f * timer));
             this.transform.position = new Vector3(pos.x, pos.y, this.transform.position.z);
         }
        
@@ -63,10 +64,12 @@ public class CameraFollower : MonoBehaviour
         enabled = true;
     }
 
-    public IEnumerator CamShake(float duration)
+    public IEnumerator CamShake(float power, float duration)
     {
-        seed1 = UnityEngine.Random.Range(-5, 5);
-        seed2 = UnityEngine.Random.Range(-5, 5);
+        frequency = originalFrequency * power;
+        shakePower = originalShake * power;
+        seed1 = UnityEngine.Random.Range(-5*power, 5*power);
+        seed2 = UnityEngine.Random.Range(-5*power, 5*power);
         timer = 0;
         isShakeing = true;
         while (timer < duration)

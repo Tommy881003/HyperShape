@@ -16,6 +16,8 @@ public class HexShifter : Enemy
         current = 0;
         pattern = new int[atkPatternLen];
         PatternShuffle();
+        if (parentLevel != null)
+            this.gameObject.SetActive(false);
     }
 
     protected override bool CanAttack()
@@ -110,6 +112,11 @@ public class HexShifter : Enemy
         float dieTime = Mathf.Max(dieParticle.main.duration - 0.2f,0);
         dieParticle.Play();
         manager.StartCoroutine(manager.SpawnPattern(diePattern, this.transform.position, Quaternion.identity));
+        if (parentLevel != null && m_MyEvent != null)
+        {
+            m_MyEvent.Invoke();
+            m_MyEvent.RemoveAllListeners();
+        }
         yield return new WaitForSeconds(0.2f);
         sr.enabled = false;
         yield return new WaitForSeconds(dieTime);

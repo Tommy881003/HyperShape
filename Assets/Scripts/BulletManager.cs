@@ -5,10 +5,10 @@ using UnityEngine;
 using BulletCreator;
 using UnityEngine.Jobs;
 using Unity.Jobs;
-using Unity.Burst;
 
 public class BulletManager : MonoBehaviour
 {
+    public PlayerController player;
     private GameObject dummy;
     [HideInInspector]
     public int currentBulletAmount;
@@ -30,6 +30,7 @@ public class BulletManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        player = GameObject.Find("DummyPlayer").GetComponent<PlayerController>();
         BulletArray bulletArray = Resources.Load<BulletArray>("ScriptableObject/BA");
         bulletArray.DictIO();
         bulletDictionary = new Dictionary<string, Queue<GameObject>>();
@@ -48,7 +49,6 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    [BurstCompile]
     struct PatternUpdateJob : IJobParallelForTransform
     {
         [ReadOnly]
@@ -71,7 +71,6 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    [BurstCompile]
     struct PositionUpdateJob : IJobParallelForTransform
     {
         [ReadOnly]
@@ -98,13 +97,14 @@ public class BulletManager : MonoBehaviour
         Rigidbody2D rb = newDummy.AddComponent<Rigidbody2D>();
         List<GameObject> bullets = new List<GameObject>();
         List<SpriteRenderer> srs = new List<SpriteRenderer>();
-        List<ParticleSystem> pss = new List<ParticleSystem>();
+        List<ParticleSystem> pss = new List<ParticleSystem>(); 
         rb.gravityScale = 0;
         float timer = 0;
         float vRotate = quaternion.eulerAngles.z * Mathf.Deg2Rad;
         float selfRotate = newDummy.transform.rotation.eulerAngles.z;
         float speed = 0;
         int j = 0, length = pattern.spawns.Count;
+        Vector2[] previous = new Vector2[length];
         currentBulletAmount += length;
         Transform[] temp = new Transform[length];
         JobHandle PositionJobHandle;
@@ -119,6 +119,7 @@ public class BulletManager : MonoBehaviour
             bullets.Add(newBullet);
             srs.Add(newBullet.GetComponent<SpriteRenderer>());
             pss.Add(newBullet.GetComponent<ParticleSystem>());
+            previous[j] = newBullet.transform.position;
             distance[j] = spawn.position.magnitude;
             angles[j] = newRotate - vRotate;
             temp[j] = newBullet.transform;
@@ -158,9 +159,10 @@ public class BulletManager : MonoBehaviour
             {
                 if (isActive[i] && bullets[i].activeSelf)
                 {
-                    isActive[i] = circleCast(bullets[i], bullets[i].transform.position, 0.3f, srs[i], pss[i]);
+                    isActive[i] = circleCast(bullets[i],bullets[i].transform.position,previous[i],0.3f,srs[i],pss[i]);
                     length = (isActive[i] == false ? length - 1 : length);
                 }
+                previous[i] = bullets[i].transform.position;
             }
         }
         if(length > 0)
@@ -195,6 +197,7 @@ public class BulletManager : MonoBehaviour
         currentBulletAmount += count;
         Transform[] temp = new Transform[count];
         JobHandle PositionJobHandle;
+        Vector2[] previous = new Vector2[count];
         NativeArray<float> angles = new NativeArray<float>(count, Allocator.Persistent);
         NativeArray<float> speeds = new NativeArray<float>(count, Allocator.Persistent);
         NativeArray<bool> isActive = new NativeArray<bool>(count, Allocator.Persistent);
@@ -210,6 +213,7 @@ public class BulletManager : MonoBehaviour
             angles[i] = ((spreadMode == true? UnityEngine.Random.Range(-angle / 2, angle / 2) : Mathf.Lerp(-angle/2,angle/2, (float)i/(float)(count - 1))) + quaternion) * Mathf.Deg2Rad;
             speeds[i] = speed + (spreadMode == true ? UnityEngine.Random.Range(-0.1f*speed, 0.1f*speed) : 0);
             temp[i] = newBullet.transform;
+            previous[i] = temp[i].position;
             isActive[i] = true;
         }
         TransformAccessArray transforms = new TransformAccessArray(temp);
@@ -230,9 +234,10 @@ public class BulletManager : MonoBehaviour
             {
                 if (isActive[i] && bullets[i].activeSelf)
                 {
-                    isActive[i] = circleCast(bullets[i], bullets[i].transform.position, 0.3f, srs[i], pss[i]);
+                    isActive[i] = circleCast(bullets[i], bullets[i].transform.position, previous[i], 0.3f, srs[i], pss[i]);
                     tempCount = (isActive[i] == false ? tempCount - 1 : tempCount);
                 }
+                previous[i] = bullets[i].transform.position;
             }
         }
         isActive.Dispose();
@@ -241,18 +246,28 @@ public class BulletManager : MonoBehaviour
         angles.Dispose();
     }
 
-    bool circleCast(GameObject go ,Vector2 pos, float radius, SpriteRenderer sr, ParticleSystem ps)
+    bool circleCast(GameObject go ,Vector2 pos, Vector2 previous, float radius, SpriteRenderer sr, ParticleSystem ps)
     {
-        RaycastHit2D hit = Physics2D.CircleCast(pos, radius, Vector2.zero, 0, 1 << 8);
-        if (hit.collider != null)
-        {
-            //go.SetActive(false);
-            StartCoroutine(PlayParticle(go,sr,ps));
-            currentBulletAmount = Mathf.Max(currentBulletAmount - 1, 0);
-            return false;
-        }
-        else
+        RaycastHit2D hit = Physics2D.CircleCast(pos, radius, previous - pos, (previous - pos).magnitude, 1 << 8 | 1 << 10);
+        if (hit.collider == null)
             return true;
+        else
+        {
+            if (player.vulnerable == true && hit.collider.gameObject.CompareTag("Player"))
+            {
+                StartCoroutine(player.GetDamage());
+                Debug.Log("hitPlayer");
+            }
+                
+            if (hit.collider.gameObject.CompareTag("Wall"))
+            {
+                StartCoroutine(PlayParticle(go, sr, ps));
+                currentBulletAmount = Mathf.Max(currentBulletAmount - 1, 0);
+                return false;
+            }
+            else
+                return true;
+        }
     }
 
     public IEnumerator PlayParticle(GameObject go,SpriteRenderer sr, ParticleSystem ps)

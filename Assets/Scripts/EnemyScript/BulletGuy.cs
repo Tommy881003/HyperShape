@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class BulletGuy : Enemy
 {
+    protected static int changeRotation = 0;
     protected float rotateSeed;
     protected float speedSeed;
     protected float originalSpeed;
@@ -29,6 +30,8 @@ public class BulletGuy : Enemy
         current = 0;
         pattern = new int[atkPatternLen];
         PatternShuffle();
+        if (parentLevel != null)
+            this.gameObject.SetActive(false);
     }
 
     public void attack1()
@@ -58,6 +61,7 @@ public class BulletGuy : Enemy
         rb.velocity = Vector2.zero;
         if(hitTarget == false)
         {
+            changeRotation += 15;
             sr.color = Color.white;
             sr.DOColor(Color.red, 0.5f);
             enemyTransform.DOShakePosition(0.5f,0.5f);
@@ -93,13 +97,15 @@ public class BulletGuy : Enemy
             {
                 hitTarget = true;
                 shockwave.Play();
+                if (player.vulnerable == true)
+                    StartCoroutine(player.GetDamage());
             }
         }
         else if (collision.gameObject.CompareTag("Wall") && isAttacking)
         {
             hitTarget = true;
             shockwave.Play();
-            manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.identity));
+            manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0,0,changeRotation)));
         }
     }
 

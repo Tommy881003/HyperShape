@@ -15,13 +15,14 @@ public class testscript : Enemy
         current = 0;
         pattern = new int[atkPatternLen];
         PatternShuffle();
+        if (parentLevel != null)
+            this.gameObject.SetActive(false);
     }
 
     public void attack1()
     {
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
-        manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
-        //manager.StartCoroutine(manager.SpawnOneShot("Enemy_Cicle",5,45,15,true,this.transform.position, angle));
+        manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0,0,angle)));
     }
 
     protected override void Follow()
@@ -37,16 +38,6 @@ public class testscript : Enemy
                 destination.enabled = false;
             }
             rb.velocity = (playerTransform.position - enemyTransform.position).normalized * speed;
-            Vector3 from = enemyTransform.transform.up;
-            Vector3 to = enemyTransform.transform.position - playerTransform.transform.position;
-            enemyTransform.transform.up = Vector3.Lerp(from, to, 0.05f);
         }
     }
-
-    protected override void OnDead()
-    {
-        Debug.Log("The OnDead method is overrided");
-        Destroy(this.gameObject);
-    }
-
 }

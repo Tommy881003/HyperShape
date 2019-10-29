@@ -58,7 +58,9 @@ public class BulletArray : ScriptableObject
             if (bulletDictionary[s] == null)
                 bulletDictionary.Remove(s);
         }
+#if UNITY_EDITOR
         EditorUtility.SetDirty(this);
+#endif
     }
     private void OnDestroy()
     {

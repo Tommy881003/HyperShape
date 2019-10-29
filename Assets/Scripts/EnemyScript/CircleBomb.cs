@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class CircleBomb : Enemy
 {
+    protected static float changeRotation = 0; 
     private BulletManager manager;
     public BulletPattern diePattern;
     private CircleCollider2D cc;
@@ -26,6 +27,8 @@ public class CircleBomb : Enemy
         current = 0;
         pattern = new int[atkPatternLen];
         PatternShuffle();
+        if (parentLevel != null)
+            this.gameObject.SetActive(false);
     }
 
     public void attack1()
@@ -40,7 +43,7 @@ public class CircleBomb : Enemy
             base.Follow();
         else
         {
-            if (raycast.distance < 2)
+            if (raycast.distance < 4)
             {
                 OnDead();
                 this.enabled = false;
@@ -65,6 +68,7 @@ public class CircleBomb : Enemy
 
     protected IEnumerator Suicide()
     {
+        rb.mass = 10000;
         this.enabled = false;
         rb.velocity = Vector2.zero;
         cc.enabled = false;
@@ -77,7 +81,13 @@ public class CircleBomb : Enemy
         sr.enabled = false;
         float dieTime = dieParticle.main.duration;
         dieParticle.Play();
-        manager.StartCoroutine(manager.SpawnPattern(diePattern, this.transform.position, Quaternion.identity));
+        manager.StartCoroutine(manager.SpawnPattern(diePattern, this.transform.position, Quaternion.Euler(0,0,changeRotation)));
+        changeRotation += 22.5f;
+        if (parentLevel != null && m_MyEvent != null)
+        {
+            m_MyEvent.Invoke();
+            m_MyEvent.RemoveAllListeners();
+        }
         yield return new WaitForSeconds(dieTime);
         Destroy(this.gameObject);
     }

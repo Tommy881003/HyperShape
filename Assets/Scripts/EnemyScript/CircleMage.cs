@@ -6,16 +6,19 @@ using DG.Tweening;
 public class CircleMage : Enemy
 {
     private BulletManager manager;
-    public BulletPattern pattern1;
+    public BulletPattern pattern1,pattern2;
     protected override void Start()
     {
         base.Start();
         manager = BulletManager.instance;
         Attacks.Add(attack1);
+        Attacks.Add(attack2);
         atkPatternLen = Attacks.Count;
         current = 0;
         pattern = new int[atkPatternLen];
         PatternShuffle();
+        if (parentLevel != null)
+            this.gameObject.SetActive(false);
     }
 
     public void attack1()
@@ -25,12 +28,22 @@ public class CircleMage : Enemy
 
     IEnumerator forAttack1()
     {
+        Color originalColor = sr.color;
         isAttacking = true;
-        rb.mass = 1000;
+        rb.mass = 10000;
+        sr.DOColor(Color.white, 0.75f);
+        enemyTransform.DOShakePosition(0.75f, 0.5f, 15);
+        yield return new WaitForSeconds(0.75f);
+        sr.DOColor(originalColor, 0.5f);
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
         for (int i = 0; i < 20; i++)
         {
             float newAngle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
+            if(Mathf.Abs(angle - newAngle) > 180)
+            {
+                angle = (angle < 0 ? angle + 360 : angle);
+                newAngle = (newAngle < 0 ? newAngle + 360 : newAngle);
+            }
             angle = Mathf.Lerp(angle, newAngle, 0.3f);
             manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
             yield return new WaitForSeconds(0.05f);
@@ -39,25 +52,30 @@ public class CircleMage : Enemy
         rb.mass = 1;
     }
 
-    /*public void attack2()
+    public void attack2()
     {
-        float distance = UnityEngine.Random.Range(10, 15);
+        StartCoroutine(forAttack2());
     }
 
-    IEnumerator forattack2()
+    IEnumerator forAttack2()
     {
-        timer = 1;
+        Color originalColor = sr.color;
         isAttacking = true;
-        Vector3 originalScale = enemyTransform.localScale;
-        enemyTransform.DOScale(Vector3.zero, 0.5f);
-        yield return new WaitForSeconds(1);
-        float distance = UnityEngine.Random.Range(10, 15);
-        for(int i = 0; i < 24; i++)
+        rb.mass = 10000;
+        sr.DOColor(Color.white, 0.75f);
+        enemyTransform.DOShakePosition(0.75f, 0.5f,15);
+        yield return new WaitForSeconds(0.75f);
+        sr.DOColor(originalColor, 0.5f);
+        rb.mass = 10000;
+        for (int i = 0; i < 5; i++)
         {
-            Vector3 dis = distance * new Vector3(Mathf.Cos(i * 15 * Mathf.Deg2Rad), Mathf.Sin(i * 15 * Mathf.Deg2Rad));
-            RaycastHit2D raycast = Physics2D.CircleCast(playerTransform.position, 1f, playerTransform.position - enemyTransform.position, float.PositiveInfinity, 1 << 8 | 1 << 9);
+            float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
+            manager.StartCoroutine(manager.SpawnPattern(pattern2, this.transform.position, Quaternion.Euler(0, 0, angle)));
+            yield return new WaitForSeconds(0.4f);
         }
-    }*/
+        isAttacking = false;
+        rb.mass = 1;
+    }
 
     protected override void Follow()
     {

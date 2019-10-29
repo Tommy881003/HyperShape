@@ -9,8 +9,10 @@ public class LevelEditor : Editor
     private Level level;
     private GameObject[] tiles, monsters;
     private string[] tileNames, monsterNames, categories = {"None", "Tiles", "Monsters"};
+    private string[] waves = new string[] {"Wave1","Wave2","Wave3","Wave4"};
 
-    private int category = 0, preCate = 0, index = 0, degree = 0;
+    private int category = 0, preCate = 0, index = 0, degree = 0, wave = 1;
+    private int[] value = new int[] { 1, 2, 3, 4 };
     private GameObject selectedPrefab;
 
     private void OnEnable()
@@ -20,6 +22,7 @@ public class LevelEditor : Editor
         preCate = 0;
         index = 0;
         degree = 0;
+        wave = 1;
         selectedPrefab = null;
         tiles = Resources.LoadAll<GameObject>("Prefab(LE)/Tiles");
         monsters = Resources.LoadAll<GameObject>("Prefab(LE)/Monsters");
@@ -102,8 +105,13 @@ public class LevelEditor : Editor
         GUILayout.EndHorizontal();
         string boxstr = "Level Edit Mode : " + ((selectedPrefab == null) ? "No prefab selected" : selectedPrefab.name);
         GUILayout.Box(boxstr);
-        string rotatestr = "Rotation : " + degree;
-        GUILayout.Box(rotatestr);
+        if(category == 1)
+        {
+            string rotatestr = "Rotation : " + degree;
+            GUILayout.Box(rotatestr);
+        }
+        else if(category == 2)
+            wave = EditorGUILayout.IntPopup("Wave", wave, waves, value);
         GUILayout.EndArea();
         /*此段以上負責生成SceneGUI*/
 
@@ -123,13 +131,14 @@ public class LevelEditor : Editor
                 if (obj.position == gridPosition)
                 {
                     pointed = obj;
+                    break;
                 }
             }
         }
 
-        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Z)
+        if (category == 1 && Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.Z)
             degree = (degree == 0 ? 270 : degree - 90);
-        if (Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.C)
+        if (category == 1 && Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.C)
             degree = (degree == 270 ? 0 : degree + 90);
 
         if (pointed == null && Event.current.type == EventType.MouseDown && Event.current.button == 0 && selectedPrefab != null) //滑鼠左鍵點擊生成
@@ -141,8 +150,27 @@ public class LevelEditor : Editor
                 newObject.transform.SetParent(level.obstacle.transform);
                 newObject.transform.rotation = Quaternion.Euler(0, 0, degree);
             }
-            else
+            else if (category == 2)
+            {
                 newObject.transform.SetParent(level.enemy.transform);
+                switch (wave)
+                {
+                    case 1:
+                        level.waveOne.Add(newObject.GetComponent<Enemy>());
+                        break;
+                    case 2:
+                        level.waveTwo.Add(newObject.GetComponent<Enemy>());
+                        break;
+                    case 3:
+                        level.waveThree.Add(newObject.GetComponent<Enemy>());
+                        break;
+                    case 4:
+                        level.waveFour.Add(newObject.GetComponent<Enemy>());
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
         else if (Event.current.type == EventType.MouseDown && Event.current.button == 1) //滑鼠右鍵點擊退出生成
         {
@@ -150,7 +178,57 @@ public class LevelEditor : Editor
             selectedPrefab = null;
         }
         else if (pointed != null && Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.X) //按X把滑鼠指到的東西刪掉(如果有指到東西的話)
+        {
+            if(category == 2)
+            {
+                switch (wave)
+                {
+                    case 1:
+                        level.waveOne.Remove(pointed.gameObject.GetComponent<Enemy>());
+                        break;
+                    case 2:
+                        level.waveTwo.Add(pointed.gameObject.GetComponent<Enemy>());
+                        break;
+                    case 3:
+                        level.waveThree.Add(pointed.gameObject.GetComponent<Enemy>());
+                        break;
+                    case 4:
+                        level.waveFour.Add(pointed.gameObject.GetComponent<Enemy>());
+                        break;
+                    default:
+                        break;
+                }
+            }
             DestroyImmediate(pointed.gameObject);
+        }
+
+        if(category == 2)
+        {
+            List<Enemy> newList = new List<Enemy>();
+            switch (wave)
+            {
+                case 1:
+                    newList = level.waveOne;
+                    break;
+                case 2:
+                    newList = level.waveTwo;
+                    break;
+                case 3:
+                    newList = level.waveThree;
+                    break;
+                case 4:
+                    newList = level.waveFour;
+                    break;
+                default:
+                    break;
+            }
+            if (newList.Count != 0)
+            {
+                for (int i = 0; i < newList.Count; i++)
+                    DrawCircle(newList[i].gameObject.transform.position);
+            }
+        }
+            
             
         /*此段以上負責在Scene內生成Prefab*/
 
@@ -187,5 +265,10 @@ public class LevelEditor : Editor
             new Vector3(posX + halfX, posY + halfY, 0)
         };
         Handles.DrawSolidRectangleWithOutline(verts, new Color(color.r, color.g, color.b, 0.1f), color);
+    }
+
+    void DrawCircle(Vector2 pos)
+    {
+        Handles.DrawSolidDisc(pos, Vector3.back, 0.35f);
     }
 }
