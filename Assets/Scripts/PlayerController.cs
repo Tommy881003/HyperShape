@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         life = maxLife;
         heart = HeartContainer.instance;
         heart.ShowHeart(true);
-        this.enabled = false;
+        //this.enabled = false;
     }
 
     // Update is called once per frame

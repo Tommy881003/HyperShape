@@ -46,14 +46,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f145571f720744242a51c4cfad313ba0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  info: {fileID: 0}
   map: {fileID: 7668619864701610613}
   enemy: {fileID: 9053186539961933313}
   obstacle: {fileID: 2881288062894005770}
+  WaveNum: 0
+  currentWaveNum: 0
   X: 1
   Y: 1
   directions: []
   PosInArray: {x: -1, y: -1}
   connection: 0
+  waveOne: []
+  waveTwo: []
+  waveThree: []
+  waveFour: []
+  enemyNum: 0
+  maxEnemyNum: 0
 --- !u!1 &2881288062894005770
 GameObject:
   m_ObjectHideFlags: 0

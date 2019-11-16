@@ -117,6 +117,7 @@ public class BulletManager : MonoBehaviour
             newBullet.transform.position = new Vector2(spawn.position.magnitude * Mathf.Cos(newRotate), spawn.position.magnitude * Mathf.Sin(newRotate)) + pos;
             newBullet.SetActive(true);
             bullets.Add(newBullet);
+            bulletDictionary[spawn.name].Enqueue(newBullet);
             srs.Add(newBullet.GetComponent<SpriteRenderer>());
             pss.Add(newBullet.GetComponent<ParticleSystem>());
             previous[j] = newBullet.transform.position;
@@ -133,7 +134,7 @@ public class BulletManager : MonoBehaviour
         pattern.velocity.postWrapMode = WrapMode.Loop;
         pattern.rotation.postWrapMode = WrapMode.Loop;
         pattern.scale.postWrapMode = WrapMode.Loop;
-        while (timer <= 10)
+        while (timer <= pattern.scale.keys[pattern.scale.length - 1].time)
         {
             if (length == 0)
                 break; 
@@ -171,8 +172,7 @@ public class BulletManager : MonoBehaviour
             {
                 if (bullets[i].activeSelf)
                 {
-                    bullets[i].SetActive(false);
-                    bulletDictionary[bullets[i].name].Enqueue(bullets[i]);
+                    StartCoroutine(PlayParticle(bullets[i], srs[i], pss[i]));
                     currentBulletAmount = Mathf.Max(currentBulletAmount - 1, 0);
                 }
             }
@@ -218,7 +218,8 @@ public class BulletManager : MonoBehaviour
         }
         TransformAccessArray transforms = new TransformAccessArray(temp);
         int tempCount = count;
-        while (tempCount > 0)
+        float timer = 0;
+        while (tempCount > 0 && timer <= 10)
         {
             PositionUpdateJob m_Job = new PositionUpdateJob()
             {
@@ -239,6 +240,15 @@ public class BulletManager : MonoBehaviour
                 }
                 previous[i] = bullets[i].transform.position;
             }
+            timer += Time.deltaTime;
+        }
+        if (tempCount > 0)
+        {
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                if (bullets[i].activeSelf)
+                    bullets[i].SetActive(false);
+            }
         }
         isActive.Dispose();
         transforms.Dispose();
@@ -254,10 +264,7 @@ public class BulletManager : MonoBehaviour
         else
         {
             if (player.vulnerable == true && hit.collider.gameObject.CompareTag("Player"))
-            {
                 StartCoroutine(player.GetDamage());
-                Debug.Log("hitPlayer");
-            }
                 
             if (hit.collider.gameObject.CompareTag("Wall"))
             {
@@ -272,10 +279,13 @@ public class BulletManager : MonoBehaviour
 
     public IEnumerator PlayParticle(GameObject go,SpriteRenderer sr, ParticleSystem ps)
     {
+        foreach (Transform child in go.transform)
+            child.gameObject.SetActive(false);
         if(sr.isVisible == false)
         {
+            foreach (Transform child in go.transform)
+                child.gameObject.SetActive(true);
             go.SetActive(false);
-            bulletDictionary[go.name].Enqueue(go);
             yield break;
         }
         sr.enabled = false;
@@ -283,7 +293,8 @@ public class BulletManager : MonoBehaviour
         float time = ps.main.duration;
         yield return new WaitForSeconds(time);
         sr.enabled = true;
+        foreach (Transform child in go.transform)
+            child.gameObject.SetActive(true);
         go.SetActive(false);
-        bulletDictionary[go.name].Enqueue(go);
     }
 }

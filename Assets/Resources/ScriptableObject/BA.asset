@@ -20,9 +20,15 @@ MonoBehaviour:
   - gameObject: {fileID: 4463068735855389471, guid: a522eb659c16a9f4e8c34522a8815b7b,
       type: 3}
     size: 500
-  - gameObject: {fileID: 3929027194407862028, guid: a5938cb0afadbef4eac99f0755fd4b0e,
-      type: 3}
-    size: 500
   - gameObject: {fileID: 5060108363126641103, guid: 10ed66d691d03c4429de351154fccba0,
       type: 3}
     size: 500
+  - gameObject: {fileID: 1600338653811337236, guid: 4cff5aa53137c8b4dbebc8a8e8e5d312,
+      type: 3}
+    size: 500
+  - gameObject: {fileID: 6869921920141530078, guid: ae810868be9686c4397d85203d804e36,
+      type: 3}
+    size: 1000
+  - gameObject: {fileID: 6223268553986275644, guid: cdb85df73120672408539cbd61494baa,
+      type: 3}
+    size: 1000

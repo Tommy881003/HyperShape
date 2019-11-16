@@ -1,0 +1,343 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d373a4e34540b784f8a1f1dac2ec79e8, type: 3}
+  m_Name: Unlocker_Ring
+  m_EditorClassIdentifier: 
+  vRotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
+  velocity:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
+  rotation:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
+  scale:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 5
+      outSlope: 5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 50
+      inSlope: 5
+      outSlope: 5
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 1
+    m_RotationOrder: 4
+  spawns:
+  - name: Boss_Square
+    position: {x: 3.4999664, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: 2.799973, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: 2.0999799, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: 1.3999865, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: 0.69999325, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: 0, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: -0.69999343, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: -1.3999865, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: -2.0999799, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: -2.799973, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: -3.4999664, y: 3.4999664}
+  - name: Boss_Square
+    position: {x: -3.4999664, y: 2.7999732}
+  - name: Boss_Square
+    position: {x: -3.4999664, y: 2.0999799}
+  - name: Boss_Square
+    position: {x: -3.4999664, y: 1.3999866}
+  - name: Boss_Square
+    position: {x: -3.4999664, y: 0.69999343}
+  - name: Boss_Square
+    position: {x: -3.4999666, y: 0.00000023841858}
+  - name: Boss_Square
+    position: {x: -3.4999666, y: -0.69999313}
+  - name: Boss_Square
+    position: {x: -3.4999666, y: -1.3999861}
+  - name: Boss_Square
+    position: {x: -3.4999666, y: -2.0999796}
+  - name: Boss_Square
+    position: {x: -3.4999666, y: -2.7999725}
+  - name: Boss_Square
+    position: {x: -3.4999666, y: -3.499966}
+  - name: Boss_Square
+    position: {x: -2.7999735, y: -3.499966}
+  - name: Boss_Square
+    position: {x: -2.09998, y: -3.4999661}
+  - name: Boss_Square
+    position: {x: -1.3999869, y: -3.4999661}
+  - name: Boss_Square
+    position: {x: -0.69999367, y: -3.4999664}
+  - name: Boss_Square
+    position: {x: -0.00000047683716, y: -3.4999664}
+  - name: Boss_Square
+    position: {x: 0.6999929, y: -3.4999664}
+  - name: Boss_Square
+    position: {x: 1.3999859, y: -3.4999666}
+  - name: Boss_Square
+    position: {x: 2.0999794, y: -3.4999666}
+  - name: Boss_Square
+    position: {x: 2.7999723, y: -3.4999669}
+  - name: Boss_Square
+    position: {x: 3.4999657, y: -3.4999669}
+  - name: Boss_Square
+    position: {x: 3.4999657, y: -2.7999735}
+  - name: Boss_Square
+    position: {x: 3.499966, y: -2.09998}
+  - name: Boss_Square
+    position: {x: 3.499966, y: -1.3999869}
+  - name: Boss_Square
+    position: {x: 3.499966, y: -0.69999355}
+  - name: Boss_Square
+    position: {x: 3.4999661, y: -0.00000023841858}
+  - name: Boss_Square
+    position: {x: 3.4999661, y: 0.69999325}
+  - name: Boss_Square
+    position: {x: 3.4999661, y: 1.3999864}
+  - name: Boss_Square
+    position: {x: 3.4999661, y: 2.0999799}
+  - name: Boss_Square
+    position: {x: 3.4999664, y: 2.799973}
+  - name: Boss_Square
+    position: {x: 3.250004, y: 3.250004}
+  - name: Boss_Square
+    position: {x: 2.527781, y: 3.250004}
+  - name: Boss_Square
+    position: {x: 1.8055578, y: 3.250004}
+  - name: Boss_Square
+    position: {x: 1.0833346, y: 3.250004}
+  - name: Boss_Square
+    position: {x: 0.36111155, y: 3.250004}
+  - name: Boss_Square
+    position: {x: -0.36111173, y: 3.250004}
+  - name: Boss_Square
+    position: {x: -1.0833348, y: 3.250004}
+  - name: Boss_Square
+    position: {x: -1.8055578, y: 3.250004}
+  - name: Boss_Square
+    position: {x: -2.527781, y: 3.250004}
+  - name: Boss_Square
+    position: {x: -3.250004, y: 3.250004}
+  - name: Boss_Square
+    position: {x: -3.250004, y: 2.527781}
+  - name: Boss_Square
+    position: {x: -3.250004, y: 1.8055578}
+  - name: Boss_Square
+    position: {x: -3.250004, y: 1.0833347}
+  - name: Boss_Square
+    position: {x: -3.250004, y: 0.36111164}
+  - name: Boss_Square
+    position: {x: -3.2500043, y: -0.3611116}
+  - name: Boss_Square
+    position: {x: -3.2500043, y: -1.0833347}
+  - name: Boss_Square
+    position: {x: -3.2500043, y: -1.8055577}
+  - name: Boss_Square
+    position: {x: -3.2500043, y: -2.5277808}
+  - name: Boss_Square
+    position: {x: -3.2500043, y: -3.2500038}
+  - name: Boss_Square
+    position: {x: -2.5277812, y: -3.2500038}
+  - name: Boss_Square
+    position: {x: -1.8055581, y: -3.250004}
+  - name: Boss_Square
+    position: {x: -1.0833349, y: -3.250004}
+  - name: Boss_Square
+    position: {x: -0.36111188, y: -3.2500043}
+  - name: Boss_Square
+    position: {x: 0.36111137, y: -3.2500043}
+  - name: Boss_Square
+    position: {x: 1.0833344, y: -3.2500045}
+  - name: Boss_Square
+    position: {x: 1.8055575, y: -3.2500045}
+  - name: Boss_Square
+    position: {x: 2.5277805, y: -3.2500048}
+  - name: Boss_Square
+    position: {x: 3.2500036, y: -3.2500048}
+  - name: Boss_Square
+    position: {x: 3.2500036, y: -2.5277815}
+  - name: Boss_Square
+    position: {x: 3.2500036, y: -1.8055583}
+  - name: Boss_Square
+    position: {x: 3.2500038, y: -1.083335}
+  - name: Boss_Square
+    position: {x: 3.2500038, y: -0.36111194}
+  - name: Boss_Square
+    position: {x: 3.2500038, y: 0.3611114}
+  - name: Boss_Square
+    position: {x: 3.2500038, y: 1.0833346}
+  - name: Boss_Square
+    position: {x: 3.250004, y: 1.8055577}
+  - name: Boss_Square
+    position: {x: 3.250004, y: 2.527781}
+  - name: Boss_Square
+    position: {x: 2.9999712, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: 2.399977, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: 1.7999827, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: 1.1999884, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: 0.5999942, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: 0, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: -0.59999436, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: -1.1999884, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: -1.7999828, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: -2.3999767, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: -2.9999712, y: 2.9999712}
+  - name: Boss_Square
+    position: {x: -2.9999712, y: 2.399977}
+  - name: Boss_Square
+    position: {x: -2.9999712, y: 1.7999827}
+  - name: Boss_Square
+    position: {x: -2.9999712, y: 1.1999885}
+  - name: Boss_Square
+    position: {x: -2.9999712, y: 0.5999943}
+  - name: Boss_Square
+    position: {x: -2.9999714, y: 0.00000011920929}
+  - name: Boss_Square
+    position: {x: -2.9999714, y: -0.59999424}
+  - name: Boss_Square
+    position: {x: -2.9999714, y: -1.1999882}
+  - name: Boss_Square
+    position: {x: -2.9999714, y: -1.7999825}
+  - name: Boss_Square
+    position: {x: -2.9999714, y: -2.3999765}
+  - name: Boss_Square
+    position: {x: -2.9999714, y: -2.999971}
+  - name: Boss_Square
+    position: {x: -2.3999772, y: -2.999971}
+  - name: Boss_Square
+    position: {x: -1.7999829, y: -2.9999712}
+  - name: Boss_Square
+    position: {x: -1.1999887, y: -2.9999712}
+  - name: Boss_Square
+    position: {x: -0.59999454, y: -2.9999712}
+  - name: Boss_Square
+    position: {x: -0.00000035762787, y: -2.9999714}
+  - name: Boss_Square
+    position: {x: 0.599994, y: -2.9999714}
+  - name: Boss_Square
+    position: {x: 1.199988, y: -2.9999714}
+  - name: Boss_Square
+    position: {x: 1.7999823, y: -2.9999714}
+  - name: Boss_Square
+    position: {x: 2.3999763, y: -2.9999716}
+  - name: Boss_Square
+    position: {x: 2.9999707, y: -2.9999716}
+  - name: Boss_Square
+    position: {x: 2.9999707, y: -2.3999774}
+  - name: Boss_Square
+    position: {x: 2.9999707, y: -1.799983}
+  - name: Boss_Square
+    position: {x: 2.999971, y: -1.1999887}
+  - name: Boss_Square
+    position: {x: 2.999971, y: -0.5999945}
+  - name: Boss_Square
+    position: {x: 2.999971, y: -0.00000023841858}
+  - name: Boss_Square
+    position: {x: 2.999971, y: 0.5999942}
+  - name: Boss_Square
+    position: {x: 2.999971, y: 1.1999882}
+  - name: Boss_Square
+    position: {x: 2.9999712, y: 1.7999827}
+  - name: Boss_Square
+    position: {x: 2.9999712, y: 2.3999767}

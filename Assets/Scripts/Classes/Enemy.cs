@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     protected Level parentLevel = null;
     protected UnityEvent m_MyEvent = new UnityEvent();
 
-    [SerializeField,Header("生命值"),Range(1,1000)]
+    [SerializeField,Header("生命值"),Range(1,10000)]
     protected int hp = 50;
     [SerializeField, Header("速度"), Range(1, 100)]
     protected float speed;
@@ -200,7 +200,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if(isAttacking == false)
         {
