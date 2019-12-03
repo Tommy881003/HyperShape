@@ -436,13 +436,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45462098}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 11f41de2ca23c4d48ab8f8eb44bc6121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  controller: {fileID: 0}
+  isCutScene: 0
   lerp: 0.1
+  mousePlayerLerp: 5
 --- !u!1 &89215879
 GameObject:
   m_ObjectHideFlags: 0
@@ -5271,7 +5274,7 @@ Transform:
   m_Children:
   - {fileID: 360768040}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &120903281
 GameObject:
@@ -15192,13 +15195,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112958c946be4864ca9ada6684a98186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerTransform: {fileID: 0}
-  enemyTransform: {fileID: 0}
+  wave: 0
+  maxHp: 0
   hp: 50
+  speed: 0
   coolDown: 2
-  timer: 0
-  atkPatternLen: 0
+  shuffle: 0
   pattern1: {fileID: 11400000, guid: 360770af0effb734fb82c6268d8102b9, type: 2}
 --- !u!4 &581235781
 Transform:
@@ -15280,6 +15282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d6bb42a01bb0e47a5e61079e2ab3ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   currentBulletAmount: 0
 --- !u!4 &715225968
 Transform:
@@ -25451,7 +25454,7 @@ Transform:
   - {fileID: 1302655602}
   - {fileID: 1274863578}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1363126960
 MonoBehaviour:
@@ -25831,13 +25834,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 112958c946be4864ca9ada6684a98186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerTransform: {fileID: 0}
-  enemyTransform: {fileID: 0}
+  wave: 0
+  maxHp: 0
   hp: 50
+  speed: 0
   coolDown: 2
-  timer: 0
-  atkPatternLen: 0
+  shuffle: 0
   pattern1: {fileID: 11400000, guid: 360770af0effb734fb82c6268d8102b9, type: 2}
 --- !u!4 &1559393550
 Transform:
@@ -30910,7 +30912,7 @@ Transform:
   m_Children:
   - {fileID: 1743656511}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1723775257
 MonoBehaviour:
@@ -30924,13 +30926,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 406b4ae376e0d60439e4d505b5c78a49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerTransform: {fileID: 0}
-  enemyTransform: {fileID: 0}
+  wave: 0
+  maxHp: 0
   hp: 50
+  speed: 0
   coolDown: 4
-  timer: 0
-  atkPatternLen: 0
+  shuffle: 0
 --- !u!1 &1743656510
 GameObject:
   m_ObjectHideFlags: 0
@@ -31342,6 +31343,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7204619378978570508, guid: 66b37b3031434274192696e91f8064b7,
         type: 3}
       propertyPath: m_Name

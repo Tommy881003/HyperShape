@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sr;
     private HeartContainer heart;
 
-    private bool isShifting = false, canShift = true, canShoot = true;
+    [HideInInspector]
+    public bool isShifting = false, canShift = true, canShoot = true;
     [HideInInspector]
     public bool isBattling = false;
     [HideInInspector]
@@ -56,19 +57,18 @@ public class PlayerController : MonoBehaviour
         selectedWeapon = this.GetComponentInChildren<Weapon>();
         life = maxLife;
         heart = HeartContainer.instance;
-        heart.ShowHeart(true);
+        heart.ShowHeart(true,this);
         //this.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        /*if (Input.GetKeyDown(KeyCode.R))
-            Special();*/
-        if (Input.GetMouseButton(0) && canShoot)
-            Attack();
-        /*if (Input.mouseScrollDelta.y != 0)
-            ChangeWeapon(Input.mouseScrollDelta.y);*/
+        if (follower.isCutScene)
+        {
+            rb.velocity = Vector2.zero;
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Space) && canShift)
             StartCoroutine(Shift());
         if (isShifting == false)
@@ -76,65 +76,6 @@ public class PlayerController : MonoBehaviour
         player.transform.localScale = new Vector3(1 + 0.05f * (rb.velocity.magnitude / speed), 1 - 0.05f * (rb.velocity.magnitude / speed), 1);
         player.transform.rotation = Quaternion.Euler(0, 0, (rb.velocity.y < 0 ? -Vector2.Angle(Vector2.right, rb.velocity) : Vector2.Angle(Vector2.right, rb.velocity)));
     }
-
-    /*private void LateUpdate()
-    {
-        if (satellites.Count == 0)
-            return;
-        int i = 0;
-        float pi = Mathf.PI;
-        float dis = 2f + 0.5f * Mathf.Cos(pi * Time.time * 0.7f);
-        float followStr = 0.15f + 0.1f * Mathf.Sin(pi * Time.time * 0.7f);
-        float phase = (360 / satellites.Count) * Mathf.Deg2Rad;
-        foreach (GameObject satellite in satellites)
-        {
-            Vector3 followPosition = player.transform.position + new Vector3(dis * Mathf.Cos(pi * Time.time + i * phase), dis * Mathf.Sin(pi * Time.time + i * phase), 0);
-            satellite.transform.position = Vector3.Lerp(satellite.transform.position, followPosition, followStr);
-            i++;
-        }
-    }
-
-    public void AddSatellite(GameObject satellite)
-    {
-        if(satellites.Count > 0)
-            weapons.ElementAt(currentSatIndex).SwitchOut();
-        GameObject newGO = Instantiate(satellite, player.transform.position, Quaternion.identity, carrier.transform);
-        satellites.AddLast(newGO);
-        weapons.AddLast(newGO.GetComponent<Weapon>());
-        currentSatIndex = satellites.Count - 1;
-    }*/
-
-    private void Attack()
-    {
-        selectedWeapon.Attack();
-    }
-
-    /*private void ChangeWeapon(float scroll)
-    {
-        if(satellites.Count <= 1)
-            return;
-        weapons.ElementAt(currentSatIndex).SwitchOut();
-        if (scroll > 0)
-            currentSatIndex = (currentSatIndex == 0 ? satellites.Count - 1 : currentSatIndex - 1);
-        else
-            currentSatIndex = (currentSatIndex == satellites.Count - 1 ? 0 : currentSatIndex + 1);
-        weapons.ElementAt(currentSatIndex).SwitchIn();
-    }
-
-    private void Special()
-    {
-        if (satellites.Count == 0)
-            return;
-        weapons.ElementAt(currentSatIndex).Special();
-        satellites.ElementAt(currentSatIndex).transform.parent = null;
-        satellites.Remove(satellites.ElementAt(currentSatIndex));
-        weapons.Remove(weapons.ElementAt(currentSatIndex));
-        currentSatIndex = (currentSatIndex == 0 ? 0 : currentSatIndex - 1);
-        previousSatIndex = -1;
-        if (satellites.Count == 0)
-            return;
-        weapons.ElementAt(currentSatIndex).SwitchIn();
-    }*/
 
     Vector2 Moving()
     {
@@ -177,7 +118,7 @@ public class PlayerController : MonoBehaviour
     {
         StartCoroutine(follower.CamShake(2,0.5f));
         life--;
-        heart.ShowHeart(false);
+        heart.ShowHeart(false,this);
         vulnerable = false;
         float timer = 0;
         float flashTime = 0.1f;

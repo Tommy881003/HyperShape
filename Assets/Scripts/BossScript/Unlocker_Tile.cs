@@ -30,16 +30,23 @@ public class Unlocker_Tile : MonoBehaviour
             StartCoroutine(player.GetDamage());
     }
 
+    public IEnumerator Fade(float time)
+    {
+        sr.DOColor(new Color32(255, 89, 110, 50), time / 2);
+        yield return new WaitForSeconds(time / 2);
+        sr.DOColor(oriColor, time/2);
+    }
+
     public IEnumerator Pop(float warnTime, float PopTime)
     {
         isPoping = true;
-        sr.DOBlendableColor(new Color32(255,89,89,0),0.1f).SetLoops(-1, LoopType.Yoyo);
-        sr.DOFade(0.5f, warnTime);
+        sr.DOBlendableColor(new Color32(255,89,110,0),0.1f).SetLoops(-1, LoopType.Yoyo);
+        sr.DOFade(0.3f, warnTime);
         yield return new WaitForSeconds(warnTime);
         sr.DOKill();
         sr.color = Color.white;
         box.enabled = true;
-        sr.DOColor(new Color32(255, 89, 89, 255), 0.4f);
+        sr.DOColor(new Color32(255, 89, 110, 255), 0.4f);
         sr.gameObject.transform.localScale = 1.4f * scale;
         sr.sortingOrder = 3;
         sr.gameObject.transform.DOScale(scale, 0.4f);

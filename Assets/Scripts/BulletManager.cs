@@ -60,6 +60,7 @@ public class BulletManager : MonoBehaviour
         public Vector3 parentPos;
         public float parentAngle;
         public float scale;
+        public bool rotateWithParent;
 
         public void Execute(int i, TransformAccess transform)
         {
@@ -68,6 +69,8 @@ public class BulletManager : MonoBehaviour
             float newAngle = parentAngle + angles[i];
             Vector3 newDisance = new Vector3(distance[i] * Mathf.Cos(newAngle), distance[i] * Mathf.Sin(newAngle));
             transform.position = parentPos + (newDisance * scale);
+            if (rotateWithParent)
+                transform.rotation = Quaternion.Euler(0, 0, parentAngle * Mathf.Rad2Deg);
         }
     }
 
@@ -90,7 +93,7 @@ public class BulletManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnPattern(BulletPattern pattern, Vector2 pos, Quaternion quaternion)
+    public IEnumerator SpawnPattern(BulletPattern pattern, Vector2 pos, Quaternion quaternion, bool rotateWithParent = false)
     {
         GameObject newDummy = Instantiate(dummy, pos, quaternion);
         Transform parent = newDummy.transform;
@@ -115,6 +118,7 @@ public class BulletManager : MonoBehaviour
             float newRotate = vRotate + Vector2.SignedAngle(Vector2.right,spawn.position) * Mathf.Deg2Rad;
             GameObject newBullet = bulletDictionary[spawn.name].Dequeue();
             newBullet.transform.position = new Vector2(spawn.position.magnitude * Mathf.Cos(newRotate), spawn.position.magnitude * Mathf.Sin(newRotate)) + pos;
+            newBullet.transform.rotation = ((rotateWithParent == true) ? quaternion : Quaternion.Euler(0,0,0));
             newBullet.SetActive(true);
             bullets.Add(newBullet);
             bulletDictionary[spawn.name].Enqueue(newBullet);
@@ -134,7 +138,7 @@ public class BulletManager : MonoBehaviour
         pattern.velocity.postWrapMode = WrapMode.Loop;
         pattern.rotation.postWrapMode = WrapMode.Loop;
         pattern.scale.postWrapMode = WrapMode.Loop;
-        while (timer <= pattern.scale.keys[pattern.scale.length - 1].time)
+        while (timer <= pattern.timer)
         {
             if (length == 0)
                 break; 
@@ -151,6 +155,7 @@ public class BulletManager : MonoBehaviour
                 scale = pattern.scale.Evaluate(timer),
                 parentPos = parent.position,
                 parentAngle = parent.rotation.eulerAngles.z * Mathf.Deg2Rad,
+                rotateWithParent = rotateWithParent,
             };
             PositionJobHandle = m_Job.Schedule(transforms);
             PositionJobHandle.Complete();
@@ -205,6 +210,7 @@ public class BulletManager : MonoBehaviour
         {
             GameObject newBullet = bulletDictionary[bulletName].Dequeue();
             newBullet.transform.position = pos;
+            newBullet.transform.rotation = Quaternion.Euler(0, 0, 0);
             newBullet.SetActive(true);
             bullets.Add(newBullet);
             bulletDictionary[bulletName].Enqueue(newBullet);
@@ -258,7 +264,7 @@ public class BulletManager : MonoBehaviour
 
     bool circleCast(GameObject go ,Vector2 pos, Vector2 previous, float radius, SpriteRenderer sr, ParticleSystem ps)
     {
-        RaycastHit2D hit = Physics2D.CircleCast(pos, radius, previous - pos, (previous - pos).magnitude, 1 << 8 | 1 << 10);
+        RaycastHit2D hit = Physics2D.CircleCast(pos, radius, previous - pos, (previous - pos).magnitude, 1 << 8 | 1 << 10 | 1 << 15);
         if (hit.collider == null)
             return true;
         else
@@ -266,7 +272,7 @@ public class BulletManager : MonoBehaviour
             if (player.vulnerable == true && hit.collider.gameObject.CompareTag("Player"))
                 StartCoroutine(player.GetDamage());
                 
-            if (hit.collider.gameObject.CompareTag("Wall"))
+            if (hit.collider.gameObject.CompareTag("Wall") || hit.collider.gameObject.CompareTag("GhostWall"))
             {
                 StartCoroutine(PlayParticle(go, sr, ps));
                 currentBulletAmount = Mathf.Max(currentBulletAmount - 1, 0);

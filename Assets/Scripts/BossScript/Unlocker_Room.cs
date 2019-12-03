@@ -65,4 +65,10 @@ public class Unlocker_Room : MonoBehaviour
         if (x >= 0 && x < level.X && y >= 0 && y < level.Y)
             StartCoroutine(tiles[x, y].Pop(warnTime, popTime));
     }
+
+    public void DoFade(int x, int y, float time)
+    {
+        if (x >= 0 && x < level.X && y >= 0 && y < level.Y)
+            StartCoroutine(tiles[x, y].Fade(time));
+    }
 }

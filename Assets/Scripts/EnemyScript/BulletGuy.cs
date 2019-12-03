@@ -83,8 +83,9 @@ public class BulletGuy : Enemy
     {
         if (collision.gameObject.CompareTag("PlayerBullet"))
         {
-            Destroy(collision.gameObject);
-            hp -= 10;
+            PlayerBulletInfo info = collision.gameObject.GetComponent<PlayerBulletInfo>();
+            info.StartCoroutine(info.DelayDestroy());
+            hp -= info.damage;
             if (isAttacking)
             {
                 hitTarget = true;

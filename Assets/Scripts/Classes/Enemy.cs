@@ -21,8 +21,9 @@ public class Enemy : MonoBehaviour
     protected Level parentLevel = null;
     protected UnityEvent m_MyEvent = new UnityEvent();
 
+    public float maxHp;
     [SerializeField,Header("生命值"),Range(1,10000)]
-    protected int hp = 50;
+    public float hp = 50;
     [SerializeField, Header("速度"), Range(1, 100)]
     protected float speed;
     [SerializeField, Header("冷卻時間"), Range(0.5f, 20)]
@@ -59,7 +60,7 @@ public class Enemy : MonoBehaviour
         );
     }
 
-    protected void DoNothing()
+    protected virtual void DoNothing()
     {
         if(destination.isActiveAndEnabled)
             destination.enabled = false;
@@ -97,6 +98,9 @@ public class Enemy : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         rb.mass = 10000;
+        Destroy(rb);
+        foreach(Collider2D c in GetComponents<Collider2D>())
+            c.enabled = false;
         destination.enabled = false;
         iPath.enabled = false;
         sr.enabled = false;
@@ -153,6 +157,7 @@ public class Enemy : MonoBehaviour
         destination.target = playerTransform;
         iPath = enemyTransform.gameObject.GetComponent<AIPath>();
         timer = coolDown;
+        maxHp = hp;
         rb.angularDrag = 10000;
         parentLevel = this.GetComponentInParent<Level>();
         if (parentLevel != null)
@@ -213,8 +218,9 @@ public class Enemy : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("PlayerBullet"))
         {
-            Destroy(collision.gameObject);
-            hp -= 10;
+            PlayerBulletInfo info = collision.gameObject.GetComponent<PlayerBulletInfo>();
+            info.StartCoroutine(info.DelayDestroy());
+            hp -= info.damage;
         }
     }
 

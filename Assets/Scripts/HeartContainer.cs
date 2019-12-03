@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class HeartContainer : MonoBehaviour
 {
+    private Image lowHp;
     public Image[] hearts;
     public Sprite empty, half, full;
-    private PlayerController player;
+    public PlayerController player = null;
     public static HeartContainer instance = null;
+    private float alpha = 0;
+    private bool found = false;
     private void Awake()
     {
         if (instance == null)
@@ -19,14 +23,37 @@ public class HeartContainer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        lowHp = GetComponent<Image>();
         player = GameObject.Find("DummyPlayer").GetComponent<PlayerController>();
-        ShowHeart(true);
+        DOTween.To(() => alpha, x => alpha = x, 1f, 0.5f).SetLoops(-1,LoopType.Yoyo);
     }
 
-    public void ShowHeart(bool start)
+    public void Update()
     {
-        int maxLife = player.maxLife;
-        int currentLife = (start ? player.maxLife : player.life);
+        if(player == null)
+            player = GameObject.Find("DummyPlayer").GetComponent<PlayerController>();
+        if (player != null && player.life <= 2)
+        {
+            Color newColor = lowHp.color;
+            newColor.a = alpha;
+            lowHp.color = newColor;
+        }
+    }
+
+    public void ShowHeart(bool start, PlayerController backUp)
+    {
+        int maxLife;
+        int currentLife;
+        if (player == null)
+        {
+            maxLife = backUp.maxLife;
+            currentLife = (start ? backUp.maxLife : backUp.life);
+        }
+        else
+        {
+            maxLife = player.maxLife;
+            currentLife = (start ? player.maxLife : player.life);
+        }
         int heartCount = maxLife / 2;
         int fillHeart = Mathf.CeilToInt((float)currentLife / 2f) - 1;
         int lastHeart = currentLife % 2;

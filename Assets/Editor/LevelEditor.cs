@@ -45,40 +45,6 @@ public class LevelEditor : Editor
         float posX = level.transform.position.x;
         float posY = level.transform.position.y;
         DrawRect(posX, posY, halfX, halfY, Color.red);
-        foreach(Direction dir in level.directions)
-        {
-            switch(dir.direction)
-            {
-                case Direction.DIR.Up:
-                    posX = level.transform.position.x + (4f * dir.position + 2f) - ((float)level.X) * 2f;
-                    posY = level.transform.position.y + ((float)level.Y) * 2f + 0.5f;
-                    halfX = 2f;
-                    halfY = 0.5f;
-                    break;
-                case Direction.DIR.Down:
-                    posX = level.transform.position.x + (4f * dir.position + 2f) - ((float)level.X) * 2f;
-                    posY = level.transform.position.y - ((float)level.Y) * 2f - 0.5f;
-                    halfX = 2f;
-                    halfY = 0.5f;
-                    break;
-                case Direction.DIR.Left:
-                    posX = level.transform.position.x - ((float)level.X) * 2f - 0.5f;
-                    posY = level.transform.position.y - (4f * dir.position + 2f) + ((float)level.Y) * 2f;
-                    halfX = 0.5f;
-                    halfY = 2f;
-                    break;
-                case Direction.DIR.Right:
-                    posX = level.transform.position.x + ((float)level.X) * 2f + 0.5f;
-                    posY = level.transform.position.y - (4f * dir.position + 2f) + ((float)level.Y) * 2f;
-                    halfX = 0.5f;
-                    halfY = 2f;
-                    break;
-                default:
-                    Debug.Log("Error");
-                    break;
-            }
-            DrawRect(posX, posY, halfX, halfY, Color.blue);
-        }
         /*此段以上負責畫關卡邊界*/
 
         GUILayout.BeginArea(new Rect(10, 10, 400, 200));
@@ -245,14 +211,6 @@ public class LevelEditor : Editor
     {
         base.OnInspectorGUI();
         level = (Level)target;
-        foreach (Direction dir in level.directions)
-        {
-            dir.direction = (Direction.DIR)EditorGUILayout.EnumPopup(dir.direction);
-            if (dir.direction == Direction.DIR.Up || dir.direction == Direction.DIR.Down)
-                dir.position = EditorGUILayout.IntSlider(dir.position, 0, level.X - 1);
-            else
-                dir.position = EditorGUILayout.IntSlider(dir.position, 0, level.Y - 1);
-        }
     }
 
     void DrawRect(float posX, float posY, float halfX, float halfY, Color color)
