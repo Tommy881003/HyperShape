@@ -29,7 +29,7 @@ public class ObjAudioManager : MonoBehaviour
             {
                 Clip newClip = new Clip();
                 newClip.name = s.name;
-                newClip.hash = s.hashCode;
+                newClip.hash = s.name.GetHashCode();
                 newClip.isFX = s.isFX;
                 newClip.volume = s.volume;
                 newClip.source = gameObject.AddComponent<AudioSource>();

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: BurstRifle
+  m_Name: Burst Shotgun
   m_EditorClassIdentifier: 
   type: 2
-  bullet: {fileID: 4501925598288199308, guid: 8d24c060201a99e4196b4cccd3d49f4b, type: 3}
-  speed: 45
-  damage: 9
-  count: 1
-  burst_count: 3
-  burst_spacing: 0.05
-  fireRate: 2
-  ammoCapacity: 10
+  bullet: {fileID: 7996625255418922762, guid: 26bcba90e9bb8434ca25213773a36600, type: 3}
+  speed: 35
+  damage: 5
+  count: 5
+  burst_count: 2
+  burst_spacing: 0.2
+  fireRate: 1.25
+  ammoCapacity: 4
   reloadTime: 1
-  spread: 7
-  previous: {fileID: 11400000, guid: 455a588ea7ce83c43840e8755d2b7a54, type: 2}
+  spread: 10
+  upgrades: []

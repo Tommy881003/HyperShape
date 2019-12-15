@@ -40,3 +40,12 @@ MonoBehaviour:
     isFX: 1
     source: {fileID: 0}
     hashCode: -420609004
+  - name: nova
+    clip: {fileID: 8300000, guid: b32ed86ec75f3d44fa6a53f2ee1dfede, type: 3}
+    volume: 1
+    pitch: 1
+    blend: 0
+    loop: 0
+    isFX: 1
+    source: {fileID: 0}
+    hashCode: -420609004

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: SubMachineGun
+  m_Name: Dead Aim
   m_EditorClassIdentifier: 
-  type: 1
-  bullet: {fileID: 9039897374327216766, guid: a11f378ccd42da0468c4c41df28e66db, type: 3}
-  speed: 35
-  damage: 2.75
+  type: 0
+  bullet: {fileID: 3657849925244670343, guid: 27d2dcfa0634c0a43a1ce1872672eea3, type: 3}
+  speed: 150
+  damage: 70
   count: 1
   burst_count: 0
   burst_spacing: 0
-  fireRate: 20
-  ammoCapacity: 30
+  fireRate: 1.5
+  ammoCapacity: 7
   reloadTime: 1
-  spread: 10
-  previous: {fileID: 11400000, guid: 455a588ea7ce83c43840e8755d2b7a54, type: 2}
+  spread: 0
+  upgrades: []

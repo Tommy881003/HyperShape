@@ -26,5 +26,5 @@ public class WeaponInfo : ScriptableObject
     public int ammoCapacity;
     public float reloadTime;
     public float spread;
-    public WeaponInfo previous;
+    public WeaponInfo[] upgrades;
 }

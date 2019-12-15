@@ -16,6 +16,7 @@ public enum WeaponType
 public class PlayerController : MonoBehaviour
 {
     private GameObject player, carrier;
+    public GameObject Nova;
     private Rigidbody2D rb;
     private CircleCollider2D circle;
     private Camera cam;
@@ -23,7 +24,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer sr;
     private HeartContainer heart;
     [SerializeField]
-    private ParticleSystem die = null;
+    private ParticleSystem die = null,nova = null;
     [HideInInspector]
     public bool isShifting = false, canShift = true, canShoot = true;
     [HideInInspector]
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
     public float invincibleTime = 1.5f;
     [HideInInspector]
     public int life;
+    [HideInInspector]
+    public int currentNova = 3;
     public float exp = 0;
     private Weapon selectedWeapon;
     private ObjAudioManager audios;
@@ -68,6 +71,16 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (currentNova > 0 && Input.GetKeyDown(KeyCode.Q))
+        {
+            audios.PlayByName("nova");
+            nova.Play();
+            follower.Nova();
+            currentNova--;
+            GameObject newNova = Instantiate(Nova, player.transform.position, Quaternion.identity);
+            DOTween.To(() => newNova.GetComponent<CircleCollider2D>().radius, x => newNova.GetComponent<CircleCollider2D>().radius = x, 50f, 0.5f);
+            Destroy(newNova, 1);
+        }
         if (follower.isCutScene)
         {
             rb.velocity = Vector2.zero;
@@ -144,13 +157,13 @@ public class PlayerController : MonoBehaviour
         {
             if(timer >= flashTime * i)
             {
-                sr.enabled = !sr.enabled;
+                sr.color = (i % 2 == 0)? Color.clear : Color.white;
                 i++;
             }
             timer += Time.deltaTime;
             yield return null;
         }
-        sr.enabled = true;
+        sr.color = Color.white;
         vulnerable = true;
     }
 }

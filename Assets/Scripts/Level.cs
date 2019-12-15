@@ -21,8 +21,10 @@ public class Level : MonoBehaviour
     public int X, Y;
     [HideInInspector]
     public Vector2Int PosInArray = new Vector2Int(-1, -1);
+    /*[HideInInspector]
+    public int connection = 0;*/
     [HideInInspector]
-    public int connection = 0;
+    public int idxX = -1, idxY = -1;
     public List<Enemy> waveOne = new List<Enemy>(), waveTwo = new List<Enemy>(), waveThree = new List<Enemy>(), waveFour = new List<Enemy>();
     private BoxCollider2D box;
     public int enemyNum = 0;
@@ -30,6 +32,8 @@ public class Level : MonoBehaviour
     private static Gradient gradient = null, battleGrad = null;
     private Gradient now;
     private SceneAudioManager sceneAudio;
+    private bool battled = false;
+    private MiniMap miniMap;
 
     private void Awake()
     {
@@ -49,6 +53,7 @@ public class Level : MonoBehaviour
     void Start()
     {
         sceneAudio = SceneAudioManager.instance;
+        miniMap = MiniMap.instance;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         maxWaveNum = info.maxWaveNum;
         spawnTime = info.spawnTime;
@@ -97,8 +102,10 @@ public class Level : MonoBehaviour
     {
         if(box.enabled == true && collision.gameObject.CompareTag("Player"))
         {
-            box.enabled = false;
-            
+            miniMap.Modify(idxX, idxY);
+            if (battled)
+                return;
+            battled = true;
             if(isBoss)
             {
                 Camera cam = Camera.main;

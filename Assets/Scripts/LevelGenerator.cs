@@ -28,15 +28,18 @@ public class LevelGenerator : MonoBehaviour
     public GeneratingStatus currentStatus = GeneratingStatus.Initiating;
     public GameObject Composite;
     public GameObject StartingPlace;
+    public GameObject Boss;
     public GameObject path;
     private GameObject[] levels, lvToPut;
     private Level[] lvInform;      //儲存lvToPut內的Level class資料
     private Stack<Vector2Int> search = new Stack<Vector2Int>();
     private int minX,minY,maxX,maxY;
+    private MiniMap miniMap;
 
     void Start()
     {
         map = new int[mapX, mapY];
+        miniMap = MiniMap.instance;
         levels = Resources.LoadAll<GameObject>("Prefab(LC)/SubLevels");
         for (int i = 0; i < mapY; i++)
             for (int j = 0; j < mapX; j++)
@@ -60,11 +63,13 @@ public class LevelGenerator : MonoBehaviour
         /*此段以上負責洗牌*/
 
         int lvCount = UnityEngine.Random.Range(minMap, maxMap);
-        lvToPut = new GameObject[lvCount + 1];
-        lvInform = new Level[lvCount + 1];
+        lvToPut = new GameObject[lvCount + 2];
+        lvInform = new Level[lvCount + 2];
         lvToPut[0] = StartingPlace;
         lvInform[0] = StartingPlace.GetComponent<Level>();
-        for (int i = 1; i < lvCount + 1; i ++)
+        lvToPut[1] = Boss;
+        lvInform[1] = Boss.GetComponent<Level>();
+        for (int i = 2; i < lvCount + 2; i ++)
         {
             lvToPut[i] = levels[i];
             lvInform[i] = lvToPut[i].GetComponent<Level>();
@@ -85,6 +90,9 @@ public class LevelGenerator : MonoBehaviour
         int y = 3;
         map[3, 3] = 0;
         lvToPut[0].transform.position = idx2Vec(3, 3);
+        lvInform[0].idxX = 3;
+        lvInform[0].idxY = 3;
+        miniMap.SetUp(3, 3);
         minX = x; maxX = x; minY = y; maxY = y;
         /*第一個被隨機生成的關卡*/
         for (int i = 1; i < len; i ++)
@@ -112,6 +120,9 @@ public class LevelGenerator : MonoBehaviour
                 {
                     lvToPut[i] = Instantiate(lvToPut[i], idx2Vec(tempX, tempY), Quaternion.identity, Composite.transform);
                     lvInform[i] = lvToPut[i].GetComponent<Level>();
+                    lvInform[i].idxX = tempX;
+                    lvInform[i].idxY = tempY;
+                    miniMap.SetUp(tempX, tempY, i == 1);
                     map[tempX, tempY] = i;
                     minX = (minX > tempX ? tempX : minX);
                     minY = (minY > tempY ? tempY : minY);

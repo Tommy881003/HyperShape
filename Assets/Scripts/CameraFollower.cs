@@ -25,6 +25,7 @@ public class CameraFollower : MonoBehaviour
     private GlitchEffect glitch;
     private CRTEffect cRT;
     private SceneAudioManager sceneAudio;
+    private RippleEffect ripple;
 
     private void Awake()
     {
@@ -42,6 +43,7 @@ public class CameraFollower : MonoBehaviour
         originalFrequency = frequency; originalShake = shakePower;
         glitch = GetComponent<GlitchEffect>();
         cRT = GetComponent<CRTEffect>();
+        ripple = GetComponent<RippleEffect>();
         sceneAudio = SceneAudioManager.instance;
         if(isTest == false)
             generator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
@@ -143,5 +145,11 @@ public class CameraFollower : MonoBehaviour
         isShakeing = false;
         duration = 0;
         yield return null;
+    }
+
+    public void Nova()
+    {
+        ripple.Emit(cam.WorldToViewportPoint(player.transform.position));
+        StartCoroutine(CamShake(2.5f, 0.5f));
     }
 }

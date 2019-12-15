@@ -10,18 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Shotgun
+  m_Name: Raid
   m_EditorClassIdentifier: 
-  type: 1
-  bullet: {fileID: 7996625255418922762, guid: 26bcba90e9bb8434ca25213773a36600, type: 3}
-  speed: 35
-  damage: 5
-  count: 5
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 1.25
+  type: 2
+  bullet: {fileID: 3929027194407862028, guid: a5938cb0afadbef4eac99f0755fd4b0e, type: 3}
+  speed: 55
+  damage: 7
+  count: 1
+  burst_count: 5
+  burst_spacing: 0.05
+  fireRate: 3
   ammoCapacity: 10
   reloadTime: 1
-  spread: 10
-  upgrades:
-  - {fileID: 11400000, guid: e2978d372f8d91c43b49d0f52f3df263, type: 2}
+  spread: 3.5
+  upgrades: []
