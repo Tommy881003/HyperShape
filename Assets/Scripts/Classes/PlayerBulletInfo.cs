@@ -29,6 +29,11 @@ public class PlayerBulletInfo : MonoBehaviour
                 transform.position = hit.point;
                 rb.velocity = Vector2.zero;
                 rb.constraints = RigidbodyConstraints2D.FreezeAll;
+                if (hit.collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+                {
+                    enemy.hp -= damage;
+                    StartCoroutine(DelayDestroy());
+                }
             }
             previous = transform.position;
         }

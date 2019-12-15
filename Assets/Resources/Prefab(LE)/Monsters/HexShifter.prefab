@@ -4921,8 +4921,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 10
-      minScalar: 3
+      scalar: 15
+      minScalar: 5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5037,8 +5037,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.2
+      scalar: 0.7
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -9538,9 +9538,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 285487333
-  m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingLayerID: 1978498503
+  m_SortingLayer: 2
+  m_SortingOrder: 100
   m_RenderMode: 0
   m_SortMode: 0
   m_MinParticleSize: 0
@@ -9678,7 +9678,7 @@ Transform:
   m_GameObject: {fileID: 5920132101464080784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 7, y: 4.06, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 2.25, y: 2.25, z: 1}
   m_Children:
   - {fileID: 3451589675228317153}
   - {fileID: 3451589675366393193}
@@ -9733,7 +9733,7 @@ SpriteRenderer:
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 2
+  m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &5920132101464080810
 MonoBehaviour:
@@ -9920,9 +9920,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eefca01011f36a04cbbe2d482ffec434, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 50
+  wave: 0
+  maxHp: 0
+  hp: 40
   speed: 6
   coolDown: 3
   shuffle: 0
+  shardNum: 3
   pattern1: {fileID: 11400000, guid: 6b37d47adb8ae164b95004ddec715331, type: 2}
   diePattern: {fileID: 11400000, guid: 8cb553b92cff97c45a51dddf47074a20, type: 2}

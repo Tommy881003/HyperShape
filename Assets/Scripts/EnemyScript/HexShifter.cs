@@ -6,10 +6,12 @@ using DG.Tweening;
 public class HexShifter : Enemy
 {
     private BulletManager manager;
+    private Vector3 scale;
     public BulletPattern pattern1,diePattern;
     protected override void Start()
     {
         base.Start();
+        scale = transform.localScale;
         manager = BulletManager.instance;
         Attacks.Add(attack1);
         atkPatternLen = Attacks.Count;
@@ -41,13 +43,14 @@ public class HexShifter : Enemy
         isAttacking = true;
         for(int i = 0; i < 2; i++)
         {
-            enemyTransform.localScale = new Vector3(1, 1, 1);
+            enemyTransform.localScale = 0.5f * scale;
             enemyTransform.DOMove(rayDir(), 0.2f);
-            enemyTransform.DOScale(new Vector3(2, 2, 1), 0.2f);
+            enemyTransform.DOScale(scale, 0.2f);
             yield return new WaitForSeconds(0.4f);
         }
-        enemyTransform.localScale = new Vector3(2.5f, 2.5f, 1);
-        enemyTransform.DOScale(new Vector3(2, 2, 1), 0.2f);
+        yield return new WaitForSeconds(0.2f);
+        enemyTransform.localScale = 1.25f * scale;
+        enemyTransform.DOScale(scale, 0.2f);
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
         manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
         yield return new WaitForSeconds(0.4f);
@@ -104,11 +107,10 @@ public class HexShifter : Enemy
         rb.velocity = Vector2.zero;
         destination.enabled = false;
         iPath.enabled = false;
-        enemyTransform.DOScale(new Vector3(0.5f, 0.5f, 1), 0.5f).SetEase(Ease.OutQuint);
+        enemyTransform.DOScale(0.6f * scale, 0.5f).SetEase(Ease.Linear);
+        enemyTransform.DOShakePosition(0.5f, 0.5f, 20).SetEase(Ease.Linear);
+        sr.DOColor(Color.white, 0.5f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.5f);
-        enemyTransform.DOShakePosition(0.5f,1,10);
-        enemyTransform.DOScale(new Vector3(2.5f, 2.5f, 1), 0.5f).SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(0.3f);
         float dieTime = Mathf.Max(dieParticle.main.duration - 0.2f,0);
         dieParticle.Play();
         manager.StartCoroutine(manager.SpawnPattern(diePattern, this.transform.position, Quaternion.identity));
@@ -119,6 +121,7 @@ public class HexShifter : Enemy
         }
         yield return new WaitForSeconds(0.2f);
         sr.enabled = false;
+        giveShard();
         yield return new WaitForSeconds(dieTime);
         Destroy(this.gameObject);
     }

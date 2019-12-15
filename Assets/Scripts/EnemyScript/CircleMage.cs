@@ -6,13 +6,14 @@ using DG.Tweening;
 public class CircleMage : Enemy
 {
     private BulletManager manager;
-    public BulletPattern pattern1,pattern2;
+    public BulletPattern pattern1,pattern2,pattern3;
     protected override void Start()
     {
         base.Start();
         manager = BulletManager.instance;
         Attacks.Add(attack1);
         Attacks.Add(attack2);
+        Attacks.Add(attack3);
         atkPatternLen = Attacks.Count;
         current = 0;
         pattern = new int[atkPatternLen];
@@ -30,7 +31,7 @@ public class CircleMage : Enemy
     {
         Color originalColor = sr.color;
         isAttacking = true;
-        rb.mass = 10000;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         sr.DOColor(Color.white, 0.75f);
         enemyTransform.DOShakePosition(0.75f, 0.5f, 15);
         yield return new WaitForSeconds(0.75f);
@@ -49,7 +50,7 @@ public class CircleMage : Enemy
             yield return new WaitForSeconds(0.05f);
         }
         isAttacking = false;
-        rb.mass = 1;
+        rb.constraints = RigidbodyConstraints2D.None;
     }
 
     public void attack2()
@@ -61,7 +62,7 @@ public class CircleMage : Enemy
     {
         Color originalColor = sr.color;
         isAttacking = true;
-        rb.mass = 10000;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
         sr.DOColor(Color.white, 0.75f);
         enemyTransform.DOShakePosition(0.75f, 0.5f,15);
         yield return new WaitForSeconds(0.75f);
@@ -69,12 +70,34 @@ public class CircleMage : Enemy
         rb.mass = 10000;
         for (int i = 0; i < 5; i++)
         {
-            float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
+            float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position) + Random.Range(-20,20);
             manager.StartCoroutine(manager.SpawnPattern(pattern2, this.transform.position, Quaternion.Euler(0, 0, angle)));
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(0.3f);
         }
         isAttacking = false;
+        rb.constraints = RigidbodyConstraints2D.None;
         rb.mass = 1;
+    }
+
+    public void attack3()
+    {
+        StartCoroutine(forAttack3());
+    }
+
+    IEnumerator forAttack3()
+    {
+        Color originalColor = sr.color;
+        isAttacking = true;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        sr.DOColor(Color.white, 0.5f);
+        float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
+        manager.StartCoroutine(manager.SpawnPattern(pattern3, this.transform.position, Quaternion.Euler(0, 0, angle)));
+        yield return new WaitForSeconds(0.75f);
+        sr.DOColor(originalColor, 0.5f);
+        enemyTransform.DOShakePosition(0.5f, 0.5f, 10);
+        yield return new WaitForSeconds(0.5f);
+        isAttacking = false;
+        rb.constraints = RigidbodyConstraints2D.None;
     }
 
     protected override void Follow()

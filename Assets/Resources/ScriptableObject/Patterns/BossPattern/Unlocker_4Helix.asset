@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d373a4e34540b784f8a1f1dac2ec79e8, type: 3}
   m_Name: Unlocker_4Helix
   m_EditorClassIdentifier: 
+  timer: 10
   vRotation:
     serializedVersion: 2
     m_Curve:
@@ -41,7 +42,7 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 17
+      value: 20
       inSlope: 0
       outSlope: 0
       tangentMode: 34
@@ -50,7 +51,7 @@ MonoBehaviour:
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 10
-      value: 17
+      value: 20
       inSlope: 0
       outSlope: 0
       tangentMode: 34

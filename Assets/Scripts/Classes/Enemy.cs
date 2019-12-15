@@ -9,6 +9,7 @@ using UnityEngine.Events;
 public class Enemy : MonoBehaviour
 {
     public int wave;
+    protected static GameObject shard = null;
     Root aiRoot = BT.Root();
     protected PlayerController player;
     protected Transform playerTransform;
@@ -30,6 +31,8 @@ public class Enemy : MonoBehaviour
     protected float coolDown = 4f;
     [SerializeField, Header("是否洗牌?")]
     protected bool shuffle;
+    [SerializeField, Header("碎片數量"), Range(0, 25)]
+    protected int shardNum = 0;
     protected float timer = 0;
     [SerializeField]
     public List<System.Action> Attacks = new List<System.Action>();
@@ -37,6 +40,7 @@ public class Enemy : MonoBehaviour
     protected int atkPatternLen = 0;
     protected int[] pattern;
     protected bool isAttacking;
+    protected int currentShard = 0;
 
     //AI邏輯：
     //IF(怪物血量歸零) => 死亡function(放特效、音效，死亡時攻擊之類的)
@@ -58,6 +62,12 @@ public class Enemy : MonoBehaviour
                     BT.Call(DoNothing)
                 )
         );
+    }
+
+    private void Awake()
+    {
+        if(shard == null)
+            shard = Resources.Load<GameObject>("Prefab(I)/Shard");
     }
 
     protected virtual void DoNothing()
@@ -111,8 +121,26 @@ public class Enemy : MonoBehaviour
             m_MyEvent.Invoke();
             m_MyEvent.RemoveAllListeners();
         }
+        giveShard();
         yield return new WaitForSeconds(dieTime);
         Destroy(this.gameObject);
+    }
+
+    protected void giveShard()
+    {
+        for(int i = 0; i < shardNum; i++)
+        {
+            if (currentShard < shardNum)
+            {
+                currentShard++;
+                float rand = Random.Range(0, 360) * Mathf.Deg2Rad;
+                float speed = Random.Range(5, 10);
+                GameObject newShard = Instantiate(shard, transform.position, Quaternion.identity);
+                newShard.GetComponent<Rigidbody2D>().velocity = speed * new Vector2(Mathf.Cos(rand), Mathf.Sin(rand));
+            }
+            else
+                return;
+        }
     }
 
     ///<summary>處理攻擊。預設執行動作：無，必須加入攻擊的函式</summary>
@@ -158,6 +186,7 @@ public class Enemy : MonoBehaviour
         iPath = enemyTransform.gameObject.GetComponent<AIPath>();
         timer = coolDown;
         maxHp = hp;
+        speed = speed * Random.Range(0.8f, 1.2f);
         rb.angularDrag = 10000;
         parentLevel = this.GetComponentInParent<Level>();
         if (parentLevel != null)

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d373a4e34540b784f8a1f1dac2ec79e8, type: 3}
   m_Name: CircleMage_Pattern3
   m_EditorClassIdentifier: 
+  timer: 10
   vRotation:
     serializedVersion: 2
     m_Curve:
@@ -34,31 +35,40 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 2
+    m_PostInfinity: 1
     m_RotationOrder: 4
   velocity:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 15
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
+      value: 0
+      inSlope: 60
+      outSlope: Infinity
+      tangentMode: 97
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 10
-      value: 15
-      inSlope: 0
+      time: 0.75
+      value: 20
+      inSlope: -0.40742373
       outSlope: 0
-      tangentMode: 34
+      tangentMode: 65
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 10
+      value: 20
+      inSlope: -0
+      outSlope: Infinity
+      tangentMode: 101
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 2
+    m_PostInfinity: 1
     m_RotationOrder: 4
   rotation:
     serializedVersion: 2
@@ -66,14 +76,14 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 60
-      outSlope: 60
+      inSlope: 80
+      outSlope: 80
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 1
+      time: 0.75
       value: 60
       inSlope: Infinity
       outSlope: 0
@@ -91,7 +101,7 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 2
+    m_PostInfinity: 1
     m_RotationOrder: 4
   scale:
     serializedVersion: 2
@@ -100,15 +110,15 @@ MonoBehaviour:
       time: 0
       value: 0
       inSlope: 2.094635
-      outSlope: 1
+      outSlope: 2
       tangentMode: 65
       weightedMode: 0
       inWeight: 0
       outWeight: 0.08163265
     - serializedVersion: 3
-      time: 1
+      time: 0.5
       value: 1
-      inSlope: 1
+      inSlope: 2
       outSlope: Infinity
       tangentMode: 101
       weightedMode: 0
@@ -124,36 +134,54 @@ MonoBehaviour:
       inWeight: 0.33333334
       outWeight: 0.33333334
     m_PreInfinity: 2
-    m_PostInfinity: 2
+    m_PostInfinity: 1
     m_RotationOrder: 4
   spawns:
   - name: Enemy_Cicle
-    position: {x: 4, y: 0}
+    position: {x: 2.25, y: 0}
   - name: Enemy_Cicle
-    position: {x: 3.309017, y: 0.95105654}
+    position: {x: 2.1733332, y: 0.58234286}
   - name: Enemy_Cicle
-    position: {x: 2.1909828, y: 0.5877852}
+    position: {x: 1.9485571, y: 1.125}
   - name: Enemy_Cicle
-    position: {x: 2.1909828, y: -0.5877851}
+    position: {x: 1.5909902, y: 1.5909902}
   - name: Enemy_Cicle
-    position: {x: 3.3090172, y: -0.9510565}
+    position: {x: 1.1249999, y: 1.9485573}
   - name: Enemy_Cicle
-    position: {x: -0.5, y: 2.598076}
+    position: {x: 0.5823429, y: 2.1733332}
   - name: Enemy_Cicle
-    position: {x: -1.190983, y: 3.5491326}
+    position: {x: -0.000000098350625, y: 2.25}
   - name: Enemy_Cicle
-    position: {x: -2.3090172, y: 3.1858613}
+    position: {x: -0.58234286, y: 2.1733332}
   - name: Enemy_Cicle
-    position: {x: -2.3090172, y: 2.010291}
+    position: {x: -1.1250001, y: 1.9485571}
   - name: Enemy_Cicle
-    position: {x: -1.1909828, y: 1.6470196}
+    position: {x: -1.5909902, y: 1.5909902}
   - name: Enemy_Cicle
-    position: {x: -0.5, y: -2.598076}
+    position: {x: -1.9485571, y: 1.1250001}
   - name: Enemy_Cicle
-    position: {x: -1.190983, y: -1.6470196}
+    position: {x: -2.1733332, y: 0.58234304}
   - name: Enemy_Cicle
-    position: {x: -2.3090172, y: -2.0102909}
+    position: {x: -2.25, y: -0.00000019670125}
   - name: Enemy_Cicle
-    position: {x: -2.3090172, y: -3.185861}
+    position: {x: -2.1733332, y: -0.5823429}
   - name: Enemy_Cicle
-    position: {x: -1.1909828, y: -3.5491326}
+    position: {x: -1.9485571, y: -1.1249999}
+  - name: Enemy_Cicle
+    position: {x: -1.5909903, y: -1.5909901}
+  - name: Enemy_Cicle
+    position: {x: -1.1249998, y: -1.9485573}
+  - name: Enemy_Cicle
+    position: {x: -0.58234274, y: -2.1733332}
+  - name: Enemy_Cicle
+    position: {x: 0.000000026830982, y: -2.25}
+  - name: Enemy_Cicle
+    position: {x: 0.5823428, y: -2.1733332}
+  - name: Enemy_Cicle
+    position: {x: 1.1249998, y: -1.9485573}
+  - name: Enemy_Cicle
+    position: {x: 1.59099, y: -1.5909905}
+  - name: Enemy_Cicle
+    position: {x: 1.948557, y: -1.1250004}
+  - name: Enemy_Cicle
+    position: {x: 2.173333, y: -0.5823434}

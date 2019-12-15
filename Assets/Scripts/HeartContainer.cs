@@ -13,6 +13,7 @@ public class HeartContainer : MonoBehaviour
     public static HeartContainer instance = null;
     private float alpha = 0;
     private bool found = false;
+    private SceneAudioManager sceneAudio;
     private void Awake()
     {
         if (instance == null)
@@ -26,6 +27,7 @@ public class HeartContainer : MonoBehaviour
         lowHp = GetComponent<Image>();
         player = GameObject.Find("DummyPlayer").GetComponent<PlayerController>();
         DOTween.To(() => alpha, x => alpha = x, 1f, 0.5f).SetLoops(-1,LoopType.Yoyo);
+        sceneAudio = SceneAudioManager.instance;
     }
 
     public void Update()
@@ -34,10 +36,14 @@ public class HeartContainer : MonoBehaviour
             player = GameObject.Find("DummyPlayer").GetComponent<PlayerController>();
         if (player != null && player.life <= 2)
         {
+            if(player.life > 0)
+                sceneAudio.PlayByName("low", sceneAudio.sceneClips);
             Color newColor = lowHp.color;
             newColor.a = alpha;
             lowHp.color = newColor;
         }
+        else
+            sceneAudio.StopByName("low", sceneAudio.sceneClips);
     }
 
     public void ShowHeart(bool start, PlayerController backUp)

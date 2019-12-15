@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Rendering.PostProcessing;
+using JetFistGames.RetroTVFX;
 
 public class CameraFollower : MonoBehaviour
 {
@@ -21,8 +21,10 @@ public class CameraFollower : MonoBehaviour
     private float oriLerp;
     private float screenRatio;
     private Vector3 previousLerp = Vector3.zero;
-    private float pi = Mathf.PI;
     public bool isTest = false;
+    private GlitchEffect glitch;
+    private CRTEffect cRT;
+    private SceneAudioManager sceneAudio;
 
     private void Awake()
     {
@@ -38,6 +40,9 @@ public class CameraFollower : MonoBehaviour
         isShakeing = false;
         seed1 = 0; seed2 = 0; timer = 0;
         originalFrequency = frequency; originalShake = shakePower;
+        glitch = GetComponent<GlitchEffect>();
+        cRT = GetComponent<CRTEffect>();
+        sceneAudio = SceneAudioManager.instance;
         if(isTest == false)
             generator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
         if (generator == null)
@@ -88,6 +93,36 @@ public class CameraFollower : MonoBehaviour
         cam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, cam.transform.position.z);
         controller = player.GetComponentInParent<PlayerController>();
         enabled = true;
+    }
+
+    public void GetDamage()
+    {
+        StartCoroutine(CamShake(3, 0.75f));
+        glitch.intensity = 1;
+        glitch.flipIntensity = 1;
+        glitch.colorIntensity = 1;
+        glitch.flickIntensity = 1;
+        DOTween.To(() => glitch.intensity, x => glitch.intensity = x, 0f, 0.75f).SetEase(Ease.InExpo);
+        DOTween.To(() => glitch.flipIntensity, x => glitch.flipIntensity = x, 0f, 0.75f).SetEase(Ease.InExpo);
+        DOTween.To(() => glitch.colorIntensity, x => glitch.colorIntensity = x, 0f, 0.75f).SetEase(Ease.InExpo);
+        DOTween.To(() => glitch.flickIntensity, x => glitch.flickIntensity = x, 0f, 0.75f).SetEase(Ease.InExpo);
+    }
+
+    public void Die()
+    {
+        StartCoroutine(CamShake(3, 1f));
+        sceneAudio.StopAll();
+        glitch.intensity = 1;
+        glitch.flipIntensity = 1;
+        glitch.colorIntensity = 1;
+        glitch.flickIntensity = 1;
+        DOTween.To(() => glitch.intensity, x => glitch.intensity = x, 0f, 1f);
+        DOTween.To(() => glitch.flipIntensity, x => glitch.flipIntensity = x, 0f, 1f);
+        DOTween.To(() => glitch.colorIntensity, x => glitch.colorIntensity = x, 0f, 1f);
+        DOTween.To(() => glitch.flickIntensity, x => glitch.flickIntensity = x, 0f, 1f);
+        DOTween.To(() => cRT.IQScale.x, x => cRT.IQScale.x = x, 0f, 1f);
+        DOTween.To(() => cRT.IQScale.y, x => cRT.IQScale.y = x, 0f, 1f);
+        DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0f, 2f).SetUpdate(true).SetEase(Ease.Linear);
     }
 
     public IEnumerator CamShake(float power, float duration)

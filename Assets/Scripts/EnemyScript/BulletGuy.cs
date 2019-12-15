@@ -7,7 +7,7 @@ public class BulletGuy : Enemy
 {
     protected static int changeRotation = 0;
     protected float rotateSeed;
-    protected float speedSeed;
+    /*protected float speedSeed;*/
     protected float originalSpeed;
     protected Color originalColor;
     protected bool hitTarget = false;
@@ -23,10 +23,9 @@ public class BulletGuy : Enemy
         atkPatternLen = Attacks.Count;
         shockwave = enemyTransform.Find("Main").gameObject.GetComponent<ParticleSystem>();
         sr = enemyTransform.Find("Main").gameObject.GetComponent<SpriteRenderer>();
-        speedSeed = UnityEngine.Random.Range(0.8f, 1.2f);
         rotateSeed = UnityEngine.Random.Range(0.8f, 1.2f);
         originalColor = sr.color;
-        originalSpeed = speed * speedSeed;
+        originalSpeed = speed;
         current = 0;
         pattern = new int[atkPatternLen];
         PatternShuffle();
@@ -86,11 +85,6 @@ public class BulletGuy : Enemy
             PlayerBulletInfo info = collision.gameObject.GetComponent<PlayerBulletInfo>();
             info.StartCoroutine(info.DelayDestroy());
             hp -= info.damage;
-            if (isAttacking)
-            {
-                hitTarget = true;
-                shockwave.Play();
-            }
         }
         else if (collision.gameObject.CompareTag("Player"))
         {

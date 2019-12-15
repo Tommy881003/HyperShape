@@ -276,10 +276,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 553df35c11c19d04b97422d644d4b0a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 20
+  wave: 0
+  maxHp: 0
+  hp: 10
   speed: 17.5
   coolDown: 20
   shuffle: 0
+  shardNum: 1
   diePattern: {fileID: 11400000, guid: 5b8d2d474ed80b64690ce18d31d63d0e, type: 2}
 --- !u!1 &8607032792385969102
 GameObject:

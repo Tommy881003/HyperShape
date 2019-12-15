@@ -9,9 +9,10 @@ public class Unlocker : Boss
     private CameraFollower follower;
     private BulletManager manager;
     private BossHealthBar healthBar;
-    private ParticleSystem explode; 
+    private ParticleSystem explode;
+    private ObjAudioManager audios;
     public ParticleSystem rageParticle;
-    public BulletPattern ring,dot4,helix4;
+    public BulletPattern ring,dot4,square,helix4;
     //public BulletPattern[] tetris;
     public Unlocker_Room room;
     [SerializeField]
@@ -21,6 +22,11 @@ public class Unlocker : Boss
     private GameObject currentBody;
     private bool canFollow = false,isRage = false;
     private float halfHp;
+
+    private void Awake()
+    {
+        audios = GetComponent<ObjAudioManager>();
+    }
     protected override void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
@@ -63,10 +69,16 @@ public class Unlocker : Boss
     {
         if(follower.isCutScene == false)
             base.Update();
-        if(isRage == false && hp <= halfHp)
+        if(player.life <= 0)
+        {
+            StopAllCoroutines();
+            audios.StopAll();
+        }
+        if (isRage == false && hp <= halfHp)
         {
             isRage = true;
             StopAllCoroutines();
+            audios.StopAll();
             StartCoroutine(Phase2());
         }
     }
@@ -82,6 +94,7 @@ public class Unlocker : Boss
         b12.DOKill();
         Color oriColor = b11.color;
         yield return new WaitForSeconds(0.5f);
+        audios.PlayByName("p2_cha");
         b11.DOColor(Color.white, 1.5f);
         b12.DOColor(Color.white, 1.5f);
         transform.DOShakePosition(1.5f, 1f, 30);
@@ -91,6 +104,7 @@ public class Unlocker : Boss
         transform.DOScale(scale, 0.25f).SetEase(Ease.OutBack);
         transform.DOShakePosition(0.5f, 1f, 15);
         yield return new WaitForSeconds(0.1f);
+        audios.PlayByName("p2_dis");
         follower.StartCoroutine(follower.CamShake(3.5f, 0.5f));
         body2.SetActive(true);
         currentBody = body2;
@@ -123,6 +137,7 @@ public class Unlocker : Boss
         transform.DOMove(room.gameObject.transform.position, time).SetEase(Ease.OutQuad);
         transform.DORotate(new Vector3(0, 0, degree), time, RotateMode.FastBeyond360).SetEase(Ease.OutQuad);
         transform.DOScale(1.4f * scale, time).SetEase(Ease.OutQuad);
+        audios.PlayByName("a1_cha");
         if(isRage)
         {
             b21.DOColor(Color.white,time).SetEase(Ease.OutQuad);
@@ -173,6 +188,7 @@ public class Unlocker : Boss
                         room.DoPop(8 + j, 7 - (i - 4 - j), 0.5f, 0.5f);
                     }
                 }
+                audios.PlayByName("a1_dis");
                 transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 20);
                 b21.color = Color.white;
                 b22.color = Color.white;
@@ -194,6 +210,7 @@ public class Unlocker : Boss
                     room.DoPop(8 + i - j, 8 + i, 0.5f, 0.5f);
                     room.DoPop(8 + i, 7 - i + j, 0.5f, 0.5f);
                 }
+                audios.PlayByName("a1_dis");
                 transform.DOShakePosition(0.5f, new Vector3(0, 0.5f, 0), 20);
                 b11.color = Color.white;
                 b12.color = Color.white;
@@ -215,18 +232,20 @@ public class Unlocker : Boss
     {
         isAttacking = true;
         canFollow = true;
+        audios.PlayByName("a2_fir");
         for (int i = 0; i <= 80; i++)
         {
-            if(isRage)
+            if (isRage)
             {
-                manager.StartCoroutine(manager.SpawnOneShot("Boss_Square", 3, 360, 17.5f, true, transform.position, 0));
+                manager.StartCoroutine(manager.SpawnOneShot("Boss_Square", 3, 360, 15f, true, transform.position, 0));
                 if (i % 8 == 0)
-                    room.RandomPop(8, 0.8f, 0.8f);
+                    room.RandomPop(6, 0.8f, 0.8f);
             }
             else
                 manager.StartCoroutine(manager.SpawnOneShot("Boss_Square", 3, 360, 15f, true, transform.position, 0));
             yield return new WaitForSeconds(0.1f);
-        }   
+        }
+        audios.StopByName("a2_fir");
         isAttacking = false;
     }
 
@@ -259,33 +278,35 @@ public class Unlocker : Boss
         if (isRage)
         {
             rageParticle.Stop();
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 4; i++)
             {
+                audios.PlayByName("a3_warn");
                 Vector2Int tileVect = room.vec2ind(playerTransform.position);
                 tileVect = new Vector2Int((int)Mathf.Clamp(tileVect.x, 2, parentLevel.X - 3), (int)Mathf.Clamp(tileVect.y, 2, parentLevel.Y - 3));
                 Vector3 toPosition = room.ind2vec(tileVect.x, tileVect.y);
-                room.DoPop(tileVect.x - 1, tileVect.y - 1, 0.75f, 0.5f);
-                room.DoPop(tileVect.x - 1, tileVect.y + 1, 0.75f, 0.5f);
-                room.DoPop(tileVect.x, tileVect.y, 0.75f, 0.5f);
-                room.DoPop(tileVect.x + 1, tileVect.y - 1, 0.75f, 0.5f);
-                room.DoPop(tileVect.x + 1, tileVect.y + 1, 0.75f, 0.5f);
+                room.DoPop(tileVect.x - 1, tileVect.y - 1, 1f, 0.5f);
+                room.DoPop(tileVect.x - 1, tileVect.y + 1, 1f, 0.5f);
+                room.DoPop(tileVect.x, tileVect.y, 1f, 0.5f);
+                room.DoPop(tileVect.x + 1, tileVect.y - 1, 1f, 0.5f);
+                room.DoPop(tileVect.x + 1, tileVect.y + 1, 1f, 0.5f);
                 for(int j = 0; j < parentLevel.X; j++)
                     if(j != tileVect.x)
-                        room.DoPop(j, tileVect.y, 0.75f, 0.5f);
+                        room.DoPop(j, tileVect.y, 1f, 0.5f);
                 for (int j = 0; j < parentLevel.Y; j++)
                     if (j != tileVect.y)
-                        room.DoPop(tileVect.x, j, 0.75f, 0.5f);
-                yield return new WaitForSeconds(0.75f);
+                        room.DoPop(tileVect.x, j, 1f, 0.5f);
+                yield return new WaitForSeconds(1f);
+                audios.PlayByName("a3_dis");
                 transform.position = toPosition;
                 manager.StartCoroutine(manager.SpawnPattern(ring, toPosition, Quaternion.identity));
-                if (i != 5)
+                if (i != 3)
                 {
                     transform.DORotate(new Vector3(0, 0, 0), 0.4f).SetEase(Ease.OutBack);
                     transform.DOScale(scale, 0.4f).SetEase(Ease.OutBack);
                     yield return new WaitForSeconds(0.4f);
                     transform.DORotate(new Vector3(0, 0, -90), 0.4f).SetEase(Ease.OutCubic);
                     transform.DOScale(Vector3.zero, 0.4f).SetEase(Ease.OutCubic);
-                    yield return new WaitForSeconds(0.75f);
+                    yield return new WaitForSeconds(1f);
                 }
                 else
                 {
@@ -300,19 +321,21 @@ public class Unlocker : Boss
         {
             for (int i = 0; i < 4; i++)
             {
+                audios.PlayByName("a3_warn");
                 Vector2Int tileVect = room.vec2ind(playerTransform.position);
                 tileVect = new Vector2Int((int)Mathf.Clamp(tileVect.x, 2, parentLevel.X - 3), (int)Mathf.Clamp(tileVect.y, 2, parentLevel.Y - 3));
                 Vector3 toPosition = room.ind2vec(tileVect.x, tileVect.y);
-                room.DoPop(tileVect.x - 1, tileVect.y - 1, 0.75f, 0.5f);
-                room.DoPop(tileVect.x - 1, tileVect.y, 0.75f, 0.5f);
-                room.DoPop(tileVect.x - 1, tileVect.y + 1, 0.75f, 0.5f);
-                room.DoPop(tileVect.x, tileVect.y - 1, 0.75f, 0.5f);
-                room.DoPop(tileVect.x, tileVect.y, 0.75f, 0.5f);
-                room.DoPop(tileVect.x, tileVect.y + 1, 0.75f, 0.5f);
-                room.DoPop(tileVect.x + 1, tileVect.y - 1, 0.75f, 0.5f);
-                room.DoPop(tileVect.x + 1, tileVect.y, 0.75f, 0.5f);
-                room.DoPop(tileVect.x + 1, tileVect.y + 1, 0.75f, 0.5f);
-                yield return new WaitForSeconds(0.75f);
+                room.DoPop(tileVect.x - 1, tileVect.y - 1, 1f, 0.5f);
+                room.DoPop(tileVect.x - 1, tileVect.y, 1f, 0.5f);
+                room.DoPop(tileVect.x - 1, tileVect.y + 1, 1f, 0.5f);
+                room.DoPop(tileVect.x, tileVect.y - 1, 1f, 0.5f);
+                room.DoPop(tileVect.x, tileVect.y, 1f, 0.5f);
+                room.DoPop(tileVect.x, tileVect.y + 1, 1f, 0.5f);
+                room.DoPop(tileVect.x + 1, tileVect.y - 1, 1f, 0.5f);
+                room.DoPop(tileVect.x + 1, tileVect.y, 1f, 0.5f);
+                room.DoPop(tileVect.x + 1, tileVect.y + 1, 1f, 0.5f);
+                yield return new WaitForSeconds(1f);
+                audios.PlayByName("a3_dis");
                 transform.position = toPosition;
                 manager.StartCoroutine(manager.SpawnPattern(ring, toPosition, Quaternion.identity));
                 if (i != 3)
@@ -349,16 +372,21 @@ public class Unlocker : Boss
         float timer = 0;
         int count = 0;
         transform.DORotate(new Vector3(0, 0, 2880), 8, RotateMode.FastBeyond360).SetEase(Ease.Linear);
-        while(timer <= 8)
+        audios.PlayByName("a4_fir");
+        while (timer <= 8)
         {
             if(timer >= count * 0.1f)
             {
-                manager.StartCoroutine(manager.SpawnPattern(dot4, transform.position, Quaternion.Euler(0,0,37*count),true));
+                if(isRage && count % 20 == 0)
+                    manager.StartCoroutine(manager.SpawnPattern(square, transform.position, Quaternion.Euler(0, 0, 37 * count), true));
+                else
+                    manager.StartCoroutine(manager.SpawnPattern(dot4, transform.position, Quaternion.Euler(0,0,37*count),true));
                 count++;
             }
             timer += Time.deltaTime;
             yield return null;
         }
+        audios.StopByName("a4_fir");
         isAttacking = false;
     }
 
@@ -387,6 +415,7 @@ public class Unlocker : Boss
         {
             if (timer >= count * 0.16f)
             {
+                audios.PlayByName("a5_fir");
                 float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - transform.position) + UnityEngine.Random.Range(-25, 25);
                 manager.StartCoroutine(manager.SpawnPattern(helix4, transform.position, Quaternion.Euler(0, 0, angle)));
                 count++;
@@ -406,7 +435,7 @@ public class Unlocker : Boss
     IEnumerator zigZag(int rand)
     {
         int dis = UnityEngine.Random.Range(3, 8);
-        int crossDis = UnityEngine.Random.Range(8, 13);
+        int crossDis = UnityEngine.Random.Range(7, 11);
         Vector2Int[] pos = new Vector2Int[4];
         Vector2Int index = room.vec2ind(playerTransform.position);
         pos[0] = new Vector2Int(Mathf.Clamp(index.x - dis, 0, parentLevel.X), Mathf.Clamp(index.y, 1, parentLevel.Y - 1));
@@ -430,12 +459,13 @@ public class Unlocker : Boss
                     room.DoPop(pos[rand].x + (i % 2), pos[rand].y - i, 0.5f, 0.5f);
                     break;
             }
-            yield return new WaitForSeconds(0.125f);
+            yield return new WaitForSeconds(0.25f);
         }
     }
 
     protected override IEnumerator playDead()
     {
+        audios.StopAll();
         transform.DOKill();
         b21.DOKill();
         b22.DOKill();
@@ -444,15 +474,19 @@ public class Unlocker : Boss
         StartCoroutine(EndCutScene());
         float dieTime = dieParticle.main.duration;
         dieParticle.Play();
+        audios.PlayByName("dying");
         if (parentLevel != null && m_MyEvent != null)
         {
             m_MyEvent.Invoke();
             m_MyEvent.RemoveAllListeners();
         }
         yield return new WaitForSeconds(dieTime);
+        audios.StopByName("dying");
+        audios.PlayByName("die");
         dieTime = explode.main.duration;
         currentBody.SetActive(false);
         explode.Play();
+        giveShard();
         yield return new WaitForSeconds(dieTime);
         Destroy(this.gameObject);
     }
@@ -481,6 +515,8 @@ public class Unlocker : Boss
         room = GetComponentInParent<Unlocker_Room>();
         for (int i = 8; i >= 0; i--)
         {
+            if(i == 6)
+                audios.PlayByName("spawn");
             for (int j = 0; j < 2 * i + 1; j++)
             {
                 room.DoFade(7 - i + j, 7 - i, 0.25f);

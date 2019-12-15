@@ -15,7 +15,7 @@ MonoBehaviour:
   type: 0
   bullet: {fileID: 1332280715140326440, guid: bc0dade2835dca84b8f31f56474ec6f3, type: 3}
   speed: 100
-  damage: 20
+  damage: 27.5
   count: 1
   burst_count: 0
   burst_spacing: 0

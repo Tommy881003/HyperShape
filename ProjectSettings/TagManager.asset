@@ -11,6 +11,7 @@ TagManager:
   - Bullet
   - PlayerBullet
   - GhostWall
+  - Collect
   layers:
   - Default
   - TransparentFX

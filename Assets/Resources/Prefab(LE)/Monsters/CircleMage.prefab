@@ -35,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 6318718205704362049}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 5, y: 5, z: 0}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 8917050309032144691}
   - {fileID: 8917050307318499152}
@@ -277,12 +277,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wave: 0
-  hp: 50
+  maxHp: 0
+  hp: 60
   speed: 4
   coolDown: 4
-  shuffle: 0
+  shuffle: 1
+  shardNum: 4
   pattern1: {fileID: 11400000, guid: 02935c87f28f7d74dadeaa80d5b61157, type: 2}
   pattern2: {fileID: 11400000, guid: 9796b5b5a29b0d9438f881c5348291f2, type: 2}
+  pattern3: {fileID: 11400000, guid: f4f738470f18d244ab3cf6ee810e00f8, type: 2}
 --- !u!1 &8917050307318499155
 GameObject:
   m_ObjectHideFlags: 0

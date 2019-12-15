@@ -74,9 +74,8 @@ public class CircleBomb : Enemy
         cc.enabled = false;
         destination.enabled = false;
         iPath.enabled = false;
-        enemyTransform.DOScale(new Vector3(2.5f, 2.5f, 1), 0.5f).SetEase(Ease.InBack);
         enemyTransform.DOShakePosition(0.5f, 0.5f, 10).SetEase(Ease.InCubic);
-        sr.DOColor(Color.white, 0.5f).SetEase(Ease.InCubic);
+        sr.DOColor(Color.white, 0.5f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.5f);
         sr.enabled = false;
         float dieTime = dieParticle.main.duration;
@@ -88,6 +87,7 @@ public class CircleBomb : Enemy
             m_MyEvent.Invoke();
             m_MyEvent.RemoveAllListeners();
         }
+        giveShard();
         yield return new WaitForSeconds(dieTime);
         Destroy(this.gameObject);
     }

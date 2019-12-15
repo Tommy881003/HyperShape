@@ -29,6 +29,7 @@ public class Level : MonoBehaviour
     public int maxEnemyNum = 0;
     private static Gradient gradient = null, battleGrad = null;
     private Gradient now;
+    private SceneAudioManager sceneAudio;
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class Level : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        sceneAudio = SceneAudioManager.instance;
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         maxWaveNum = info.maxWaveNum;
         spawnTime = info.spawnTime;
@@ -68,7 +70,7 @@ public class Level : MonoBehaviour
         if (gradient == null)
             gradient = lr.colorGradient;
         now = gradient;
-        Invoke("DrawLine", 0.2f);
+        Invoke("DrawLine", 0.1f);
         shuffle();
     }
 
@@ -117,9 +119,13 @@ public class Level : MonoBehaviour
 
     IEnumerator StartBossCutScene(Camera cam, CameraFollower follower)
     {
+        sceneAudio.VolumeChange("bgm", sceneAudio.sceneClips, 0, 0.5f);
+        sceneAudio.VolumeChange("boss", sceneAudio.sceneClips, 0.4f, 0.5f);
+        sceneAudio.PlayByName("boss", sceneAudio.sceneClips);
         follower.isCutScene = true;
         Vector3 oriPos = cam.transform.position;
         cam.transform.DOMove(new Vector3(boss.transform.position.x, boss.transform.position.y, cam.transform.position.z), 1);
+        sceneAudio.StopByName("bgm", sceneAudio.sceneClips);
         yield return new WaitForSeconds(1.5f);
         boss.gameObject.SetActive(true);
         boss.StartCoroutine(boss.StartCutScene());
@@ -220,11 +226,15 @@ public class Level : MonoBehaviour
 
     IEnumerator EndBossCutScene(Camera cam, CameraFollower follower)
     {
+        sceneAudio.VolumeChange("boss", sceneAudio.sceneClips, 0, 0.5f);
+        sceneAudio.VolumeChange("bgm", sceneAudio.sceneClips, 0.5f, 0.5f);
+        sceneAudio.PlayByName("bgm", sceneAudio.sceneClips);
         follower.isCutScene = true;
         Vector3 oriPos = cam.transform.position;
         cam.transform.DOMove(new Vector3(boss.transform.position.x, boss.transform.position.y, cam.transform.position.z), 0.5f);
         BossHealthBar.instance.StartCoroutine(BossHealthBar.instance.EndBoss());
         yield return new WaitForSeconds(3);
+        sceneAudio.StopByName("boss", sceneAudio.sceneClips);
         cam.transform.DOMove(oriPos, 1);
         yield return new WaitForSeconds(1);
         follower.isCutScene = false;

@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private CameraFollower follower;
     private SpriteRenderer sr;
     private HeartContainer heart;
-
+    [SerializeField]
+    private ParticleSystem die = null;
     [HideInInspector]
     public bool isShifting = false, canShift = true, canShoot = true;
     [HideInInspector]
@@ -43,7 +44,9 @@ public class PlayerController : MonoBehaviour
     public float invincibleTime = 1.5f;
     [HideInInspector]
     public int life;
+    public float exp = 0;
     private Weapon selectedWeapon;
+    private ObjAudioManager audios;
 
     // Start is called before the first frame update
     void Start()
@@ -58,6 +61,7 @@ public class PlayerController : MonoBehaviour
         life = maxLife;
         heart = HeartContainer.instance;
         heart.ShowHeart(true,this);
+        audios = GetComponent<ObjAudioManager>();
         //this.enabled = false;
     }
 
@@ -96,6 +100,7 @@ public class PlayerController : MonoBehaviour
         isShifting = true;
         vulnerable = false;
         canShift = false;
+        audios.PlayByName("dash");
         float moveDis = shiftDis;
         Vector3 moveVect = Moving().normalized;
         RaycastHit2D ray = Physics2D.Raycast(player.transform.position, moveVect, shiftDis + circle.radius, 1 << 8);
@@ -103,10 +108,9 @@ public class PlayerController : MonoBehaviour
         if (ray.collider != null)
             moveDis = ray.distance - 0.5f * circle.radius;
         Vector3 moveTo = player.transform.position + moveVect * moveDis;
-        player.transform.localScale = new Vector3(1.3f, 0.7f, 1);
+        player.transform.localScale = new Vector3(1.4f, 0.6f, 1);
         player.transform.rotation = Quaternion.Euler(0, 0, (moveVect.y < 0? -Vector2.Angle(Vector2.right, moveVect) : Vector2.Angle(Vector2.right, moveVect)));
         player.transform.DOMove(moveTo, 0.15f * moveDis / shiftDis);
-        player.transform.DOScale(new Vector3(1, 1, 1), 0.15f).SetEase(Ease.InCubic);
         yield return new WaitForSeconds(0.15f);
         isShifting = false;
         vulnerable = true;
@@ -116,10 +120,23 @@ public class PlayerController : MonoBehaviour
 
     public IEnumerator GetDamage()
     {
-        StartCoroutine(follower.CamShake(2,0.5f));
-        life--;
-        heart.ShowHeart(false,this);
+        if (vulnerable == false)
+            yield break;
         vulnerable = false;
+        life--;
+        if(life > 0)
+        {
+            audios.PlayByName("damage");
+            follower.GetDamage();
+        }
+        else
+        {
+            audios.PlayByName("over");
+            follower.Die();
+            die.Play();
+            enabled = false;
+        }
+        heart.ShowHeart(false,this);
         float timer = 0;
         float flashTime = 0.1f;
         int i = 0;
