@@ -233,17 +233,17 @@ public class Unlocker : Boss
         isAttacking = true;
         canFollow = true;
         audios.PlayByName("a2_fir");
-        for (int i = 0; i <= 80; i++)
+        for (int i = 0; i <= 48; i++)
         {
             if (isRage)
             {
                 manager.StartCoroutine(manager.SpawnOneShot("Boss_Square", 3, 360, 15f, true, transform.position, 0));
                 if (i % 8 == 0)
-                    room.RandomPop(6, 0.8f, 0.8f);
+                    room.RandomPop(6, 1f, 1f);
             }
             else
                 manager.StartCoroutine(manager.SpawnOneShot("Boss_Square", 3, 360, 15f, true, transform.position, 0));
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.125f);
         }
         audios.StopByName("a2_fir");
         isAttacking = false;
@@ -371,9 +371,9 @@ public class Unlocker : Boss
         canFollow = false;
         float timer = 0;
         int count = 0;
-        transform.DORotate(new Vector3(0, 0, 2880), 8, RotateMode.FastBeyond360).SetEase(Ease.Linear);
+        transform.DORotate(new Vector3(0, 0, 2160), 6, RotateMode.FastBeyond360).SetEase(Ease.Linear);
         audios.PlayByName("a4_fir");
-        while (timer <= 8)
+        while (timer <= 6)
         {
             if(timer >= count * 0.1f)
             {

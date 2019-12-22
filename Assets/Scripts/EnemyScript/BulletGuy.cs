@@ -40,39 +40,23 @@ public class BulletGuy : Enemy
 
     IEnumerator forAttack1()
     {
-        float chaseTime = 0;
         isAttacking = true;
-        sr.DOColor(Color.red, 2.5f);
-        while(chaseTime <= 2.5f && hitTarget == false)
-        {
-            speed = originalSpeed * 2;
-            Vector2 ray = playerTransform.transform.position - enemyTransform.transform.position;
-            chaseTime += Time.deltaTime;
-            yield return null;
-        }
-        if (chaseTime <= 2.5f)
-        {
-            sr.DOKill();
-            sr.color = originalColor;
-        }
+        gameObject.layer = LayerMask.NameToLayer("GhostEnemy");
         speed = originalSpeed;
-        endChasing = true;
         rb.velocity = Vector2.zero;
-        if(hitTarget == false)
-        {
-            changeRotation += 15;
-            sr.color = Color.white;
-            sr.DOColor(Color.red, 0.5f);
-            enemyTransform.DOShakePosition(0.5f,0.5f);
-            float toAngle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
-            enemyTransform.DORotateQuaternion(Quaternion.Euler(0, 0, toAngle - 90), 0.5f);
-            yield return new WaitForSeconds(0.5f);
-            rb.velocity = originalSpeed * 4 * new Vector2(Mathf.Cos(toAngle * Mathf.Deg2Rad), Mathf.Sin(toAngle * Mathf.Deg2Rad));
-            while (hitTarget == false)
-                yield return null;
-        }
+        changeRotation += 15;
+        sr.color = Color.white;
+        sr.DOColor(Color.red, 0.5f);
+        float toAngle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
+        enemyTransform.DORotateQuaternion(Quaternion.Euler(0, 0, toAngle - 90), 0.5f);
+        enemyTransform.DOShakePosition(0.5f,0.5f);
+        yield return new WaitForSeconds(0.5f);
+        rb.velocity = 35 * new Vector2(Mathf.Cos(toAngle * Mathf.Deg2Rad), Mathf.Sin(toAngle * Mathf.Deg2Rad));
+        while (hitTarget == false)
+            yield return null;
         sr.color = originalColor;
         hitTarget = false;
+        gameObject.layer = LayerMask.NameToLayer("Enemy");
         isAttacking = false;
         endChasing = false;
         yield break;
@@ -85,6 +69,7 @@ public class BulletGuy : Enemy
             PlayerBulletInfo info = collision.gameObject.GetComponent<PlayerBulletInfo>();
             info.StartCoroutine(info.DelayDestroy());
             hp -= info.damage;
+            StartCoroutine(Hurt());
         }
         else if (collision.gameObject.CompareTag("Player"))
         {
@@ -106,7 +91,7 @@ public class BulletGuy : Enemy
 
     protected override bool CanFollow()
     {
-        if(endChasing)
+        if(isAttacking)
         {
             if (destination.isActiveAndEnabled)
                 destination.enabled = false;
@@ -118,7 +103,7 @@ public class BulletGuy : Enemy
             destination.enabled = true;
             iPath.enabled = true;
         }
-        return !endChasing;
+        return !isAttacking;
     }
 
     protected override void Follow()

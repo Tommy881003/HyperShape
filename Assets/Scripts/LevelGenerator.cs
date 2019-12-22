@@ -33,6 +33,7 @@ public class LevelGenerator : MonoBehaviour
     private GameObject[] levels, lvToPut;
     private Level[] lvInform;      //儲存lvToPut內的Level class資料
     private Stack<Vector2Int> search = new Stack<Vector2Int>();
+    private int halfRand;
     private int minX,minY,maxX,maxY;
     private MiniMap miniMap;
 
@@ -63,6 +64,7 @@ public class LevelGenerator : MonoBehaviour
         /*此段以上負責洗牌*/
 
         int lvCount = UnityEngine.Random.Range(minMap, maxMap);
+        halfRand = UnityEngine.Random.Range((lvCount / 2) - 2, (lvCount / 2) + 2);
         lvToPut = new GameObject[lvCount + 2];
         lvInform = new Level[lvCount + 2];
         lvToPut[0] = StartingPlace;
@@ -128,8 +130,8 @@ public class LevelGenerator : MonoBehaviour
                     minY = (minY > tempY ? tempY : minY);
                     maxX = (maxX < tempX ? tempX : maxX);
                     maxY = (maxY < tempY ? tempY : maxY);
-                    x = tempX;
-                    y = tempY;
+                    x = (i == 1 || i == halfRand) ? 3 : tempX;
+                    y = (i == 1 || i == halfRand) ? 3 : tempY;
                     break;
                 }
             }
@@ -164,7 +166,6 @@ public class LevelGenerator : MonoBehaviour
             {
                 if (map[j, i] >= 0)
                 {
-                    Debug.Log(j + "," + i + " have level.");
                     if (j + 1 < mapX && map[j + 1, i] != -1)
                         Link(j,i,true);
                     if (i + 1 < mapY && map[j, i + 1] != -1)
@@ -186,7 +187,6 @@ public class LevelGenerator : MonoBehaviour
         else
             b = map[i, j + 1];
         GameObject temp;
-        Debug.Log(i + "," + j + " buildPath.");
         if (lvToPut[a].transform.position.y == lvToPut[b].transform.position.y)
         {
             float xPos = (lvToPut[a].transform.position.x + 2 * lvInform[a].X + lvToPut[b].transform.position.x - 2 * lvInform[b].X) / 2f;

@@ -23,7 +23,6 @@ public class Level : MonoBehaviour
     public Vector2Int PosInArray = new Vector2Int(-1, -1);
     /*[HideInInspector]
     public int connection = 0;*/
-    [HideInInspector]
     public int idxX = -1, idxY = -1;
     public List<Enemy> waveOne = new List<Enemy>(), waveTwo = new List<Enemy>(), waveThree = new List<Enemy>(), waveFour = new List<Enemy>();
     private BoxCollider2D box;
@@ -33,7 +32,7 @@ public class Level : MonoBehaviour
     private Gradient now;
     private SceneAudioManager sceneAudio;
     private bool battled = false;
-    private MiniMap miniMap;
+    private MiniMap miniMap = null;
 
     private void Awake()
     {
@@ -81,8 +80,10 @@ public class Level : MonoBehaviour
 
     private void Update()
     {
-        if(lr.colorGradient != now)
-            lr.colorGradient = now;
+        if(player.isBattling)
+            lr.colorGradient = battleGrad;
+        else
+            lr.colorGradient = gradient;
     }
 
     void DrawLine()
@@ -102,12 +103,14 @@ public class Level : MonoBehaviour
     {
         if(box.enabled == true && collision.gameObject.CompareTag("Player"))
         {
-            miniMap.Modify(idxX, idxY);
+            if(miniMap != null)
+                miniMap.Modify(idxX, idxY);
             if (battled)
                 return;
             battled = true;
             if(isBoss)
             {
+                miniMap.Off();
                 Camera cam = Camera.main;
                 CameraFollower follower = cam.GetComponent<CameraFollower>();
                 StartCoroutine(StartBossCutScene(cam, follower));
@@ -116,6 +119,7 @@ public class Level : MonoBehaviour
             }
             else if(maxEnemyNum > 0)
             {
+                miniMap.Off();
                 currentWaveNum++;
                 StartCoroutine(SpawnEnemy());
                 player.isBattling = true;
@@ -218,6 +222,7 @@ public class Level : MonoBehaviour
         {
             player.isBattling = false;
             now = gradient;
+            miniMap.On();
         }
     }
 
@@ -228,6 +233,7 @@ public class Level : MonoBehaviour
         now = gradient;
         Camera cam = Camera.main;
         CameraFollower follower = cam.GetComponent<CameraFollower>();
+        miniMap.On();
         StartCoroutine(EndBossCutScene(cam, follower));
     }
 

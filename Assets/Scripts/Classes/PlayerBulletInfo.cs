@@ -9,6 +9,8 @@ public class PlayerBulletInfo : MonoBehaviour
     private Rigidbody2D rb = null;
     private SpriteRenderer sr = null;
     private ParticleSystem ps = null;
+    private SceneAudioManager manager;
+    private AudioSource source = null;
     public bool isDisabled = false;
 
     private void Start()
@@ -17,6 +19,12 @@ public class PlayerBulletInfo : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         ps = GetComponent<ParticleSystem>();
+        manager = SceneAudioManager.instance;
+        if(TryGetComponent(out source))
+        {
+            source.volume *= manager.fxAmp;
+            source.Play();
+        }
     }
 
     private void LateUpdate()
@@ -32,6 +40,7 @@ public class PlayerBulletInfo : MonoBehaviour
                 if (hit.collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
                 {
                     enemy.hp -= damage;
+                    enemy.StartCoroutine(enemy.Hurt());
                     StartCoroutine(DelayDestroy());
                 }
             }

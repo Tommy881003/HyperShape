@@ -104,7 +104,10 @@ public class HexShifter : Enemy
 
     protected override IEnumerator playDead()
     {
+        sr.material = oriSr;
         rb.velocity = Vector2.zero;
+        foreach (Collider2D c in colliders)
+            c.enabled = false;
         destination.enabled = false;
         iPath.enabled = false;
         enemyTransform.DOScale(0.6f * scale, 0.5f).SetEase(Ease.Linear);

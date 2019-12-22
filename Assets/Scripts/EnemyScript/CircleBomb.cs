@@ -8,6 +8,7 @@ public class CircleBomb : Enemy
     protected static float changeRotation = 0; 
     private BulletManager manager;
     public BulletPattern diePattern;
+    private bool killing = false;
     private CircleCollider2D cc;
     protected override void Start()
     {
@@ -68,10 +69,14 @@ public class CircleBomb : Enemy
 
     protected IEnumerator Suicide()
     {
+        if (killing)
+            yield break;
+        killing = true;
         rb.mass = 10000;
-        this.enabled = false;
+        enabled = false;
         rb.velocity = Vector2.zero;
-        cc.enabled = false;
+        foreach (Collider2D c in colliders)
+            c.enabled = false;
         destination.enabled = false;
         iPath.enabled = false;
         enemyTransform.DOShakePosition(0.5f, 0.5f, 10).SetEase(Ease.InCubic);
@@ -80,7 +85,7 @@ public class CircleBomb : Enemy
         sr.enabled = false;
         float dieTime = dieParticle.main.duration;
         dieParticle.Play();
-        manager.StartCoroutine(manager.SpawnPattern(diePattern, this.transform.position, Quaternion.Euler(0,0,changeRotation)));
+        manager.StartCoroutine(manager.SpawnPattern(diePattern, transform.position, Quaternion.Euler(0,0,changeRotation)));
         changeRotation += 22.5f;
         if (parentLevel != null && m_MyEvent != null)
         {
@@ -89,6 +94,6 @@ public class CircleBomb : Enemy
         }
         giveShard();
         yield return new WaitForSeconds(dieTime);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }

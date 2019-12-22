@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     public float exp = 0;
     private Weapon selectedWeapon;
     private ObjAudioManager audios;
+    private PauseMenu menu = null;
 
     // Start is called before the first frame update
     void Start()
@@ -65,12 +66,14 @@ public class PlayerController : MonoBehaviour
         heart = HeartContainer.instance;
         heart.ShowHeart(true,this);
         audios = GetComponent<ObjAudioManager>();
-        //this.enabled = false;
+        menu = PauseMenu.instance;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && menu != null)
+            menu.enabled = !menu.enabled;
         if (currentNova > 0 && Input.GetKeyDown(KeyCode.Q))
         {
             audios.PlayByName("nova");
@@ -79,7 +82,7 @@ public class PlayerController : MonoBehaviour
             currentNova--;
             GameObject newNova = Instantiate(Nova, player.transform.position, Quaternion.identity);
             DOTween.To(() => newNova.GetComponent<CircleCollider2D>().radius, x => newNova.GetComponent<CircleCollider2D>().radius = x, 50f, 0.5f);
-            Destroy(newNova, 1);
+            Destroy(newNova, 2);
         }
         if (follower.isCutScene)
         {
@@ -144,6 +147,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            circle.enabled = false;
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
             audios.PlayByName("over");
             follower.Die();
             die.Play();

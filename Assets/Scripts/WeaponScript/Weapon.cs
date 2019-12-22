@@ -46,7 +46,7 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if (canAttack && ((currentGun.type == weapon_type.auto && Input.GetMouseButton(0)) || Input.GetMouseButtonDown(0)))
+        if (Time.timeScale >= 0.5f && canAttack && ((currentGun.type == weapon_type.auto && Input.GetMouseButton(0)) || Input.GetMouseButtonDown(0)))
         {
             if(currentAmmo > 0)
             {

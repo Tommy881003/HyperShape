@@ -150,22 +150,37 @@ public class LevelEditor : Editor
                 switch (wave)
                 {
                     case 1:
-                        level.waveOne.Remove(pointed.gameObject.GetComponent<Enemy>());
+                        if (level.waveOne.Exists(e => e = pointed.gameObject.GetComponent<Enemy>()))
+                        {
+                            level.waveOne.Remove(pointed.gameObject.GetComponent<Enemy>());
+                            DestroyImmediate(pointed.gameObject);
+                        }
                         break;
                     case 2:
-                        level.waveTwo.Add(pointed.gameObject.GetComponent<Enemy>());
+                        if (level.waveTwo.Exists(e => e = pointed.gameObject.GetComponent<Enemy>()))
+                        {
+                            level.waveTwo.Remove(pointed.gameObject.GetComponent<Enemy>());
+                            DestroyImmediate(pointed.gameObject);
+                        }
                         break;
                     case 3:
-                        level.waveThree.Add(pointed.gameObject.GetComponent<Enemy>());
+                        if (level.waveThree.Exists(e => e = pointed.gameObject.GetComponent<Enemy>()))
+                        {
+                            level.waveThree.Remove(pointed.gameObject.GetComponent<Enemy>());
+                            DestroyImmediate(pointed.gameObject);
+                        }
                         break;
                     case 4:
-                        level.waveFour.Add(pointed.gameObject.GetComponent<Enemy>());
+                        if (level.waveFour.Exists(e => e = pointed.gameObject.GetComponent<Enemy>()))
+                        {
+                            level.waveFour.Remove(pointed.gameObject.GetComponent<Enemy>());
+                            DestroyImmediate(pointed.gameObject);
+                        }
                         break;
                     default:
                         break;
                 }
             }
-            DestroyImmediate(pointed.gameObject);
         }
 
         if(category == 2)

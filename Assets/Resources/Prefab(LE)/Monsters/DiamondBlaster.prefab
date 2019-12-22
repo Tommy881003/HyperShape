@@ -5182,7 +5182,7 @@ MonoBehaviour:
   wave: 0
   maxHp: 0
   hp: 150
-  speed: 3
+  speed: 2
   coolDown: 6
   shuffle: 0
   shardNum: 5

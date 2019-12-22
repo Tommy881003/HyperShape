@@ -121,4 +121,14 @@ public class MiniMap : MonoBehaviour
             columns[x, y].color = edge;
         }
     }
+
+    public void On()
+    {
+        DOTween.To(() => canvas.alpha, x => canvas.alpha = x, 1, 1);
+    }
+
+    public void Off()
+    {
+        DOTween.To(() => canvas.alpha, x => canvas.alpha = x, 0, 1);
+    }
 }

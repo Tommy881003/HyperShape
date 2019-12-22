@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1588006986000023625}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.15, y: 0.15, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children: []
   m_Father: {fileID: 4181197841925037926}
   m_RootOrder: 1
@@ -69,7 +69,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b4fce67168acb634e9b0e6ec14aaf404, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b8482f72bdddc1e40a7b0510cbdc405c, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 1978498503
   m_BackSortingLayerID: 285487333
@@ -5169,7 +5169,7 @@ MonoBehaviour:
   wave: 0
   maxHp: 0
   hp: 20
-  speed: 5
+  speed: 4
   coolDown: 4
   shuffle: 0
   shardNum: 2

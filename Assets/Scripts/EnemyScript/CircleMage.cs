@@ -37,7 +37,7 @@ public class CircleMage : Enemy
         yield return new WaitForSeconds(0.75f);
         sr.DOColor(originalColor, 0.5f);
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 12; i++)
         {
             float newAngle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
             if(Mathf.Abs(angle - newAngle) > 180)
@@ -47,7 +47,7 @@ public class CircleMage : Enemy
             }
             angle = Mathf.Lerp(angle, newAngle, 0.3f);
             manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.075f);
         }
         isAttacking = false;
         rb.constraints = RigidbodyConstraints2D.None;

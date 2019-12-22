@@ -97,7 +97,8 @@ MonoBehaviour:
   X: 6
   Y: 12
   PosInArray: {x: -1, y: -1}
-  connection: 0
+  idxX: -1
+  idxY: -1
   waveOne:
   - {fileID: 6497848449346565636}
   - {fileID: 40526198912090822}

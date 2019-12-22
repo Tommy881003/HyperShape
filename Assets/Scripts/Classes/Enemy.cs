@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 {
     public int wave;
     protected static GameObject shard = null;
+    protected static Material hurt = null;
     Root aiRoot = BT.Root();
     protected PlayerController player;
     protected Transform playerTransform;
@@ -17,6 +18,7 @@ public class Enemy : MonoBehaviour
     protected AIDestinationSetter destination;
     protected AIPath iPath;
     protected Rigidbody2D rb;
+    protected Collider2D[] colliders;
     protected ParticleSystem dieParticle;
     protected SpriteRenderer sr;
     protected Level parentLevel = null;
@@ -25,7 +27,7 @@ public class Enemy : MonoBehaviour
     public float maxHp;
     [SerializeField,Header("生命值"),Range(1,10000)]
     public float hp = 50;
-    [SerializeField, Header("速度"), Range(1, 100)]
+    [SerializeField, Header("速度"), Range(0, 100)]
     protected float speed;
     [SerializeField, Header("冷卻時間"), Range(0.5f, 20)]
     protected float coolDown = 4f;
@@ -41,6 +43,7 @@ public class Enemy : MonoBehaviour
     protected int[] pattern;
     protected bool isAttacking;
     protected int currentShard = 0;
+    protected Material oriSr;
 
     //AI邏輯：
     //IF(怪物血量歸零) => 死亡function(放特效、音效，死亡時攻擊之類的)
@@ -68,6 +71,8 @@ public class Enemy : MonoBehaviour
     {
         if(shard == null)
             shard = Resources.Load<GameObject>("Prefab(I)/Shard");
+        if(hurt == null)
+            hurt = Resources.Load<Material>("Materials/Hurt");
     }
 
     protected virtual void DoNothing()
@@ -106,10 +111,11 @@ public class Enemy : MonoBehaviour
 
     protected virtual IEnumerator playDead()
     {
+        sr.material = oriSr;
         rb.velocity = Vector2.zero;
         rb.mass = 10000;
         Destroy(rb);
-        foreach(Collider2D c in GetComponents<Collider2D>())
+        foreach(Collider2D c in colliders)
             c.enabled = false;
         destination.enabled = false;
         iPath.enabled = false;
@@ -175,11 +181,12 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Start()//需要override以獲取繼承此class的script所涵蓋的資料，關於如何override請參考底下的註解
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
-        playerTransform = player.gameObject.transform.Find("Player");
-        enemyTransform = this.transform;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform.Find("Player");
+        player = playerTransform.gameObject.GetComponentInParent<PlayerController>();
+        enemyTransform = transform;
         rb = enemyTransform.gameObject.GetComponent<Rigidbody2D>();
         sr = enemyTransform.gameObject.GetComponent<SpriteRenderer>();
+        colliders = GetComponents<Collider2D>();
         dieParticle = enemyTransform.Find("Die").gameObject.GetComponent<ParticleSystem>();
         destination = enemyTransform.gameObject.GetComponent<AIDestinationSetter>();
         destination.target = playerTransform;
@@ -188,6 +195,7 @@ public class Enemy : MonoBehaviour
         maxHp = hp;
         speed = speed * Random.Range(0.8f, 1.2f);
         rb.angularDrag = 10000;
+        oriSr = sr.material;
         parentLevel = this.GetComponentInParent<Level>();
         if (parentLevel != null)
             m_MyEvent.AddListener(parentLevel.EnemyDie);
@@ -245,12 +253,25 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("PlayerBullet"))
+        if (collision.gameObject.CompareTag("PlayerBullet"))
         {
             PlayerBulletInfo info = collision.gameObject.GetComponent<PlayerBulletInfo>();
             info.StartCoroutine(info.DelayDestroy());
             hp -= info.damage;
+            StartCoroutine(Hurt());
         }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Contact");
+            player.StartCoroutine(player.GetDamage());
+        }
+    }
+
+    public virtual IEnumerator Hurt()
+    {
+        sr.material = hurt;
+        yield return new WaitForSeconds(0.075f);
+        sr.material = oriSr;
     }
 
     public Root GetAIRoot()
