@@ -3,6 +3,7 @@ using Unity.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using BulletCreator;
+using UnityEngine.SceneManagement;
 using UnityEngine.Jobs;
 using Unity.Jobs;
 
@@ -29,6 +30,28 @@ public class BulletManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        player = GameObject.Find("DummyPlayer").GetComponent<PlayerController>();
+        BulletArray bulletArray = Resources.Load<BulletArray>("ScriptableObject/BA");
+        bulletArray.DictIO();
+        bulletDictionary = new Dictionary<string, Queue<GameObject>>();
+        dummy = new GameObject();
+        foreach (Bullet bullet in bulletArray.enemies)
+        {
+            Queue<GameObject> bulletPool = new Queue<GameObject>();
+            for (int i = 0; i < bullet.size; i++)
+            {
+                GameObject newBulet = Instantiate(bullet.gameObject);
+                newBulet.name = bullet.name;
+                newBulet.SetActive(false);
+                bulletPool.Enqueue(newBulet);
+            }
+            bulletDictionary.Add(bullet.name, bulletPool);
+        }
+        SceneManager.sceneLoaded += OnSceneLoad;
+    }
+
+    void OnSceneLoad(Scene s, LoadSceneMode l)
     {
         player = GameObject.Find("DummyPlayer").GetComponent<PlayerController>();
         BulletArray bulletArray = Resources.Load<BulletArray>("ScriptableObject/BA");

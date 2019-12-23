@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 3208949262944761717}
   - component: {fileID: 3208949262944761718}
   - component: {fileID: 5560684028045836483}
+  - component: {fileID: 6501163249639806623}
   m_Layer: 9
   m_Name: BulletGuy
   m_TagString: Untagged
@@ -237,6 +238,7 @@ MonoBehaviour:
   shuffle: 0
   shardNum: 3
   pattern1: {fileID: 11400000, guid: bfa23601d7771d24fbdff00064948503, type: 2}
+  audios: {fileID: 0}
 --- !u!212 &3208949262944761718
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -320,6 +322,19 @@ PolygonCollider2D:
       - {x: 0.25, y: 0.8}
       - {x: 0, y: 0.9}
       - {x: -0.25, y: 0.8}
+--- !u!114 &6501163249639806623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3208949262944761716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7a928df4ed6cb4caf966fbfadd118c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipArray: {fileID: 11400000, guid: a2c8108d346efdc48b333072143377b5, type: 2}
 --- !u!1 &4842118763660728495
 GameObject:
   m_ObjectHideFlags: 0

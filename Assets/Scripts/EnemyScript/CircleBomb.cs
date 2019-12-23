@@ -8,11 +8,13 @@ public class CircleBomb : Enemy
     protected static float changeRotation = 0; 
     private BulletManager manager;
     public BulletPattern diePattern;
+    public AudioSource audios;
     private bool killing = false;
     private CircleCollider2D cc;
     protected override void Start()
     {
         base.Start();
+        audios = GetComponent<AudioSource>();
         manager = BulletManager.instance;
         Attacks.Add(attack1);
         CircleCollider2D[] ccs = enemyTransform.GetComponents<CircleCollider2D>();
@@ -82,6 +84,7 @@ public class CircleBomb : Enemy
         enemyTransform.DOShakePosition(0.5f, 0.5f, 10).SetEase(Ease.InCubic);
         sr.DOColor(Color.white, 0.5f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.5f);
+        audios.Play();
         sr.enabled = false;
         float dieTime = dieParticle.main.duration;
         dieParticle.Play();

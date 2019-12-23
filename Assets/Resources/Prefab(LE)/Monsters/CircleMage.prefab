@@ -4830,6 +4830,7 @@ GameObject:
   - component: {fileID: 8253585214748838096}
   - component: {fileID: 1822079467416502098}
   - component: {fileID: 6318718205704362054}
+  - component: {fileID: -5192374953269171679}
   m_Layer: 9
   m_Name: CircleMage
   m_TagString: Untagged
@@ -5098,6 +5099,20 @@ MonoBehaviour:
   pattern1: {fileID: 11400000, guid: 02935c87f28f7d74dadeaa80d5b61157, type: 2}
   pattern2: {fileID: 11400000, guid: 9796b5b5a29b0d9438f881c5348291f2, type: 2}
   pattern3: {fileID: 11400000, guid: f4f738470f18d244ab3cf6ee810e00f8, type: 2}
+  audios: {fileID: 0}
+--- !u!114 &-5192374953269171679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6318718205704362049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7a928df4ed6cb4caf966fbfadd118c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipArray: {fileID: 11400000, guid: 063e02545efd9614abbaf73e67e2db21, type: 2}
 --- !u!1 &8917050307318499155
 GameObject:
   m_ObjectHideFlags: 0
@@ -5345,7 +5360,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 20
+      scalar: 10
       minScalar: 6
       maxCurve:
         serializedVersion: 2
@@ -5461,8 +5476,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.4
+      scalar: 0.6
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -7802,7 +7817,7 @@ ParticleSystem:
     inWorldSpace: 0
     multiplyDragByParticleSize: 1
     multiplyDragByParticleVelocity: 1
-    dampen: 0.05
+    dampen: 0.15
     drag:
       serializedVersion: 2
       minMaxState: 0

@@ -6,10 +6,13 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public static PauseMenu instance = null;
-    private SceneAudioManager audioManager;
-    private CanvasGroup group;
+    public Camera cam;
+    public SceneAudioManager audioManager;
+    public CanvasGroup pause;
     [SerializeField]
     private Slider music = null, fx = null;
+    public Loading loading;
+    public Canvas canvas;
 
     private void Awake()
     {
@@ -17,22 +20,27 @@ public class PauseMenu : MonoBehaviour
             instance = this;
         else
             Destroy(gameObject);
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
     void Start()
     {
         audioManager = SceneAudioManager.instance;
-        group = GetComponentInChildren<CanvasGroup>();
+        loading = Loading.instance;
         enabled = false;
-        group.alpha = 0;
-        group.interactable = false;
+        pause.alpha = 0;
+        pause.interactable = false;
+        canvas = GetComponent<Canvas>();
+        cam = CameraFollower.instance.cam;
+        canvas.renderMode = RenderMode.ScreenSpaceCamera;
+        canvas.worldCamera = cam;
     }
 
     private void OnEnable()
     {
-        group.alpha = 1;
-        group.interactable = true;
+        pause.alpha = 1;
+        pause.interactable = true;
         music.value = 10 * audioManager.musicAmp;
         fx.value = 10 * audioManager.fxAmp;
         Time.timeScale = 0;
@@ -40,8 +48,8 @@ public class PauseMenu : MonoBehaviour
 
     private void OnDisable()
     {
-        group.alpha = 0;
-        group.interactable = false;
+        pause.alpha = 0;
+        pause.interactable = false;
         Time.timeScale = 1;
     }
 
@@ -67,7 +75,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Title()
     {
-        Debug.Log("ToTitle");
+        loading.StartCoroutine(loading.SceneTransition(0));
+        enabled = false;
     }
 
     public void Exit()

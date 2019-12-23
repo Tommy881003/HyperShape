@@ -7,9 +7,11 @@ public class DiamondBlaster : Enemy
 {
     private BulletManager manager;
     public BulletPattern pattern1;
+    public ObjAudioManager audios;
     protected override void Start()
     {
         base.Start();
+        audios = GetComponent<ObjAudioManager>();
         manager = BulletManager.instance;
         Attacks.Add(attack1);
         atkPatternLen = Attacks.Count;
@@ -29,12 +31,14 @@ public class DiamondBlaster : Enemy
     {
         isAttacking = true;
         rb.mass = 10000;
+        audios.PlayByName("cha");
         Color orignialColor = sr.color;
         Vector3 scale = this.transform.localScale;
         sr.DOColor(Color.white, 0.5f).SetEase(Ease.OutCubic);
         enemyTransform.DOScale(2f * scale, 0.5f).SetEase(Ease.OutCubic);
         enemyTransform.DOShakePosition(0.5f, 0.2f, 10, 90).SetEase(Ease.OutCubic);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
+        audios.PlayByName("atk");
         manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.identity));
         sr.DOColor(orignialColor, 0.5f).SetEase(Ease.OutBack);
         enemyTransform.DOScale(scale, 0.5f).SetEase(Ease.OutBack);
@@ -57,5 +61,11 @@ public class DiamondBlaster : Enemy
             }
             rb.velocity = (playerTransform.position - enemyTransform.position).normalized * speed;
         }
+    }
+
+    protected override void OnDead()
+    {
+        base.OnDead();
+        audios.PlayByName("die");
     }
 }

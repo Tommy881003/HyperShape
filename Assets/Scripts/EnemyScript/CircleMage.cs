@@ -7,9 +7,11 @@ public class CircleMage : Enemy
 {
     private BulletManager manager;
     public BulletPattern pattern1,pattern2,pattern3;
+    public ObjAudioManager audios;
     protected override void Start()
     {
         base.Start();
+        audios = GetComponent<ObjAudioManager>();
         manager = BulletManager.instance;
         Attacks.Add(attack1);
         Attacks.Add(attack2);
@@ -35,6 +37,7 @@ public class CircleMage : Enemy
         sr.DOColor(Color.white, 0.75f);
         enemyTransform.DOShakePosition(0.75f, 0.5f, 15);
         yield return new WaitForSeconds(0.75f);
+        audios.PlayByName("atk1");
         sr.DOColor(originalColor, 0.5f);
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
         for (int i = 0; i < 12; i++)
@@ -49,6 +52,7 @@ public class CircleMage : Enemy
             manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
             yield return new WaitForSeconds(0.075f);
         }
+        audios.StopByName("atk1");
         isAttacking = false;
         rb.constraints = RigidbodyConstraints2D.None;
     }
@@ -70,6 +74,7 @@ public class CircleMage : Enemy
         rb.mass = 10000;
         for (int i = 0; i < 5; i++)
         {
+            audios.PlayByName("atk2");
             float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position) + Random.Range(-20,20);
             manager.StartCoroutine(manager.SpawnPattern(pattern2, this.transform.position, Quaternion.Euler(0, 0, angle)));
             yield return new WaitForSeconds(0.3f);
@@ -90,9 +95,10 @@ public class CircleMage : Enemy
         isAttacking = true;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
         sr.DOColor(Color.white, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        audios.PlayByName("atk3");
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
-        manager.StartCoroutine(manager.SpawnPattern(pattern3, this.transform.position, Quaternion.Euler(0, 0, angle)));
-        yield return new WaitForSeconds(0.75f);
+        manager.StartCoroutine(manager.SpawnPattern(pattern3, this.transform.position, Quaternion.Euler(0, 0, angle))); 
         sr.DOColor(originalColor, 0.5f);
         enemyTransform.DOShakePosition(0.5f, 0.5f, 10);
         yield return new WaitForSeconds(0.5f);

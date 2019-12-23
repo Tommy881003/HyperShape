@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 using JetFistGames.RetroTVFX;
 
 public class CameraFollower : MonoBehaviour
 {
+    public static CameraFollower instance = null;
     private LevelGenerator generator = null;
-    private Camera cam;
+    [HideInInspector]
+    public Camera cam;
     public GameObject player = null;
     public PlayerController controller = null;
     private bool isShakeing;
@@ -30,6 +33,17 @@ public class CameraFollower : MonoBehaviour
     private void Awake()
     {
         Application.targetFrameRate = 60;
+        if (instance == null)
+        {
+            instance = this;
+            cam = GetComponent<Camera>();
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
     }
 
     // Start is called before the first frame update
@@ -37,7 +51,6 @@ public class CameraFollower : MonoBehaviour
     {
         oriLerp = lerp;
         screenRatio = (float)Screen.height / (float)Screen.width;
-        cam = GetComponent<Camera>();
         isShakeing = false;
         seed1 = 0; seed2 = 0; timer = 0;
         originalFrequency = frequency; originalShake = shakePower;
@@ -54,6 +67,7 @@ public class CameraFollower : MonoBehaviour
         }
         else
             StartCoroutine(FindPlayer());
+        SceneManager.sceneLoaded += OnSceneLoad;
     }
 
     // Update is called once per frame
@@ -151,5 +165,18 @@ public class CameraFollower : MonoBehaviour
     {
         ripple.Emit(cam.WorldToViewportPoint(player.transform.position));
         StartCoroutine(CamShake(2.5f, 0.5f));
+    }
+
+    void OnSceneLoad(Scene s, LoadSceneMode l)
+    {
+        if (isTest == false)
+            generator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
+        if (generator == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform.Find("Player").gameObject;
+            controller = player.GetComponentInParent<PlayerController>();
+        }
+        else
+            StartCoroutine(FindPlayer());
     }
 }

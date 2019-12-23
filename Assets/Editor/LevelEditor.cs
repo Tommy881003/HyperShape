@@ -145,7 +145,9 @@ public class LevelEditor : Editor
         }
         else if (pointed != null && Event.current.type == EventType.KeyDown && Event.current.keyCode == KeyCode.X) //按X把滑鼠指到的東西刪掉(如果有指到東西的話)
         {
-            if(category == 2)
+            if(category == 1)
+                DestroyImmediate(pointed.gameObject);
+            if (category == 2)
             {
                 switch (wave)
                 {

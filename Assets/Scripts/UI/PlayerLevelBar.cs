@@ -10,8 +10,10 @@ public class PlayerLevelBar : MonoBehaviour
     public static PlayerLevelBar instance = null;
     public PlayerController player = null;
     private LevelUp up;
-    private Scrollbar levelBar;
-    private TextMeshProUGUI text;
+    [SerializeField]
+    private Scrollbar levelBar = null,novaBar = null;
+    [SerializeField]
+    private TextMeshProUGUI levelText = null,novaText = null;
     private int level = 1;
     [Range(50,200)]
     public float threshold = 150;
@@ -20,8 +22,6 @@ public class PlayerLevelBar : MonoBehaviour
     private float nowExp = 0;
     private void Awake()
     {
-        levelBar = GetComponentInChildren<Scrollbar>();
-        text = GetComponentInChildren<TextMeshProUGUI>();
         levelExp = threshold;
         previousExp = 0;
         if (instance == null)
@@ -44,10 +44,15 @@ public class PlayerLevelBar : MonoBehaviour
             level++;
             previousExp = levelExp;
             levelExp += threshold * Mathf.Pow(1.25f, level - 1);
-            text.text = "Lv : " + level.ToString();
+            levelText.text = "Lv : " + level.ToString();
             up.StartCoroutine(up.Upgrade());
         }    
         nowExp = player.exp - previousExp;
         levelBar.size = nowExp / (threshold * Mathf.Pow(1.25f, level - 1));
+        novaBar.size = player.currentNovaTime / player.novaCoolDown;
+        if (player.currentNovaTime == player.novaCoolDown)
+            novaText.alpha = 1;
+        else
+            novaText.alpha = 0;
     }
 }

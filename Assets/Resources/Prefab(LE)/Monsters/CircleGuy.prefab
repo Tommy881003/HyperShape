@@ -4860,6 +4860,7 @@ GameObject:
   - component: {fileID: 1390359472950819381}
   - component: {fileID: 8685331570098490807}
   - component: {fileID: 5333731274321419812}
+  - component: {fileID: -7729113234094679296}
   m_Layer: 9
   m_Name: CircleGuy
   m_TagString: Untagged
@@ -5125,3 +5126,17 @@ MonoBehaviour:
   shuffle: 0
   shardNum: 2
   pattern1: {fileID: 11400000, guid: 87b9baa986b5eab4d9399c1f8184df88, type: 2}
+  audios: {fileID: 0}
+--- !u!114 &-7729113234094679296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3923114860499249828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7a928df4ed6cb4caf966fbfadd118c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipArray: {fileID: 11400000, guid: fcdbb62c62a54e249b9eef044ca820d9, type: 2}

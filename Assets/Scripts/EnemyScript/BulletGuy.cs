@@ -15,10 +15,12 @@ public class BulletGuy : Enemy
     private BulletManager manager;
     public BulletPattern pattern1;
     private ParticleSystem shockwave;
+    public ObjAudioManager audios;
     protected override void Start()
     {
         base.Start();
         manager = BulletManager.instance;
+        audios = GetComponent<ObjAudioManager>();
         Attacks.Add(attack1);
         atkPatternLen = Attacks.Count;
         shockwave = enemyTransform.Find("Main").gameObject.GetComponent<ParticleSystem>();
@@ -50,8 +52,10 @@ public class BulletGuy : Enemy
         float toAngle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
         enemyTransform.DORotateQuaternion(Quaternion.Euler(0, 0, toAngle - 90), 0.5f);
         enemyTransform.DOShakePosition(0.5f,0.5f);
-        yield return new WaitForSeconds(0.5f);
+        audios.PlayByName("cha");
+        yield return new WaitForSeconds(0.75f);
         rb.velocity = 35 * new Vector2(Mathf.Cos(toAngle * Mathf.Deg2Rad), Mathf.Sin(toAngle * Mathf.Deg2Rad));
+        audios.PlayByName("atk");
         while (hitTarget == false)
             yield return null;
         sr.color = originalColor;
@@ -123,5 +127,11 @@ public class BulletGuy : Enemy
             Vector3 to = playerTransform.transform.position - enemyTransform.transform.position;
             enemyTransform.transform.up = Vector3.Lerp(from, to, 0.1f * rotateSeed);
         }
+    }
+
+    protected override void OnDead()
+    {
+        base.OnDead();
+        audios.PlayByName("die");
     }
 }

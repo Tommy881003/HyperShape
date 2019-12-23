@@ -8,9 +8,11 @@ public class HexShifter : Enemy
     private BulletManager manager;
     private Vector3 scale;
     public BulletPattern pattern1,diePattern;
+    public ObjAudioManager audios;
     protected override void Start()
     {
         base.Start();
+        audios = GetComponent<ObjAudioManager>();
         scale = transform.localScale;
         manager = BulletManager.instance;
         Attacks.Add(attack1);
@@ -46,11 +48,13 @@ public class HexShifter : Enemy
             enemyTransform.localScale = 0.5f * scale;
             enemyTransform.DOMove(rayDir(), 0.2f);
             enemyTransform.DOScale(scale, 0.2f);
+            audios.PlayByName("cha");
             yield return new WaitForSeconds(0.4f);
         }
         yield return new WaitForSeconds(0.2f);
         enemyTransform.localScale = 1.25f * scale;
         enemyTransform.DOScale(scale, 0.2f);
+        audios.PlayByName("atk");
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
         manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
         yield return new WaitForSeconds(0.4f);
@@ -115,6 +119,7 @@ public class HexShifter : Enemy
         sr.DOColor(Color.white, 0.5f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.5f);
         float dieTime = Mathf.Max(dieParticle.main.duration - 0.2f,0);
+        audios.PlayByName("die");
         dieParticle.Play();
         manager.StartCoroutine(manager.SpawnPattern(diePattern, this.transform.position, Quaternion.identity));
         if (parentLevel != null && m_MyEvent != null)

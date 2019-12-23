@@ -46,7 +46,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public int life;
     [HideInInspector]
-    public int currentNova = 3;
+    public float currentNovaTime = 15, novaCoolDown = 15;
     public float exp = 0;
     private Weapon selectedWeapon;
     private ObjAudioManager audios;
@@ -72,14 +72,15 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        currentNovaTime = Mathf.Min(currentNovaTime + Time.deltaTime, novaCoolDown);
         if (Input.GetKeyDown(KeyCode.Escape) && menu != null)
             menu.enabled = !menu.enabled;
-        if (currentNova > 0 && Input.GetKeyDown(KeyCode.Q))
+        if (currentNovaTime == novaCoolDown && Input.GetKeyDown(KeyCode.Q))
         {
+            currentNovaTime = 0;
             audios.PlayByName("nova");
             nova.Play();
             follower.Nova();
-            currentNova--;
             GameObject newNova = Instantiate(Nova, player.transform.position, Quaternion.identity);
             DOTween.To(() => newNova.GetComponent<CircleCollider2D>().radius, x => newNova.GetComponent<CircleCollider2D>().radius = x, 50f, 0.5f);
             Destroy(newNova, 2);

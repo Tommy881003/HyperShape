@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcce10586cafa234086d88978e7a1bfa, type: 3}
+  m_Name: HexShifter
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: cha
+    clip: {fileID: 8300000, guid: 9457a8fd89010ec44932043be215e138, type: 3}
+    volume: 1
+    pitch: 1
+    blend: 0
+    loop: 0
+    isFX: 1
+    source: {fileID: 0}
+    hashCode: 1905883080
+  - name: atk
+    clip: {fileID: 8300000, guid: 4b93982dd59744f4eb54a676e8bce112, type: 3}
+    volume: 1
+    pitch: 1
+    blend: 0
+    loop: 0
+    isFX: 1
+    source: {fileID: 0}
+    hashCode: -419715932
+  - name: die
+    clip: {fileID: 8300000, guid: 789807468989a7d49870f72007d934cd, type: 3}
+    volume: 1
+    pitch: 1
+    blend: 0
+    loop: 0
+    isFX: 1
+    source: {fileID: 0}
+    hashCode: 339798784

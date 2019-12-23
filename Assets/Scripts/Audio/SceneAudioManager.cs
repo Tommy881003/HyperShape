@@ -49,49 +49,9 @@ public class SceneAudioManager : MonoBehaviour
                 generalClips.Add(newClip);
             }
         }
-    }
-
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneChange;
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneChange;
-    }
-
-    private void Update()
-    {
-        if(sceneChangeComplete)
-        {
-            foreach (Clip s in sceneClips)
-            {
-                if (s.isFX)
-                    s.source.volume = s.volume * fxAmp;
-                else
-                    s.source.volume = s.volume * musicAmp;
-            }
-        }
-    }
-
-    void OnSceneChange(Scene scene, LoadSceneMode mode)
-    {
-        sceneChangeComplete = false;
         if(sceneClipArray != null)
         {
-            foreach (Clip s in sceneClips)
-            {
-                Destroy(s.source);
-            }
-        }
-        /*string clipName = "Scene" + scene.buildIndex.ToString() + "Audio";
-        sceneClipArray = Resources.Load<AudioClipArray>("Scriptable Object/" + clipName);*/
-        if(sceneClipArray != null)
-        {
-            sceneClips.Clear();
-            sceneClipArray.Initialize();
-            foreach(Sound s in sceneClipArray.sounds)
+            foreach (Sound s in sceneClipArray.sounds)
             {
                 Clip newClip = new Clip();
                 newClip.name = s.name;
@@ -109,15 +69,28 @@ public class SceneAudioManager : MonoBehaviour
                 newClip.source.bypassReverbZones = true;
                 sceneClips.Add(newClip);
             }
-            foreach(Clip clip in sceneClips)
-            {
-                clip.source.Play();
-            }
         }
-        sceneChangeComplete = true;
+    }
+
+    private void Start()
+    {
         PlayByName("bgm", sceneClips);
         StopByName("boss", sceneClips);
         StopByName("low", sceneClips);
+    }
+
+    private void Update()
+    {
+        if(sceneChangeComplete)
+        {
+            foreach (Clip s in sceneClips)
+            {
+                if (s.isFX)
+                    s.source.volume = s.volume * fxAmp;
+                else
+                    s.source.volume = s.volume * musicAmp;
+            }
+        }
     }
 
     public void PlayByName(string name, List<Clip> clips)

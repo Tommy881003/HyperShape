@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
+  m_Name: Big Shotgun
+  m_EditorClassIdentifier: 
+  type: 0
+  bullet: {fileID: 3395924439713750603, guid: b474d45333475654aadc08f9067c3358, type: 3}
+  speed: 35
+  damage: 5
+  count: 10
+  burst_count: 0
+  burst_spacing: 0
+  fireRate: 1
+  ammoCapacity: 5
+  reloadTime: 2
+  spread: 15
+  upgrades: []

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 5375635394174656547}
   - component: {fileID: 8653473954358965168}
   - component: {fileID: 316339172256630577}
+  - component: {fileID: 2952449960478647609}
   m_Layer: 9
   m_Name: TriShotgun
   m_TagString: Untagged
@@ -147,7 +148,7 @@ MonoBehaviour:
   enableRotation: 1
   targetCompatibility: {fileID: 0}
   maxAcceleration: 10000
-  rotationSpeed: 360
+  rotationSpeed: 180
   slowdownDistance: 0.6
   pickNextWaypointDist: 2
   endReachedDistance: 0.2
@@ -268,6 +269,7 @@ MonoBehaviour:
   shuffle: 0
   shardNum: 2
   pattern1: {fileID: 11400000, guid: 0a9ded72fee0dad46a4d14b3057e233d, type: 2}
+  audios: {fileID: 0}
 --- !u!60 &316339172256630577
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -296,6 +298,19 @@ PolygonCollider2D:
     - - {x: 0, y: 0.4}
       - {x: 0.45, y: -0.4}
       - {x: -0.45, y: -0.4}
+--- !u!114 &2952449960478647609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316339172256630576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7a928df4ed6cb4caf966fbfadd118c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipArray: {fileID: 11400000, guid: 859662a202168014abaa219acfb86025, type: 2}
 --- !u!1 &2912982837500932163
 GameObject:
   m_ObjectHideFlags: 0

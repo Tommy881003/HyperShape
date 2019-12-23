@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcce10586cafa234086d88978e7a1bfa, type: 3}
+  m_Name: BulletGuy
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: cha
+    clip: {fileID: 8300000, guid: 74638193c0887604ea53a849a6c491fd, type: 3}
+    volume: 0.9
+    pitch: 1
+    blend: 0
+    loop: 0
+    isFX: 1
+    source: {fileID: 0}
+    hashCode: 1905883080
+  - name: atk
+    clip: {fileID: 8300000, guid: f9d8f32482b02a94899d8c288a2cf365, type: 3}
+    volume: 0.7
+    pitch: 1
+    blend: 0
+    loop: 0
+    isFX: 1
+    source: {fileID: 0}
+    hashCode: -419715932
+  - name: die
+    clip: {fileID: 8300000, guid: 6f26a90be8c55744eaac92b8e4118fb7, type: 3}
+    volume: 1
+    pitch: 1
+    blend: 0
+    loop: 0
+    isFX: 1
+    source: {fileID: 0}
+    hashCode: 339798784

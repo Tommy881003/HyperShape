@@ -25,3 +25,4 @@ MonoBehaviour:
   spread: 10
   upgrades:
   - {fileID: 11400000, guid: e2978d372f8d91c43b49d0f52f3df263, type: 2}
+  - {fileID: 11400000, guid: 1b2010c8b20cbee4e92ed7e8a7ce0d23, type: 2}

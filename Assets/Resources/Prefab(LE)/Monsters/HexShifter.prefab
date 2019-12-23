@@ -9662,6 +9662,7 @@ GameObject:
   - component: {fileID: 8580114283855040769}
   - component: {fileID: 2076515543183959683}
   - component: {fileID: 5920132101464080785}
+  - component: {fileID: 7284335018022044422}
   m_Layer: 13
   m_Name: HexShifter
   m_TagString: Untagged
@@ -9923,9 +9924,23 @@ MonoBehaviour:
   wave: 0
   maxHp: 0
   hp: 40
-  speed: 6
+  speed: 5
   coolDown: 3
   shuffle: 0
   shardNum: 3
   pattern1: {fileID: 11400000, guid: 6b37d47adb8ae164b95004ddec715331, type: 2}
   diePattern: {fileID: 11400000, guid: 8cb553b92cff97c45a51dddf47074a20, type: 2}
+  audios: {fileID: 0}
+--- !u!114 &7284335018022044422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5920132101464080784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7a928df4ed6cb4caf966fbfadd118c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipArray: {fileID: 11400000, guid: 71010d6c85b469e4e8d8a19f76f422d3, type: 2}

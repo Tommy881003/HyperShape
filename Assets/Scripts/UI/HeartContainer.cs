@@ -43,7 +43,12 @@ public class HeartContainer : MonoBehaviour
             lowHp.color = newColor;
         }
         else
+        {
+            Color newColor = lowHp.color;
+            newColor.a = 0;
+            lowHp.color = newColor;
             sceneAudio.StopByName("low", sceneAudio.sceneClips);
+        }
     }
 
     public void ShowHeart(bool start, PlayerController backUp)

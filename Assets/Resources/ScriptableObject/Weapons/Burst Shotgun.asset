@@ -23,4 +23,5 @@ MonoBehaviour:
   ammoCapacity: 4
   reloadTime: 1
   spread: 10
-  upgrades: []
+  upgrades:
+  - {fileID: 11400000, guid: 23e58fb3f36ac584696d29c772bf94c9, type: 2}

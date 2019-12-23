@@ -25,6 +25,7 @@ public class Weapon : MonoBehaviour
     private float strength;
     private float time;
     private AudioSource audios;
+    private PlayerController player;
 
 
     private void Start()
@@ -42,10 +43,13 @@ public class Weapon : MonoBehaviour
         strength = Mathf.Lerp(0.5f, 3,Mathf.Clamp01((currentGun.damage * currentGun.count)/40f));
         time = Mathf.Clamp(fireTime, 0.1f, 0.3f);
         WpCount = startWps.Count;
+        player = GetComponentInParent<PlayerController>();
     }
 
     private void Update()
     {
+        if (player.enabled == false)
+            return;
         if (Time.timeScale >= 0.5f && canAttack && ((currentGun.type == weapon_type.auto && Input.GetMouseButton(0)) || Input.GetMouseButtonDown(0)))
         {
             if(currentAmmo > 0)

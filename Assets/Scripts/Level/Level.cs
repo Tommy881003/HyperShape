@@ -103,6 +103,7 @@ public class Level : MonoBehaviour
     {
         if(box.enabled == true && collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log("enter");
             if(miniMap != null)
                 miniMap.Modify(idxX, idxY);
             if (battled)

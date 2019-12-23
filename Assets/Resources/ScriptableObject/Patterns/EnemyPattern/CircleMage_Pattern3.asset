@@ -42,42 +42,33 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 60
-      outSlope: Infinity
-      tangentMode: 97
+      value: 15
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.75
-      value: 20
-      inSlope: -0.40742373
-      outSlope: 0
-      tangentMode: 65
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
       time: 10
-      value: 20
-      inSlope: -0
-      outSlope: Infinity
-      tangentMode: 101
+      value: 15
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0
     m_PreInfinity: 2
-    m_PostInfinity: 1
+    m_PostInfinity: 2
     m_RotationOrder: 4
   rotation:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
-      inSlope: 80
-      outSlope: 80
+      value: 60
+      inSlope: 0
+      outSlope: 0
       tangentMode: 34
       weightedMode: 0
       inWeight: 0
@@ -138,50 +129,64 @@ MonoBehaviour:
     m_RotationOrder: 4
   spawns:
   - name: Enemy_Cicle
-    position: {x: 2.25, y: 0}
+    position: {x: 3.5, y: 0}
   - name: Enemy_Cicle
-    position: {x: 2.1733332, y: 0.58234286}
+    position: {x: 3.3807404, y: 0.9058666}
   - name: Enemy_Cicle
-    position: {x: 1.9485571, y: 1.125}
+    position: {x: 3.0310888, y: 1.75}
   - name: Enemy_Cicle
-    position: {x: 1.5909902, y: 1.5909902}
+    position: {x: 2.4748738, y: 2.4748738}
   - name: Enemy_Cicle
-    position: {x: 1.1249999, y: 1.9485573}
+    position: {x: 1.7499999, y: 3.031089}
   - name: Enemy_Cicle
-    position: {x: 0.5823429, y: 2.1733332}
+    position: {x: 0.90586674, y: 3.3807404}
   - name: Enemy_Cicle
-    position: {x: -0.000000098350625, y: 2.25}
+    position: {x: -0.00000015298986, y: 3.5}
   - name: Enemy_Cicle
-    position: {x: -0.58234286, y: 2.1733332}
+    position: {x: -0.9058666, y: 3.3807404}
   - name: Enemy_Cicle
-    position: {x: -1.1250001, y: 1.9485571}
+    position: {x: -1.7500002, y: 3.0310888}
   - name: Enemy_Cicle
-    position: {x: -1.5909902, y: 1.5909902}
+    position: {x: -2.4748738, y: 2.4748738}
   - name: Enemy_Cicle
-    position: {x: -1.9485571, y: 1.1250001}
+    position: {x: -3.0310888, y: 1.7500002}
   - name: Enemy_Cicle
-    position: {x: -2.1733332, y: 0.58234304}
+    position: {x: -3.3807404, y: 0.905867}
   - name: Enemy_Cicle
-    position: {x: -2.25, y: -0.00000019670125}
+    position: {x: -3.5, y: -0.0000003059797}
   - name: Enemy_Cicle
-    position: {x: -2.1733332, y: -0.5823429}
+    position: {x: -3.3807404, y: -0.90586674}
   - name: Enemy_Cicle
-    position: {x: -1.9485571, y: -1.1249999}
+    position: {x: -3.0310888, y: -1.7499999}
   - name: Enemy_Cicle
-    position: {x: -1.5909903, y: -1.5909901}
+    position: {x: -2.474874, y: -2.4748735}
   - name: Enemy_Cicle
-    position: {x: -1.1249998, y: -1.9485573}
+    position: {x: -1.7499996, y: -3.031089}
   - name: Enemy_Cicle
-    position: {x: -0.58234274, y: -2.1733332}
+    position: {x: -0.90586644, y: -3.3807406}
   - name: Enemy_Cicle
-    position: {x: 0.000000026830982, y: -2.25}
+    position: {x: 0.00000004173708, y: -3.5}
   - name: Enemy_Cicle
-    position: {x: 0.5823428, y: -2.1733332}
+    position: {x: 0.90586656, y: -3.3807404}
   - name: Enemy_Cicle
-    position: {x: 1.1249998, y: -1.9485573}
+    position: {x: 1.7499996, y: -3.031089}
   - name: Enemy_Cicle
-    position: {x: 1.59099, y: -1.5909905}
+    position: {x: 2.4748733, y: -2.474874}
   - name: Enemy_Cicle
-    position: {x: 1.948557, y: -1.1250004}
+    position: {x: 3.0310886, y: -1.7500006}
   - name: Enemy_Cicle
-    position: {x: 2.173333, y: -0.5823434}
+    position: {x: 3.3807402, y: -0.90586746}
+  - name: Enemy_Cicle
+    position: {x: 1.25, y: 1}
+  - name: Enemy_Cicle
+    position: {x: -1.25, y: 1}
+  - name: Enemy_Cicle
+    position: {x: 1.5, y: -1.25}
+  - name: Enemy_Cicle
+    position: {x: 0.75, y: -1.25}
+  - name: Enemy_Cicle
+    position: {x: 0, y: -1.25}
+  - name: Enemy_Cicle
+    position: {x: -0.75, y: -1.25}
+  - name: Enemy_Cicle
+    position: {x: -1.5, y: -1.25}

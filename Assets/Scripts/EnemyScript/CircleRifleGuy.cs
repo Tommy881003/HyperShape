@@ -6,9 +6,11 @@ public class CircleRifleGuy : Enemy
 {
     private BulletManager manager;
     public BulletPattern pattern1;
+    public ObjAudioManager audios;
     protected override void Start()
     {
         base.Start();
+        audios = GetComponent<ObjAudioManager>();
         manager = BulletManager.instance;
         Attacks.Add(attack1);
         atkPatternLen = Attacks.Count;
@@ -37,6 +39,7 @@ public class CircleRifleGuy : Enemy
                 newAngle = (newAngle < 0 ? newAngle + 360 : newAngle);
             }
             angle = Mathf.Lerp(angle, newAngle, 0.8f);
+            audios.PlayByName("atk");
             manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
             yield return new WaitForSeconds(0.2f);
         }
@@ -65,5 +68,11 @@ public class CircleRifleGuy : Enemy
             Vector3 to = enemyTransform.transform.position - playerTransform.transform.position;
             enemyTransform.transform.up = Vector3.Lerp(from, to, 0.05f);
         }
+    }
+
+    protected override void OnDead()
+    {
+        base.OnDead();
+        audios.PlayByName("die");
     }
 }
