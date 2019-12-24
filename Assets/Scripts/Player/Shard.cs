@@ -13,6 +13,10 @@ public class Shard : MonoBehaviour
     private Rigidbody2D rb;
     private int rand;
     private bool follow = false;
+    private AudioSource audios;
+    private SceneAudioManager manager;
+    private HeartContainer container;
+    public bool health;
 
     void Start()
     {
@@ -23,11 +27,15 @@ public class Shard : MonoBehaviour
         rb.angularVelocity = Random.Range(-60, 60);
         player = GameObject.FindGameObjectWithTag("Player").transform.Find("Player").gameObject;
         controller = player.GetComponentInParent<PlayerController>();
-        //StartCoroutine(FindPlayer());
+        audios = GetComponent<AudioSource>();
+        manager = SceneAudioManager.instance;
+        container = HeartContainer.instance;
     }
 
     private void Update()
     {
+        if (health && controller.life == controller.maxLife)
+            follow = false;
         if(follow == true)
         {
             float distance = (transform.position - player.transform.position).magnitude;
@@ -39,17 +47,27 @@ public class Shard : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Collect"))
-            follow = true;
+            if ((health && controller.life < controller.maxLife) || !health)
+                follow = true;
         if (collision.CompareTag("Player"))
-            StartCoroutine(AddExp());
+            if((health && controller.life < controller.maxLife) || !health)
+                StartCoroutine(AddExp());
     }
 
     IEnumerator AddExp()
     {
+        audios.volume *= manager.fxAmp;
+        audios.Play();
         cc.enabled = false;
         sr.enabled = false;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
-        controller.exp += 5;
+        if (health)
+        {
+            controller.life = Mathf.Min(controller.life + 1, controller.maxLife);
+            container.ShowHeart(false, controller);
+        }
+        else
+            controller.exp += 5;
         ps.Stop();
         spark.Play();
         yield return new WaitForSeconds(ps.main.duration);

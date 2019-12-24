@@ -29,6 +29,7 @@ public class CameraFollower : MonoBehaviour
     private CRTEffect cRT;
     private SceneAudioManager sceneAudio;
     private RippleEffect ripple;
+    private GameOver over;
 
     private void Awake()
     {
@@ -58,6 +59,7 @@ public class CameraFollower : MonoBehaviour
         cRT = GetComponent<CRTEffect>();
         ripple = GetComponent<RippleEffect>();
         sceneAudio = SceneAudioManager.instance;
+        over = GameOver.instance;
         if(isTest == false)
             generator = GameObject.FindGameObjectWithTag("LevelGenerator").GetComponent<LevelGenerator>();
         if (generator == null)
@@ -124,7 +126,7 @@ public class CameraFollower : MonoBehaviour
         DOTween.To(() => glitch.flickIntensity, x => glitch.flickIntensity = x, 0f, 0.75f).SetEase(Ease.InExpo);
     }
 
-    public void Die()
+    public IEnumerator Die()
     {
         StartCoroutine(CamShake(3, 1f));
         sceneAudio.StopAll();
@@ -139,6 +141,10 @@ public class CameraFollower : MonoBehaviour
         DOTween.To(() => cRT.IQScale.x, x => cRT.IQScale.x = x, 0f, 1f);
         DOTween.To(() => cRT.IQScale.y, x => cRT.IQScale.y = x, 0f, 1f);
         DOTween.To(() => Time.timeScale, x => Time.timeScale = x, 0f, 2f).SetUpdate(true).SetEase(Ease.Linear);
+        yield return new WaitForSecondsRealtime(1.5f);
+        over.StartCoroutine(over.gameOver());
+        DOTween.To(() => cRT.IQScale.x, x => cRT.IQScale.x = x, 1f, 0.5f).SetUpdate(true);
+        DOTween.To(() => cRT.IQScale.y, x => cRT.IQScale.y = x, 1f, 0.5f).SetUpdate(true);
     }
 
     public IEnumerator CamShake(float power, float duration)

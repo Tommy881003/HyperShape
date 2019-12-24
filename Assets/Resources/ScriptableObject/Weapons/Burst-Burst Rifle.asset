@@ -16,6 +16,7 @@ MonoBehaviour:
   bullet: {fileID: 4621956510468982459, guid: 814b0b8e8666bc34abfe82cbdb05441c, type: 3}
   speed: 45
   damage: 6
+  level: 3
   count: 2
   burst_count: 3
   burst_spacing: 0.075

@@ -16,6 +16,7 @@ MonoBehaviour:
   bullet: {fileID: 9039897374327216766, guid: a11f378ccd42da0468c4c41df28e66db, type: 3}
   speed: 35
   damage: 2.75
+  level: 2
   count: 1
   burst_count: 0
   burst_spacing: 0
@@ -23,4 +24,5 @@ MonoBehaviour:
   ammoCapacity: 30
   reloadTime: 1
   spread: 15
-  upgrades: []
+  upgrades:
+  - {fileID: 11400000, guid: 1977e6e41e4a1174eb74686835b38b3b, type: 2}

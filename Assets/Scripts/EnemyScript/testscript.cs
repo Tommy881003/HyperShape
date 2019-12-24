@@ -56,9 +56,9 @@ public class testscript : Enemy
                 destination.enabled = false;
             }
             rb.velocity = (playerTransform.position - enemyTransform.position).normalized * speed;
-            Vector3 from = enemyTransform.transform.up;
+            Vector3 from = enemyTransform.transform.right;
             Vector3 to = enemyTransform.transform.position - playerTransform.transform.position;
-            enemyTransform.transform.up = Vector3.Lerp(from, to, 0.025f);
+            enemyTransform.transform.right = Vector3.Lerp(from, to, 0.025f);
         }
     }
 

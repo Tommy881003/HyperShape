@@ -45,19 +45,26 @@ public class HexShifter : Enemy
         isAttacking = true;
         for(int i = 0; i < 2; i++)
         {
+            rb.constraints = RigidbodyConstraints2D.None;
             enemyTransform.localScale = 0.5f * scale;
             enemyTransform.DOMove(rayDir(), 0.2f);
             enemyTransform.DOScale(scale, 0.2f);
             audios.PlayByName("cha");
+            rb.constraints = RigidbodyConstraints2D.FreezeAll;
             yield return new WaitForSeconds(0.4f);
         }
-        yield return new WaitForSeconds(0.2f);
-        enemyTransform.localScale = 1.25f * scale;
-        enemyTransform.DOScale(scale, 0.2f);
+        Color oriColor = sr.color;
+        sr.DOColor(Color.white,0.5f);
+        enemyTransform.DOScale(1.3f * scale, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        transform.DOShakePosition(0.5f, 0.5f, 10);
+        enemyTransform.DOScale(scale, 0.5f);
+        sr.DOColor(oriColor, 0.5f);
         audios.PlayByName("atk");
         float angle = Vector2.SignedAngle(Vector2.right, playerTransform.transform.position - enemyTransform.transform.position);
         manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
         yield return new WaitForSeconds(0.4f);
+        rb.constraints = RigidbodyConstraints2D.None;
         isAttacking = false;
     }
 
@@ -114,10 +121,10 @@ public class HexShifter : Enemy
             c.enabled = false;
         destination.enabled = false;
         iPath.enabled = false;
-        enemyTransform.DOScale(0.6f * scale, 0.5f).SetEase(Ease.Linear);
-        enemyTransform.DOShakePosition(0.5f, 0.5f, 20).SetEase(Ease.Linear);
-        sr.DOColor(Color.white, 0.5f).SetEase(Ease.Linear);
-        yield return new WaitForSeconds(0.5f);
+        enemyTransform.DOScale(0.6f * scale, 1f).SetEase(Ease.Linear);
+        enemyTransform.DOShakePosition(1f, 0.5f, 20).SetEase(Ease.Linear);
+        sr.DOColor(Color.white, 1f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(1f);
         float dieTime = Mathf.Max(dieParticle.main.duration - 0.2f,0);
         audios.PlayByName("die");
         dieParticle.Play();

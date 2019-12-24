@@ -30,7 +30,7 @@ public class Loading : MonoBehaviour
         group.blocksRaycasts = true;
         big.transform.rotation = Quaternion.Euler(0, 0, 0);
         small.transform.rotation = Quaternion.Euler(0, 0, 0);
-        DOTween.To(() => group.alpha, x => group.alpha = x, 1, 0.5f);
+        group.alpha = 1;
         big.transform.DORotate(new Vector3(0, 0, 360), 1.5f).SetOptions(false).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
         small.transform.DORotate(new Vector3(0, 0, -360), 1.5f).SetOptions(false).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
         AsyncOperation async = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Single);

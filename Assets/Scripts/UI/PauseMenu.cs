@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -13,6 +15,7 @@ public class PauseMenu : MonoBehaviour
     private Slider music = null, fx = null;
     public Loading loading;
     public Canvas canvas;
+    public UnityEvent Enable, Disable;
 
     private void Awake()
     {
@@ -31,6 +34,7 @@ public class PauseMenu : MonoBehaviour
         enabled = false;
         pause.alpha = 0;
         pause.interactable = false;
+        pause.blocksRaycasts = false;
         canvas = GetComponent<Canvas>();
         cam = CameraFollower.instance.cam;
         canvas.renderMode = RenderMode.ScreenSpaceCamera;
@@ -39,8 +43,10 @@ public class PauseMenu : MonoBehaviour
 
     private void OnEnable()
     {
+        Enable.Invoke();
         pause.alpha = 1;
         pause.interactable = true;
+        pause.blocksRaycasts = true;
         music.value = 10 * audioManager.musicAmp;
         fx.value = 10 * audioManager.fxAmp;
         Time.timeScale = 0;
@@ -48,8 +54,10 @@ public class PauseMenu : MonoBehaviour
 
     private void OnDisable()
     {
+        Disable.Invoke();
         pause.alpha = 0;
         pause.interactable = false;
+        pause.blocksRaycasts = false;
         Time.timeScale = 1;
     }
 
@@ -76,11 +84,25 @@ public class PauseMenu : MonoBehaviour
     public void Title()
     {
         loading.StartCoroutine(loading.SceneTransition(0));
-        enabled = false;
+        Disable.Invoke();
+        pause.alpha = 0;
+        pause.interactable = false;
+        pause.blocksRaycasts = false;
+        Time.timeScale = 1;
     }
 
     public void Exit()
     {
         Application.Quit();
+    }
+
+    public void Reload()
+    {
+        loading.StartCoroutine(loading.SceneTransition(SceneManager.GetActiveScene().buildIndex));
+        Disable.Invoke();
+        pause.alpha = 0;
+        pause.interactable = false;
+        pause.blocksRaycasts = false;
+        Time.timeScale = 1;
     }
 }

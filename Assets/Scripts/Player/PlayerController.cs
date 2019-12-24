@@ -121,7 +121,6 @@ public class PlayerController : MonoBehaviour
         float moveDis = shiftDis;
         Vector3 moveVect = Moving().normalized;
         RaycastHit2D ray = Physics2D.Raycast(player.transform.position, moveVect, shiftDis + circle.radius, 1 << 8);
-        Debug.DrawRay(player.transform.position, moveVect * shiftDis,Color.white,2);
         if (ray.collider != null)
             moveDis = ray.distance - 0.5f * circle.radius;
         Vector3 moveTo = player.transform.position + moveVect * moveDis;
@@ -151,7 +150,7 @@ public class PlayerController : MonoBehaviour
             circle.enabled = false;
             rb.constraints = RigidbodyConstraints2D.FreezeAll;
             audios.PlayByName("over");
-            follower.Die();
+            follower.StartCoroutine(follower.Die());
             die.Play();
             enabled = false;
         }

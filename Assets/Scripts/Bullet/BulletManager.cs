@@ -53,6 +53,7 @@ public class BulletManager : MonoBehaviour
 
     void OnSceneLoad(Scene s, LoadSceneMode l)
     {
+        StopAllCoroutines();
         player = GameObject.Find("DummyPlayer").GetComponent<PlayerController>();
         BulletArray bulletArray = Resources.Load<BulletArray>("ScriptableObject/BA");
         bulletArray.DictIO();

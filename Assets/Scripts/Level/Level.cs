@@ -131,13 +131,11 @@ public class Level : MonoBehaviour
 
     IEnumerator StartBossCutScene(Camera cam, CameraFollower follower)
     {
-        sceneAudio.VolumeChange("bgm", sceneAudio.sceneClips, 0, 0.5f);
-        sceneAudio.VolumeChange("boss", sceneAudio.sceneClips, 0.4f, 0.5f);
         sceneAudio.PlayByName("boss", sceneAudio.sceneClips);
+        sceneAudio.StopByName("bgm", sceneAudio.sceneClips);
         follower.isCutScene = true;
         Vector3 oriPos = cam.transform.position;
         cam.transform.DOMove(new Vector3(boss.transform.position.x, boss.transform.position.y, cam.transform.position.z), 1);
-        sceneAudio.StopByName("bgm", sceneAudio.sceneClips);
         yield return new WaitForSeconds(1.5f);
         boss.gameObject.SetActive(true);
         boss.StartCoroutine(boss.StartCutScene());
@@ -194,20 +192,20 @@ public class Level : MonoBehaviour
     IEnumerator SpawnWarning(GameObject go)
     {
         GameObject newWarning = Instantiate(warning, go.transform.position, Quaternion.identity);
-        SpriteRenderer sr = newWarning.GetComponent<SpriteRenderer>();
+        /*SpriteRenderer sr = newWarning.GetComponent<SpriteRenderer>();*/
         ParticleSystem ps = newWarning.GetComponent<ParticleSystem>();
-        Vector3 scale = newWarning.transform.localScale;
+        /*Vector3 scale = newWarning.transform.localScale;
         sr.DOFade(1, 2f).SetEase(Ease.OutExpo);
         sr.DOColor(Color.white, 2f).SetEase(Ease.InCubic);
         newWarning.transform.DOScale(1.75f * scale, 2f).SetEase(Ease.InCubic);
-        newWarning.transform.DOShakePosition(2f, 0.3f, 30, 90, false, false).SetEase(Ease.InCubic);
+        newWarning.transform.DOShakePosition(2f, 0.3f, 30, 90, false, false).SetEase(Ease.InCubic);*/
         yield return new WaitForSeconds(2f);
         go.SetActive(true);
-        sr.enabled = false;
+        /*sr.enabled = false;
         ps.Play();
         float time = ps.main.duration;
         yield return new WaitForSeconds(time);
-        Destroy(newWarning);
+        Destroy(newWarning);*/
     }
 
     public void EnemyDie()
@@ -240,15 +238,13 @@ public class Level : MonoBehaviour
 
     IEnumerator EndBossCutScene(Camera cam, CameraFollower follower)
     {
-        sceneAudio.VolumeChange("boss", sceneAudio.sceneClips, 0, 0.5f);
-        sceneAudio.VolumeChange("bgm", sceneAudio.sceneClips, 0.5f, 0.5f);
+        sceneAudio.StopByName("boss", sceneAudio.sceneClips);
         sceneAudio.PlayByName("bgm", sceneAudio.sceneClips);
         follower.isCutScene = true;
         Vector3 oriPos = cam.transform.position;
         cam.transform.DOMove(new Vector3(boss.transform.position.x, boss.transform.position.y, cam.transform.position.z), 0.5f);
         BossHealthBar.instance.StartCoroutine(BossHealthBar.instance.EndBoss());
         yield return new WaitForSeconds(3);
-        sceneAudio.StopByName("boss", sceneAudio.sceneClips);
         cam.transform.DOMove(oriPos, 1);
         yield return new WaitForSeconds(1);
         follower.isCutScene = false;

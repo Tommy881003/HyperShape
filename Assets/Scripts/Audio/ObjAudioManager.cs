@@ -18,6 +18,7 @@ public class ObjAudioManager : MonoBehaviour
     private List<Clip> clips = new List<Clip>(), loopClips = new List<Clip>();
     private int loop = 0;
     private SceneAudioManager audioManager;
+    private PauseMenu menu;
 
     private void Awake()
     {
@@ -49,7 +50,18 @@ public class ObjAudioManager : MonoBehaviour
     private void Start()
     {
         audioManager = SceneAudioManager.instance;
+        menu = PauseMenu.instance;
+        menu.Enable.AddListener(Pause);
+        menu.Disable.AddListener(UnPause);
         enabled = false;
+    }
+    private void OnDestroy()
+    {
+        if(menu != null)
+        {
+            menu.Enable.RemoveListener(Pause);
+            menu.Disable.RemoveListener(UnPause);
+        }
     }
 
     private void Update()
@@ -105,5 +117,17 @@ public class ObjAudioManager : MonoBehaviour
             s.source.Stop();
         loop = 0;
         enabled = false;
+    }
+
+    private void Pause()
+    {
+        foreach (Clip s in clips)
+            s.source.Pause();
+    }
+
+    private void UnPause()
+    {
+        foreach (Clip s in clips)
+            s.source.UnPause();
     }
 }

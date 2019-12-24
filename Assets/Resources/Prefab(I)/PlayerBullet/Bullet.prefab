@@ -4850,7 +4850,7 @@ GameObject:
   - component: {fileID: 3453949348047519610}
   - component: {fileID: 6625230105951488863}
   m_Layer: 12
-  m_Name: RifleBullet
+  m_Name: Bullet
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9783,7 +9783,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 40d514f5e5033114b97ec3ac7cf7d827, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

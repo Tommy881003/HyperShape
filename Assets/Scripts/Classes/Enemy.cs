@@ -9,7 +9,7 @@ using UnityEngine.Events;
 public class Enemy : MonoBehaviour
 {
     public int wave;
-    protected static GameObject shard = null;
+    protected static GameObject shard = null, health = null;
     protected static Material hurt = null;
     Root aiRoot = BT.Root();
     protected PlayerController player;
@@ -71,7 +71,9 @@ public class Enemy : MonoBehaviour
     {
         if(shard == null)
             shard = Resources.Load<GameObject>("Prefab(I)/Shard");
-        if(hurt == null)
+        if (health == null)
+            health = Resources.Load<GameObject>("Prefab(I)/HealthShard");
+        if (hurt == null)
             hurt = Resources.Load<Material>("Materials/Hurt");
     }
 
@@ -129,11 +131,12 @@ public class Enemy : MonoBehaviour
         }
         giveShard();
         yield return new WaitForSeconds(dieTime);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     protected void giveShard()
     {
+        int seed = Random.Range(0, 100);
         for(int i = 0; i < shardNum; i++)
         {
             if (currentShard < shardNum)
@@ -141,7 +144,7 @@ public class Enemy : MonoBehaviour
                 currentShard++;
                 float rand = Random.Range(0, 360) * Mathf.Deg2Rad;
                 float speed = Random.Range(5, 10);
-                GameObject newShard = Instantiate(shard, transform.position, Quaternion.identity);
+                GameObject newShard = Instantiate((i == 0 && seed <= 3)? health : shard, transform.position, Quaternion.identity);
                 newShard.GetComponent<Rigidbody2D>().velocity = speed * new Vector2(Mathf.Cos(rand), Mathf.Sin(rand));
             }
             else

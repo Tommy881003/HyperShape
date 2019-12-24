@@ -38,7 +38,7 @@ public class CircleRifleGuy : Enemy
                 angle = (angle < 0 ? angle + 360 : angle);
                 newAngle = (newAngle < 0 ? newAngle + 360 : newAngle);
             }
-            angle = Mathf.Lerp(angle, newAngle, 0.8f);
+            angle = Mathf.Lerp(angle, newAngle, 0.8f) + Random.Range(-10,10);
             audios.PlayByName("atk");
             manager.StartCoroutine(manager.SpawnPattern(pattern1, this.transform.position, Quaternion.Euler(0, 0, angle)));
             yield return new WaitForSeconds(0.2f);

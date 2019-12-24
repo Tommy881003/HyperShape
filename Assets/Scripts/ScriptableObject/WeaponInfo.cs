@@ -18,6 +18,8 @@ public class WeaponInfo : ScriptableObject
     [Range(10f, 150f)]
     public float speed;
     public float damage;
+    [Range(0f, 3f)]
+    public int level = 0;
     [Range(1f, 15f)]
     public int count = 1;
     public int burst_count;

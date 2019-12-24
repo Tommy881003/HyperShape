@@ -5,15 +5,15 @@ using UnityEngine;
 public class PlayerBulletInfo : MonoBehaviour
 {
     public float damage;
-    private Vector3 previous;
-    private Rigidbody2D rb = null;
-    private SpriteRenderer sr = null;
-    private ParticleSystem ps = null;
-    private SceneAudioManager manager;
-    private AudioSource source = null;
+    protected Vector3 previous;
+    protected Rigidbody2D rb = null;
+    protected SpriteRenderer sr = null;
+    protected ParticleSystem ps = null;
+    protected SceneAudioManager manager;
+    protected AudioSource source = null;
     public bool isDisabled = false;
 
-    private void Start()
+    protected virtual void Start()
     {
         previous = transform.position;
         rb = GetComponent<Rigidbody2D>();
@@ -27,7 +27,7 @@ public class PlayerBulletInfo : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
+    protected virtual void LateUpdate()
     {
         if (!isDisabled)
         {
@@ -48,7 +48,7 @@ public class PlayerBulletInfo : MonoBehaviour
         }
     }
 
-    public IEnumerator DelayDestroy()
+    public virtual IEnumerator DelayDestroy()
     {
         isDisabled = true;
         foreach (Collider2D c in GetComponents<Collider2D>())

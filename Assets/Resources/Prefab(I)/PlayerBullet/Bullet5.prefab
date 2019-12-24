@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 2206990103898633118}
   - component: {fileID: 3627388185273688948}
   m_Layer: 12
-  m_Name: ShotgunBullet
+  m_Name: Bullet5
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7142,7 +7142,7 @@ ParticleSystem:
     m_Curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 0.1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
