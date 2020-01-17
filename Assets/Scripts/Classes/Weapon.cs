@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
-using DG.Tweening;
 
 public class Weapon : MonoBehaviour
 {
-    public WeaponInfo gun;
+    /*public WeaponInfo gun;
     private WeaponInfo currentGun;
     private List<WeaponInfo> weapons = new List<WeaponInfo>();
     [SerializeField]
@@ -187,5 +185,5 @@ public class Weapon : MonoBehaviour
         }
         yield return new WaitForSeconds(fireTime);
         canAttack = true;
-    }
+    }*/
 }

@@ -2,31 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum weapon_type
+public enum SpeedType
 {
-    semi_auto,
-    auto,
-    burst,
-    charge
+    Constant,
+    ConstantDecay,
+    Random,
+    RandomDecay
+}
+
+public enum SpreadType
+{
+    Random,
+    Evenly
+}
+
+public enum SizeType
+{
+    Constant,
+    Decay
 }
 
 [CreateAssetMenu]
 public class WeaponInfo : ScriptableObject
 {
-    public weapon_type type;
     public GameObject bullet;
+    [Space(15)]
     [Range(10f, 150f)]
     public float speed;
+    public SpeedType speedType;
+    public SizeType sizeType;
     public float damage;
-    [Range(0f, 3f)]
-    public int level = 0;
+    [Space(15)]
     [Range(1f, 15f)]
     public int count = 1;
-    public int burst_count;
-    public float burst_spacing;
-    public float fireRate;
-    public int ammoCapacity;
-    public float reloadTime;
     public float spread;
-    public WeaponInfo[] upgrades;
+    public SpreadType spreadType;
+    [Space(15)]
+    public float fireRate;
 }

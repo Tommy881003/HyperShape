@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class Direction
 {
-    public enum DIR
+    /*public enum DIR
     {
         Up = 0,
         Down = 1,
@@ -17,5 +17,5 @@ public class Direction
     [Header("接口位置")]
     public int position = 0;
     [HideInInspector]
-    public int connectedAmount = 0;
+    public int connectedAmount = 0;*/
 }
