@@ -10,19 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: SMG
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
-  type: 1
-  bullet: {fileID: 9039897374327216766, guid: a11f378ccd42da0468c4c41df28e66db, type: 3}
+  bullet: {fileID: 7996625255418922762, guid: 26bcba90e9bb8434ca25213773a36600, type: 3}
   speed: 35
-  damage: 2.75
-  level: 2
-  count: 1
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 20
-  ammoCapacity: 30
-  reloadTime: 1
-  spread: 15
-  upgrades:
-  - {fileID: 11400000, guid: 1977e6e41e4a1174eb74686835b38b3b, type: 2}
+  speedType: 0
+  sizeType: 0
+  damage: 5
+  count: 5
+  spread: 10
+  spreadType: 0
+  fireRate: 1.25

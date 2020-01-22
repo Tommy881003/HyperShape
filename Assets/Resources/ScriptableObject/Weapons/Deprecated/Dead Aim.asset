@@ -12,16 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
   m_Name: Dead Aim
   m_EditorClassIdentifier: 
-  type: 0
   bullet: {fileID: 3657849925244670343, guid: 27d2dcfa0634c0a43a1ce1872672eea3, type: 3}
   speed: 150
+  speedType: 0
+  sizeType: 0
   damage: 70
-  level: 3
   count: 1
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 1
-  ammoCapacity: 7
-  reloadTime: 1
   spread: 0
-  upgrades: []
+  spreadType: 0
+  fireRate: 1

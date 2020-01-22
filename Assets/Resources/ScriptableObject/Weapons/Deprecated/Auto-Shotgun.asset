@@ -10,19 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Burst Shotgun
+  m_Name: Auto-Shotgun
   m_EditorClassIdentifier: 
-  type: 2
   bullet: {fileID: 7996625255418922762, guid: 26bcba90e9bb8434ca25213773a36600, type: 3}
   speed: 35
-  damage: 5
-  level: 2
-  count: 5
-  burst_count: 2
-  burst_spacing: 0.2
-  fireRate: 1.25
-  ammoCapacity: 4
-  reloadTime: 1
-  spread: 10
-  upgrades:
-  - {fileID: 11400000, guid: 23e58fb3f36ac584696d29c772bf94c9, type: 2}
+  speedType: 0
+  sizeType: 0
+  damage: 4
+  count: 4
+  spread: 12
+  spreadType: 0
+  fireRate: 4

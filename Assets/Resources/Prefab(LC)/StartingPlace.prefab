@@ -190,6 +190,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &998851335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2149795921897728110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7210648bb57d35648ac8d39eb7bf5d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireTime: 0
+  canAttack: 1
+  startWeapon: {fileID: 11400000, guid: 47d2d56f04a9db24a859a70806075fd4, type: 2}
 --- !u!1 &2556882304485456140
 GameObject:
   m_ObjectHideFlags: 0
@@ -22500,13 +22515,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 180431673, guid: 2fb011fadfb2ee349968f5fccf322028, type: 3}
-      propertyPath: gun
-      value: 
-      objectReference: {fileID: 11400000, guid: d225bf0a2081efc48b45e420ffd684be,
-        type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 180431673, guid: 2fb011fadfb2ee349968f5fccf322028, type: 3}
+    - {fileID: 7866588999080931651, guid: 2fb011fadfb2ee349968f5fccf322028, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2fb011fadfb2ee349968f5fccf322028, type: 3}
+--- !u!1 &2149795921897728110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8751256457057077844, guid: 2fb011fadfb2ee349968f5fccf322028,
+    type: 3}
+  m_PrefabInstance: {fileID: 7252811223999652410}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1660026855307181472 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8335794301695319962, guid: 2fb011fadfb2ee349968f5fccf322028,

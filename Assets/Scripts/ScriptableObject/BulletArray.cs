@@ -28,26 +28,6 @@ public class BulletArray : ScriptableObject
 
     public void DictIO()
     {
-        foreach(Bullet bullet in pistol)
-        {
-            if (!bulletDictionary.ContainsKey(bullet.name))
-                bulletDictionary.Add(bullet.name, bullet.gameObject);
-        }
-        foreach (Bullet bullet in rifle)
-        {
-            if (!bulletDictionary.ContainsKey(bullet.name))
-                bulletDictionary.Add(bullet.name, bullet.gameObject);
-        }
-        foreach (Bullet bullet in shotgun)
-        {
-            if (!bulletDictionary.ContainsKey(bullet.name))
-                bulletDictionary.Add(bullet.name, bullet.gameObject);
-        }
-        foreach (Bullet bullet in laser)
-        {
-            if (!bulletDictionary.ContainsKey(bullet.name))
-                bulletDictionary.Add(bullet.name, bullet.gameObject);
-        }
         foreach (Bullet bullet in enemies)
         {
             if (!bulletDictionary.ContainsKey(bullet.name))
@@ -70,10 +50,5 @@ public class BulletArray : ScriptableObject
             instance = null;
         }
     }
-    
-    public List<Bullet> pistol = new List<Bullet>();
-    public List<Bullet> rifle = new List<Bullet>();
-    public List<Bullet> shotgun = new List<Bullet>();
-    public List<Bullet> laser = new List<Bullet>();
     public List<Bullet> enemies = new List<Bullet>();
 }

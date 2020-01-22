@@ -10,19 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Sniper Rifle
+  m_Name: Galting
   m_EditorClassIdentifier: 
-  type: 0
-  bullet: {fileID: 1332280715140326440, guid: bc0dade2835dca84b8f31f56474ec6f3, type: 3}
-  speed: 100
-  damage: 27.5
-  level: 1
+  bullet: {fileID: 1266068366657261356, guid: a21dc71a5aa259348a1156978e87804a, type: 3}
+  speed: 35
+  speedType: 0
+  sizeType: 0
+  damage: 4.5
   count: 1
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 1.2
-  ammoCapacity: 5
-  reloadTime: 1
-  spread: 2
-  upgrades:
-  - {fileID: 11400000, guid: e722b4f9a6d8261408747fb2632681bb, type: 2}
+  spread: 5
+  spreadType: 0
+  fireRate: 17.5

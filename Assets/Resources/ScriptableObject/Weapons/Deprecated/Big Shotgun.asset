@@ -10,19 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Ricocheter
+  m_Name: Big Shotgun
   m_EditorClassIdentifier: 
-  type: 0
-  bullet: {fileID: 7158899677219954729, guid: 193a92e650056284593e9b99bf85b56d, type: 3}
-  speed: 75
-  damage: 20
-  level: 2
-  count: 1
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 2
-  ammoCapacity: 7
-  reloadTime: 3
-  spread: 2
-  upgrades:
-  - {fileID: 11400000, guid: a53ac8dd79c5c3345bba2e2aa403b6cf, type: 2}
+  bullet: {fileID: 3395924439713750603, guid: b474d45333475654aadc08f9067c3358, type: 3}
+  speed: 35
+  speedType: 0
+  sizeType: 0
+  damage: 5
+  count: 10
+  spread: 15
+  spreadType: 0
+  fireRate: 0.8

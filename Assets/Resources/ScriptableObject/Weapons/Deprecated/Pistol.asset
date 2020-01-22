@@ -10,20 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Shotgun
+  m_Name: Pistol
   m_EditorClassIdentifier: 
-  type: 1
   bullet: {fileID: 7996625255418922762, guid: 26bcba90e9bb8434ca25213773a36600, type: 3}
-  speed: 35
-  damage: 5
-  level: 1
-  count: 5
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 1.25
-  ammoCapacity: 10
-  reloadTime: 1
-  spread: 10
-  upgrades:
-  - {fileID: 11400000, guid: e2978d372f8d91c43b49d0f52f3df263, type: 2}
-  - {fileID: 11400000, guid: 1b2010c8b20cbee4e92ed7e8a7ce0d23, type: 2}
+  speed: 25
+  speedType: 0
+  sizeType: 0
+  damage: 7
+  count: 1
+  spread: 7
+  spreadType: 0
+  fireRate: 3

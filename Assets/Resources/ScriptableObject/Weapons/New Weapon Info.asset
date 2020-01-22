@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
+  m_Name: New Weapon Info
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 7996625255418922762, guid: 26bcba90e9bb8434ca25213773a36600, type: 3}
+  speed: 35
+  speedType: 3
+  size: 1
+  sizeType: 1
+  damage: 5
+  count: 1
+  spread: 7.5
+  spreadType: 0
+  charge: 0
+  chargeTime: 2
+  chargeAff: 2
+  chargeType: 0
+  blast: 0
+  blastRad: 2
+  blastDmg: 0.2
+  flak: 0
+  flakSizeDmg: 0.5
+  flakCount: 3
+  fireRate: 5

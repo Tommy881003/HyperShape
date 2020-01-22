@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
     [HideInInspector]
     public float currentNovaTime = 15, novaCoolDown = 15;
     public float exp = 0;
-    private Weapon selectedWeapon;
     private ObjAudioManager audios;
     private PauseMenu menu = null;
 
@@ -61,7 +60,6 @@ public class PlayerController : MonoBehaviour
         rb = player.GetComponent<Rigidbody2D>();
         circle = player.GetComponent<CircleCollider2D>();
         sr = player.GetComponent<SpriteRenderer>();
-        selectedWeapon = this.GetComponentInChildren<Weapon>();
         life = maxLife;
         heart = HeartContainer.instance;
         heart.ShowHeart(true,this);

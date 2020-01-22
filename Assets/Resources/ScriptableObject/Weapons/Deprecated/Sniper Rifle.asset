@@ -10,17 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Pistol
+  m_Name: Sniper Rifle
   m_EditorClassIdentifier: 
-  type: 1
-  bullet: {fileID: 7996625255418922762, guid: 26bcba90e9bb8434ca25213773a36600, type: 3}
-  speed: 25
-  damage: 7
+  bullet: {fileID: 1332280715140326440, guid: bc0dade2835dca84b8f31f56474ec6f3, type: 3}
+  speed: 100
+  speedType: 0
+  sizeType: 0
+  damage: 27.5
   count: 1
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 3
-  ammoCapacity: 25
-  reloadTime: 1
-  spread: 7
-  previous: {fileID: 11400000}
+  spread: 2
+  spreadType: 0
+  fireRate: 1.2

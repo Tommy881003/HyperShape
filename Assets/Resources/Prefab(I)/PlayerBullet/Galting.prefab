@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 3884630088349859729}
   - component: {fileID: 8608563674859191919}
   m_Layer: 12
-  m_Name: Bullet7
+  m_Name: Galting
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

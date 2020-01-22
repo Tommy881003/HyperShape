@@ -19575,11 +19575,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5929774941229693713}
-  - component: {fileID: 180431673}
   - component: {fileID: 284609119}
   - component: {fileID: 284609120}
-  - component: {fileID: 7866588999080931651}
   - component: {fileID: 3770486469614284983}
+  - component: {fileID: 8706035081918834038}
   m_Layer: 10
   m_Name: Pistol
   m_TagString: Collect
@@ -19601,34 +19600,6 @@ Transform:
   m_Father: {fileID: 8335794302553963877}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &180431673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8751256457057077844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e8131296b05c542b0c9f81013cdbc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gun: {fileID: 11400000, guid: d225bf0a2081efc48b45e420ffd684be, type: 2}
-  startWps:
-  - {fileID: 11400000, guid: 455a588ea7ce83c43840e8755d2b7a54, type: 2}
-  - {fileID: 11400000, guid: 609a95fea94ef244bb35c7bef59d7525, type: 2}
-  - {fileID: 11400000, guid: 78bfa4f2838906e43b35a0698221edeb, type: 2}
-  fireTime: 0
-  currentAmmo: 0
-  canAttack: 1
-  canSwitch: 0
-  text: {fileID: 2148684900391007571}
-  parent: {fileID: 7556005738641934470}
-  follow: {fileID: 8335794302553963875}
-  level0: {r: 1, g: 1, b: 1, a: 1}
-  level1: {r: 0, g: 0.7529412, b: 0, a: 1}
-  level2: {r: 0, g: 0.7529412, b: 1, a: 1}
-  level3: {r: 1, g: 0, b: 0, a: 1}
 --- !u!58 &284609119
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -19741,14 +19712,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!33 &7866588999080931651
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8751256457057077844}
-  m_Mesh: {fileID: 0}
 --- !u!222 &3770486469614284983
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -19757,3 +19720,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8751256457057077844}
   m_CullTransparentMesh: 0
+--- !u!114 &8706035081918834038
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8751256457057077844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7210648bb57d35648ac8d39eb7bf5d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireTime: 0
+  canAttack: 1
+  startWeapon: {fileID: 11400000, guid: 47d2d56f04a9db24a859a70806075fd4, type: 2}

@@ -10,19 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Big Shotgun
+  m_Name: Raid
   m_EditorClassIdentifier: 
-  type: 0
-  bullet: {fileID: 3395924439713750603, guid: b474d45333475654aadc08f9067c3358, type: 3}
-  speed: 35
-  damage: 5
-  level: 2
-  count: 10
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 0.8
-  ammoCapacity: 5
-  reloadTime: 2
-  spread: 15
-  upgrades:
-  - {fileID: 11400000, guid: f2302d48326b0cf4eb457dcbea47d4d6, type: 2}
+  bullet: {fileID: 3929027194407862028, guid: a5938cb0afadbef4eac99f0755fd4b0e, type: 3}
+  speed: 55
+  speedType: 0
+  sizeType: 0
+  damage: 7
+  count: 1
+  spread: 3.5
+  spreadType: 0
+  fireRate: 3

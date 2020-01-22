@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9454ca1c4648da24b8a5152da601a36b, type: 3}
+  m_Name: Bigger Bullet
+  m_EditorClassIdentifier: 
+  modifiers:
+  - param: sizeAmp
+    multiplier: 1.1
+    adder: 0
+  - param: damageAmp
+    multiplier: 1.2
+    adder: 0
+  - param: speedAmp
+    multiplier: 0.9
+    adder: 0
+  - param: rateAmp
+    multiplier: 0.9
+    adder: 0

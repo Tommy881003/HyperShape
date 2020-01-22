@@ -256,14 +256,7 @@ public class Enemy : MonoBehaviour
 
     protected virtual void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("PlayerBullet"))
-        {
-            PlayerBulletInfo info = collision.gameObject.GetComponent<PlayerBulletInfo>();
-            info.StartCoroutine(info.DelayDestroy());
-            hp -= info.damage;
-            StartCoroutine(Hurt());
-        }
-        else if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Debug.Log("Contact");
             player.StartCoroutine(player.GetDamage());

@@ -10,20 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Burst Rifle
+  m_Name: Burst-Burst Rifle
   m_EditorClassIdentifier: 
-  type: 2
-  bullet: {fileID: 4501925598288199308, guid: 8d24c060201a99e4196b4cccd3d49f4b, type: 3}
+  bullet: {fileID: 4621956510468982459, guid: 814b0b8e8666bc34abfe82cbdb05441c, type: 3}
   speed: 45
-  damage: 9
-  level: 2
-  count: 1
-  burst_count: 3
-  burst_spacing: 0.075
+  speedType: 0
+  sizeType: 0
+  damage: 6
+  count: 2
+  spread: 7
+  spreadType: 0
   fireRate: 2.5
-  ammoCapacity: 10
-  reloadTime: 1
-  spread: 4
-  upgrades:
-  - {fileID: 11400000, guid: b541251ed15522749bbaa6c55c3c60b3, type: 2}
-  - {fileID: 11400000, guid: 367635b22b5b3b84cbbad2a177930451, type: 2}

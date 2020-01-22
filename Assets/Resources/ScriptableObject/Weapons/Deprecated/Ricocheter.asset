@@ -10,18 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
-  m_Name: Galting
+  m_Name: Ricocheter
   m_EditorClassIdentifier: 
-  type: 1
-  bullet: {fileID: 1266068366657261356, guid: a21dc71a5aa259348a1156978e87804a, type: 3}
-  speed: 35
-  damage: 4.5
-  level: 3
+  bullet: {fileID: 7158899677219954729, guid: 193a92e650056284593e9b99bf85b56d, type: 3}
+  speed: 75
+  speedType: 0
+  sizeType: 0
+  damage: 20
   count: 1
-  burst_count: 0
-  burst_spacing: 0
-  fireRate: 17.5
-  ammoCapacity: 30
-  reloadTime: 1
-  spread: 5
-  upgrades: []
+  spread: 2
+  spreadType: 0
+  fireRate: 2

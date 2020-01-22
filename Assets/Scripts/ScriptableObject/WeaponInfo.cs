@@ -22,6 +22,12 @@ public enum SizeType
     Decay
 }
 
+public enum ChargeType
+{
+    SlowerSpeed,
+    None
+}
+
 [CreateAssetMenu]
 public class WeaponInfo : ScriptableObject
 {
@@ -30,6 +36,7 @@ public class WeaponInfo : ScriptableObject
     [Range(10f, 150f)]
     public float speed;
     public SpeedType speedType;
+    public float size = 1;
     public SizeType sizeType;
     public float damage;
     [Space(15)]
@@ -37,6 +44,23 @@ public class WeaponInfo : ScriptableObject
     public int count = 1;
     public float spread;
     public SpreadType spreadType;
+    [Space(15)]
+    public bool charge = false;
+    [Range(1f, 5f)]
+    public float chargeTime = 2;
+    [Range(1f, 5f)]
+    public float chargeAff = 2;
+    public ChargeType chargeType;
+    [Space(15)]
+    public bool blast = false;
+    [Range(1f, 5f)]
+    public float blastRad = 2;
+    [Range(0.1f, 0.5f)]
+    public float blastDmg = 0.2f;
+    [Space(15)]
+    public bool flak = false;
+    public float flakSizeDmg = 0.5f;
+    public int flakCount = 3;
     [Space(15)]
     public float fireRate;
 }

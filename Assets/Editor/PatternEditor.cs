@@ -53,22 +53,6 @@ public class PatternEditor : Editor
         showCircle = false; showPolygon = false; showLine = false;
         degree = 0;
         DrawGO();
-        P = new string[bulletAR.pistol.Count + 1];
-        P[0] = "None";
-        for (int i = 0; i < bulletAR.pistol.Count; i++)
-            P[i + 1] = bulletAR.pistol[i].name;
-        R = new string[bulletAR.rifle.Count + 1];
-        R[0] = "None";
-        for (int i = 0; i < bulletAR.rifle.Count; i++)
-            R[i + 1] = bulletAR.rifle[i].name;
-        S = new string[bulletAR.shotgun.Count + 1];
-        S[0] = "None";
-        for (int i = 0; i < bulletAR.shotgun.Count; i++)
-            S[i + 1] = bulletAR.shotgun[i].name;
-        L = new string[bulletAR.laser.Count + 1];
-        L[0] = "None";
-        for (int i = 0; i < bulletAR.laser.Count; i++)
-            L[i + 1] = bulletAR.laser[i].name;
         E = new string[bulletAR.enemies.Count + 1];
         E[0] = "None";
         for (int i = 0; i < bulletAR.enemies.Count; i++)
@@ -92,22 +76,6 @@ public class PatternEditor : Editor
         {
             case BulletType.none:
                 selectedPrefab = null;
-                break;
-            case BulletType.pistol:
-                bulletNum = EditorGUILayout.Popup(bulletNum, P);
-                selectedPrefab = bulletNum > 0 ? bulletAR.pistol[bulletNum - 1].gameObject : null;
-                break;
-            case BulletType.rifle:
-                bulletNum = EditorGUILayout.Popup(bulletNum, R);
-                selectedPrefab = bulletNum > 0 ? bulletAR.rifle[bulletNum - 1].gameObject : null;
-                break;
-            case BulletType.shotgun:
-                bulletNum = EditorGUILayout.Popup(bulletNum, S);
-                selectedPrefab = bulletNum > 0 ? bulletAR.shotgun[bulletNum - 1].gameObject : null;
-                break;
-            case BulletType.laser:
-                bulletNum = EditorGUILayout.Popup(bulletNum, L);
-                selectedPrefab = bulletNum > 0 ? bulletAR.laser[bulletNum - 1].gameObject : null;
                 break;
             case BulletType.enemies:
                 bulletNum = EditorGUILayout.Popup(bulletNum, E);
