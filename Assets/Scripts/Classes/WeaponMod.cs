@@ -12,14 +12,27 @@ public class WeapodMod
     public float speedAmp = 1;
     public float spreadAmp = 1;
     public float rateAmp = 1;
+    public float chargeAffAmp = 1;
+    public float chargeTimeAmp = 1;
+    public float blastRadAmp = 1;
+    public float blastDmgAmp = 1;
+    public float flakSizeDmgAmp = 1;
+
     public int countOffset = 0;
     public int countAmp = 1;
     public int burstNum = 1;
+    public int flakCountOffset = 0;
+    public int reflectCountOffest = 0;
+
     public bool charge = false;
     public bool blast = false;
     public bool flak = false;
     /*以上是屬性參數，可以隨意新增新內容*/
+
+    /*WeaponMod的預設值，可以想成是類似Vector3.one的存在*/
     public static WeapodMod Default { get; set; } = new WeapodMod();
+
+    /*把參數名稱存進static Lists中*/
     public static void LoadString()
     {
         System.Type type = typeof(WeapodMod);
@@ -49,6 +62,7 @@ public class WeapodMod
         GetType().GetField(name).SetValue(this, result);
     }
 
+    /*根據Modifier的內容調整參數*/
     public void Modify(Modifier modifier)
     {
         string name = modifier.param;
@@ -71,8 +85,11 @@ public class WeapodMod
             Set<bool>(name, active);
     }
 
+    /*把參數內容具現化到武器(WeaponInfo)上*/
     public void FinalizeWeapon(WeaponInfo infoIn, out WeaponInfo infoOut)
     {
+        /* 由於這裡的infoIn是位置拷貝，如果直接讓infoOut = infoIn，  *
+         * 再對infoOut做修改會讓infoIn也被改到，因此得額外建instance */
         infoOut = ScriptableObject.CreateInstance<WeaponInfo>();
         infoOut.size = infoIn.size * sizeAmp;
         infoOut.damage = infoIn.damage * damageAmp;
@@ -81,16 +98,17 @@ public class WeapodMod
         infoOut.fireRate = infoIn.fireRate * rateAmp;
         infoOut.count = infoIn.count * countAmp + countOffset;
 
-        infoOut.charge = charge;
-        infoOut.blast = blast;
-        infoOut.flak = flak;
+        infoOut.charge = infoIn.charge | charge;
+        infoOut.blast = infoIn.blast | blast;
+        infoOut.flak = infoIn.flak | flak;
 
-        infoOut.chargeAff = infoIn.chargeAff;
-        infoOut.chargeTime = infoIn.chargeTime;
-        infoOut.flakCount = infoIn.flakCount;
-        infoOut.flakSizeDmg = infoIn.flakSizeDmg;
-        infoOut.blastRad = infoIn.blastRad;
-        infoOut.blastDmg = infoIn.blastDmg;
+        infoOut.chargeAff = infoIn.chargeAff * chargeAffAmp;
+        infoOut.chargeTime = infoIn.chargeTime * chargeTimeAmp;
+        infoOut.flakCount = infoIn.flakCount + flakCountOffset;
+        infoOut.flakSizeDmg = infoIn.flakSizeDmg * flakSizeDmgAmp;
+        infoOut.blastRad = infoIn.blastRad * blastRadAmp;
+        infoOut.blastDmg = infoIn.blastDmg * blastDmgAmp;
+        infoOut.reflectCount = infoIn.reflectCount + reflectCountOffest;
 
         infoOut.bullet = infoIn.bullet;
         

@@ -4,28 +4,28 @@ using UnityEngine;
 
 public enum SpeedType
 {
-    Constant,
-    ConstantDecay,
-    Random,
-    RandomDecay
+    Constant,       //子彈的初始速度皆相同
+    ConstantDecay,  //子彈的初始速度皆相同，且速度會慢慢遞減
+    Random,         //子彈的初始速度會乘上一個隨機常數
+    RandomDecay     //子彈的初始速度會乘上一個隨機常數，且速度會慢慢遞減
 }
 
 public enum SpreadType
 {
-    Random,
-    Evenly
+    Random,     //隨機分散
+    Evenly      //平均分佈
 }
 
 public enum SizeType
 {
-    Constant,
-    Decay
+    Constant,   //子彈大小不變
+    Decay       //子彈大小會慢慢遞減
 }
 
 public enum ChargeType
 {
-    SlowerSpeed,
-    None
+    SlowerSpeed,    //充能的子彈速度會變慢
+    None            //充能的子彈速度不變
 }
 
 [CreateAssetMenu]
@@ -62,5 +62,37 @@ public class WeaponInfo : ScriptableObject
     public float flakSizeDmg = 0.5f;
     public int flakCount = 3;
     [Space(15)]
+    public int reflectCount = 0;
+    [Space(15)]
     public float fireRate;
+
+    public void ValueCopy(out WeaponInfo infoOut)
+    {
+        infoOut = CreateInstance<WeaponInfo>();
+        infoOut.size = size;
+        infoOut.damage = damage;
+        infoOut.speed = speed;
+        infoOut.spread = spread;
+        infoOut.fireRate = fireRate;
+        infoOut.count = count;
+
+        infoOut.charge = charge;
+        infoOut.blast = blast;
+        infoOut.flak = flak;
+
+        infoOut.chargeAff = chargeAff;
+        infoOut.chargeTime = chargeTime;
+        infoOut.flakCount = flakCount;
+        infoOut.flakSizeDmg = flakSizeDmg;
+        infoOut.blastRad = blastRad;
+        infoOut.blastDmg = blastDmg;
+        infoOut.reflectCount = reflectCount;
+
+        infoOut.bullet = bullet;
+
+        infoOut.sizeType = sizeType;
+        infoOut.speedType = speedType;
+        infoOut.spreadType = spreadType;
+        infoOut.chargeType = chargeType;
+    }
 }

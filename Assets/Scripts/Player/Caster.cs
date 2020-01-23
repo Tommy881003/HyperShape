@@ -90,6 +90,7 @@ public class Caster : MonoBehaviour
         yield break;
     }
 
+    /*對武器加Buff*/
     public void AddBuff(Buff buff)
     {
         foreach (Modifier modifier in buff.modifiers)
@@ -99,6 +100,7 @@ public class Caster : MonoBehaviour
         fireTime = 1 / weapon.fireRate;
     }
 
+    /*對武器移除Buff*/
     public void RemoveBuff(Buff buff)
     {
         if (!Buffs.Contains(buff))
@@ -107,6 +109,7 @@ public class Caster : MonoBehaviour
         ReBuff();
     }
 
+    /*對武器重新上Buff*/
     public void ReBuff()
     {
         property = WeapodMod.Default;

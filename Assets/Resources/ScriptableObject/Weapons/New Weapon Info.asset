@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 7996625255418922762, guid: 26bcba90e9bb8434ca25213773a36600, type: 3}
   speed: 35
-  speedType: 3
+  speedType: 0
   size: 1
-  sizeType: 1
+  sizeType: 0
   damage: 5
   count: 1
   spread: 7.5
@@ -28,7 +28,8 @@ MonoBehaviour:
   blast: 0
   blastRad: 2
   blastDmg: 0.2
-  flak: 0
+  flak: 1
   flakSizeDmg: 0.5
-  flakCount: 3
-  fireRate: 5
+  flakCount: 5
+  reflectCount: 3
+  fireRate: 20

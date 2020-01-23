@@ -12,7 +12,7 @@ public class BulletManager : MonoBehaviour
     public PlayerController player;
     private GameObject dummy;
     [HideInInspector]
-    public int currentBulletAmount;
+    public static int currentBulletAmount = 0;
 
     public static BulletManager instance = null;
     private void Awake()
@@ -277,7 +277,10 @@ public class BulletManager : MonoBehaviour
             for (int i = 0; i < bullets.Count; i++)
             {
                 if (bullets[i].activeSelf)
+                {
                     bullets[i].SetActive(false);
+                    currentBulletAmount--;
+                }   
             }
         }
         isActive.Dispose();
@@ -326,5 +329,6 @@ public class BulletManager : MonoBehaviour
         foreach (Transform child in go.transform)
             child.gameObject.SetActive(true);
         go.SetActive(false);
+        currentBulletAmount--;
     }
 }

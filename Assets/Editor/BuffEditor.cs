@@ -17,8 +17,12 @@ public class BuffEditor : Editor
         WeapodMod.LoadString();
         indexs.Clear();
         choices.Clear();
-        for (int i = 0; i < WeapodMod.intList.Count + WeapodMod.floatList.Count; i++)
-            choices.Add((i < WeapodMod.intList.Count) ? WeapodMod.intList[i] : WeapodMod.floatList[i - WeapodMod.intList.Count]);
+        for (int i = 0; i < WeapodMod.intList.Count; i++)
+            choices.Add(WeapodMod.intList[i]);
+        for (int i = 0; i < WeapodMod.floatList.Count; i++)
+            choices.Add(WeapodMod.floatList[i]);
+        for (int i = 0; i < WeapodMod.boolList.Count; i++)
+            choices.Add(WeapodMod.boolList[i]);
         for (int i = 0; i < Inspecting.modifiers.Count; i++)
             indexs.Add(choices.FindIndex(x => x == Inspecting.modifiers[i].param));
         options = choices.ToArray();
