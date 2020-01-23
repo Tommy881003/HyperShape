@@ -33,7 +33,7 @@ public class WeaponInfo : ScriptableObject
 {
     public GameObject bullet;
     [Space(15)]
-    [Range(10f, 150f)]
+    [Range(10f, 500f)]
     public float speed;
     public SpeedType speedType;
     public float size = 1;
@@ -53,8 +53,8 @@ public class WeaponInfo : ScriptableObject
     public ChargeType chargeType;
     [Space(15)]
     public bool blast = false;
-    [Range(1f, 5f)]
-    public float blastRad = 2;
+    [Range(1f, 10f)]
+    public float blastRad = 7.5f;
     [Range(0.1f, 0.5f)]
     public float blastDmg = 0.2f;
     [Space(15)]

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBulletInfo : MonoBehaviour
 {
     public static int currentBulletAmount = 0;
+    private static GameObject blast = null;
 
     public float damage;
     protected Vector3 previous;
@@ -17,6 +18,12 @@ public class PlayerBulletInfo : MonoBehaviour
     public bool isDisabled = false;
     protected int reflectCount = 0;
     protected int frameCounter = 0;
+
+    protected void Awake()
+    {
+        if (blast == null)
+            blast = Resources.Load<GameObject>("Prefab(I)/PlayerBullet/Blast");
+    }
 
     protected virtual void Start()
     {
@@ -98,34 +105,46 @@ public class PlayerBulletInfo : MonoBehaviour
     {
         Vector2 normal = hit.normal;
         if (info.reflectCount >= reflectCount)
-        {
-            reflectCount++;
-            damage *= 0.8f;
-            velocity = Vector2.Reflect(velocity, normal);
-            transform.position += 0.55f * transform.localScale.x * new Vector3(normal.x, normal.y).normalized;
-            previous = transform.position;
-        }
+            Reflect(normal);
         if (info.blast)
-            Debug.Log("blast");
+            Blast();
         if (info.flak)
+            Flak(normal);
+    }
+
+    protected virtual void Reflect(Vector2 normal)
+    {
+        reflectCount++;
+        damage *= 0.8f;
+        velocity = Vector2.Reflect(velocity, normal);
+        transform.position += 0.55f * transform.localScale.x * new Vector3(normal.x, normal.y).normalized;
+        previous = transform.position;
+    }
+
+    protected virtual void Blast()
+    {
+        GameObject newBlast = Instantiate(blast, transform.position, Quaternion.identity);
+        newBlast.GetComponent<Blast>().SetBlast(transform.localScale.x * info.blastRad, damage * info.blastDmg, sr.color);
+    }
+
+    protected virtual void Flak(Vector2 normal)
+    {
+        WeaponInfo newInfo;
+        info.ValueCopy(out newInfo);
+        newInfo.size *= newInfo.flakSizeDmg;
+        newInfo.damage = damage * newInfo.flakSizeDmg;
+        newInfo.speedType = SpeedType.RandomDecay;
+        newInfo.flak = false;
+        for (int i = 0; i < newInfo.flakCount; i++)
         {
-            WeaponInfo newInfo;
-            info.ValueCopy(out newInfo);
-            newInfo.size *= newInfo.flakSizeDmg;
-            newInfo.damage *= newInfo.flakSizeDmg;
-            newInfo.speedType = SpeedType.RandomDecay;
-            newInfo.flak = false;
-            for (int i = 0; i < newInfo.flakCount; i++)
-            {
-                float angle = (Vector2.SignedAngle(Vector2.right, normal) + Random.Range(-75,75)) * Mathf.Deg2Rad;
-                GameObject newBullet = Instantiate(newInfo.bullet, transform.position, Quaternion.identity);
-                newBullet.GetComponent<PlayerBulletInfo>().SetBullet(newInfo,angle);
-            }
+            float angle = (Vector2.SignedAngle(Vector2.right, normal) + Random.Range(-75, 75)) * Mathf.Deg2Rad;
+            GameObject newBullet = Instantiate(newInfo.bullet, transform.position, Quaternion.identity);
+            newBullet.GetComponent<PlayerBulletInfo>().SetBullet(newInfo, angle);
         }
     }
 
     /*植入武器參數(這函數有很大機率會跟Start()同步執行，所以如果需要component要額外呼叫)*/
-    public void SetBullet(WeaponInfo weapon, float angle) 
+    public virtual void SetBullet(WeaponInfo weapon, float angle) 
     {
         enabled = false;
         info = weapon;
