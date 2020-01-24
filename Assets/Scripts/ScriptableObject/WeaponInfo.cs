@@ -33,7 +33,7 @@ public class WeaponInfo : ScriptableObject
 {
     public GameObject bullet;
     [Space(15)]
-    [Range(10f, 500f)]
+    [Range(5f, 500f)]
     public float speed;
     public SpeedType speedType;
     public float size = 1;

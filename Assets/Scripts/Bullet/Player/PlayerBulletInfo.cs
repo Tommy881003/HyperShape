@@ -47,8 +47,8 @@ public class PlayerBulletInfo : MonoBehaviour
             velocity *= 0.99f;
         if (info.sizeType == SizeType.Decay)
             transform.localScale *= 0.99f;
-        if (velocity.magnitude < 2 || transform.localScale.x < 0.1f)
-            StartCoroutine(DelayDestroy());
+        if (velocity.magnitude < 2 || transform.localScale.x < 0.2f)
+            Destroy(gameObject);
     }
 
     protected virtual void FixedUpdate()
@@ -115,7 +115,6 @@ public class PlayerBulletInfo : MonoBehaviour
     protected virtual void Reflect(Vector2 normal)
     {
         reflectCount++;
-        damage *= 0.8f;
         velocity = Vector2.Reflect(velocity, normal);
         transform.position += 0.55f * transform.localScale.x * new Vector3(normal.x, normal.y).normalized;
         previous = transform.position;
@@ -133,7 +132,7 @@ public class PlayerBulletInfo : MonoBehaviour
         info.ValueCopy(out newInfo);
         newInfo.size *= newInfo.flakSizeDmg;
         newInfo.damage = damage * newInfo.flakSizeDmg;
-        newInfo.speedType = SpeedType.RandomDecay;
+        newInfo.speedType = SpeedType.Random;
         newInfo.flak = false;
         for (int i = 0; i < newInfo.flakCount; i++)
         {

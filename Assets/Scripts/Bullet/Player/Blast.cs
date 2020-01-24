@@ -18,8 +18,8 @@ public class Blast : MonoBehaviour
         sr.color = color;
         sr.DOFade(0, 1).SetEase(Ease.OutCubic);
         transform.DOScale(new Vector3(radius,radius), 1).SetEase(Ease.OutBack);
-        yield return new WaitForSeconds(0.5f);
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 0, 1 << 13 | 1 << 14);
+        yield return new WaitForSeconds(0.25f);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, radius, Vector2.zero, 0, 1 << 9 | 1 << 13 | 1 << 14);
         foreach(RaycastHit2D hit in hits)
         {
             if (hit.collider.gameObject.TryGetComponent(out Enemy enemy))
@@ -28,7 +28,7 @@ public class Blast : MonoBehaviour
                 enemy.StartCoroutine(enemy.Hurt());
             }
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.75f);
         Destroy(gameObject);
     }
 }

@@ -7,6 +7,7 @@ public class Laser : PlayerBulletInfo
 {
     private LineRenderer lr;
     private float timer = 0;
+    private List<GameObject> hitted = new List<GameObject>();
 
     protected override void FixedUpdate()
     {
@@ -29,8 +30,12 @@ public class Laser : PlayerBulletInfo
 
                     if (hit.collider.gameObject.TryGetComponent(out Enemy enemy))
                     {
-                        enemy.hp -= damage;
-                        enemy.StartCoroutine(enemy.Hurt());
+                        if(!hitted.Contains(hit.collider.gameObject))
+                        {
+                            enemy.hp -= damage;
+                            enemy.StartCoroutine(enemy.Hurt());
+                            hitted.Add(hit.collider.gameObject);
+                        }
                     }
                     else
                     {
@@ -48,12 +53,12 @@ public class Laser : PlayerBulletInfo
 
     protected override void Reflect(Vector2 normal)
     {
+        hitted.Clear();
         lr.SetPosition(lr.positionCount - 1, transform.position - 0.1f * velocity.normalized);
         lr.positionCount++;
         lr.SetPosition(lr.positionCount - 1, transform.position);
         lr.positionCount++;
         reflectCount++;
-        damage *= 0.8f;
         velocity = Vector2.Reflect(velocity, normal);
         transform.position += 0.55f * transform.localScale.x * new Vector3(normal.x, normal.y).normalized;
         previous = transform.position;

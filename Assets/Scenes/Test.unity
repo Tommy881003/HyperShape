@@ -11587,7 +11587,7 @@ GameObject:
   - component: {fileID: 1460582437506236795}
   - component: {fileID: 1460582437506236796}
   m_Layer: 9
-  m_Name: TriBeater
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
