@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce4b4cc527b5e34dacd35a45df5eed0, type: 3}
   m_Name: New Weapon Info
   m_EditorClassIdentifier: 
-  bullet: {fileID: 8741616585280002389, guid: 95e135401466e6f47a29df2cb67b56ff, type: 3}
-  speed: 500
-  speedType: 2
-  size: 2
+  bullet: {fileID: 7639980030149955689, guid: 66f78e8164855c443a225964f2c0af75, type: 3}
+  speed: 35
+  speedType: 0
+  size: 0.75
   sizeType: 0
-  damage: 30
+  damage: 2.5
   count: 1
-  spread: 2.5
-  spreadType: 0
+  spread: 10
+  spreadType: 1
   charge: 0
   chargeTime: 2
   chargeAff: 2
   chargeType: 0
-  blast: 1
-  blastRad: 5
+  blast: 0
+  blastRad: 10
   blastDmg: 0.3
-  flak: 1
+  flak: 0
   flakSizeDmg: 0.5
   flakCount: 2
-  reflectCount: 1
-  fireRate: 0.6
+  reflectCount: 3
+  fireRate: 15
